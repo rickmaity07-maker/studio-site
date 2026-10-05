@@ -82,8 +82,8 @@ export default function ProjectsAdminPage() {
           <p className="mt-2 text-sm leading-relaxed text-muted">
             The database is empty. Import the starter projects from{" "}
             <code className="text-text">data/projects.ts</code> (with their
-            screenshots), or add your first one with “New project”. Everything —
-            edits, order, screenshots — is managed from this page, no redeploy needed.
+            screenshots), or add your first one with “New project”. Everything (edits, order,
+            screenshots) is managed from this page, no redeploy needed.
           </p>
           <button
             onClick={() => run(() => api("/api/admin/projects/import", { method: "POST" }))}

@@ -11,7 +11,7 @@ export const PROJECT_TYPES = [
   "Something else"
 ];
 
-export const BUDGETS = ["Under €1,000", "€1,000 – €3,000", "€3,000 – €7,000", "Not sure yet"];
+export const BUDGETS = ["Under €1,000", "€1,000 - €3,000", "€3,000 - €7,000", "Not sure yet"];
 
 export const TIMELINES = ["Whenever it's ready", "Within a month", "Within 2 weeks", "It's urgent"];
 

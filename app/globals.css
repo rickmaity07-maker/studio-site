@@ -39,6 +39,51 @@
   }
   select.input {
     appearance: none;
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%238991A3' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1rem;
+  }
+  .input {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .input:focus {
+    box-shadow: 0 0 0 4px rgba(76, 232, 176, 0.12);
+    outline: none;
+  }
+  .input::placeholder {
+    color: #7f879a;
+  }
+}
+
+@layer components {
+  /* Spotlight cards (components/motion/Spotlight.tsx): a mint ring on the
+     border and a faint wash on the surface, following --mx / --my. */
+  .spotlight::before,
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .spotlight::before {
+    padding: 1px;
+    background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(76, 232, 176, 0.6), transparent 45%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: 20;
+  }
+  .spotlight::after {
+    background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(76, 232, 176, 0.07), transparent 45%);
+  }
+  .spotlight:hover::before,
+  .spotlight:hover::after {
+    opacity: 1;
   }
 }
 

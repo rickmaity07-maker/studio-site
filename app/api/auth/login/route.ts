@@ -15,7 +15,7 @@ export const POST = route(async (req: Request) => {
     bucket: "login",
     max: 10,
     windowMs: 15 * 60 * 1000,
-    message: "Too many sign-in attempts — wait 15 minutes and try again."
+    message: "Too many sign-in attempts. Wait 15 minutes and try again."
   });
 
   const body = await readJson(req);

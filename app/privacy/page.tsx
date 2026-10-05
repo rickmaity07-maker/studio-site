@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         <Block title="Who is responsible">
           <p>
             {field(o.fullName)}, {field(o.street)}, {field(o.postalCity)},{" "}
-            {o.country} — {field(o.email)}. Full details are in the{" "}
+            {o.country}, {field(o.email)}. Full details are in the{" "}
             <Link href="/impressum" className="underline underline-offset-2 hover:text-live">
               Impressum
             </Link>
@@ -29,9 +29,9 @@ export default function PrivacyPage() {
 
         <Block title="The project request form">
           <p>
-            When you submit the form, I store what you enter — name, email,
+            When you submit the form, I store what you enter (name, email,
             phone number if given, business name, project type, budget,
-            timeline and your message — so I can reply to your request. The
+            timeline and your message) so I can reply to your request. The
             legal basis is your consent and steps taken at your request before
             a contract (Art. 6(1)(a) and (b) GDPR). You can withdraw consent at
             any time.
@@ -56,7 +56,7 @@ export default function PrivacyPage() {
             When a request comes in, a copy is emailed to me, and a
             confirmation of what you sent is emailed to you. Both are sent
             through Google Gmail (Google Ireland Ltd.); Google is certified
-            under the EU–US Data Privacy Framework.
+            under the EU-US Data Privacy Framework.
           </p>
           <p>
             To block spam, the form keeps a one-way hash of your IP address
@@ -68,10 +68,10 @@ export default function PrivacyPage() {
             The site is hosted on Vercel Inc. When you visit it, Vercel
             processes technical data such as your IP address and browser type
             to deliver the pages and keep them secure (Art. 6(1)(f) GDPR).
-            Vercel is certified under the EU–US Data Privacy Framework.
+            Vercel is certified under the EU-US Data Privacy Framework.
           </p>
           <p>
-            Fonts are served from this site itself — no requests are made to
+            Fonts are served from this site itself. No requests are made to
             Google Fonts. There are no analytics or tracking cookies.
           </p>
         </Block>
@@ -97,7 +97,7 @@ export default function PrivacyPage() {
           <p>
             You can ask for access to, correction, deletion or restriction of
             your data, object to its processing, and request a portable copy
-            (Art. 15–21 GDPR) — just email me. You also have the right to
+            (Art. 15-21 GDPR). Just email me. You also have the right to
             complain to a data protection supervisory authority, for example
             the Bayerisches Landesamt für Datenschutzaufsicht (BayLDA).
           </p>

@@ -37,7 +37,7 @@ export async function requireAdmin() {
   const session = await readSession();
   if (!session) throw new HttpError(401, "Sign in required.");
   const admin = await db.admin.findUnique({ where: { id: session.id }, select: { id: true, email: true } });
-  if (!admin) throw new HttpError(401, "Your session has expired — sign in again.");
+  if (!admin) throw new HttpError(401, "Your session has expired. Sign in again.");
   return admin;
 }
 

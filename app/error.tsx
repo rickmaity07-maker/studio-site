@@ -13,7 +13,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
       <p className="eyebrow">Error</p>
       <h1 className="mt-3 font-display text-3xl">Something broke on this page</h1>
       <p className="mt-3 text-muted">
-        It&apos;s on my side, not yours. Try again — and if it keeps happening,
+        It&apos;s on my side, not yours. Try again, and if it keeps happening,
         the rest of the site still works.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-4">

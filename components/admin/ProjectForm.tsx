@@ -104,7 +104,7 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
           </Field>
         </div>
 
-        <Field label="Tagline" htmlFor="tagline" hint="One line — who it's for">
+        <Field label="Tagline" htmlFor="tagline" hint="One line: who it's for">
           <input id="tagline" required value={p.tagline} onChange={(e) => set("tagline", e.target.value)} className="input" />
         </Field>
 
@@ -161,7 +161,7 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
         <Field
           label="Live URL"
           htmlFor="liveUrl"
-          hint="Leave empty until it's hosted — the page shows “Demo coming soon”"
+          hint="Leave empty until it's hosted; the page shows “Demo coming soon”"
         >
           <input
             id="liveUrl"
@@ -173,7 +173,7 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
           />
         </Field>
 
-        <Field label="Case study" htmlFor="description" hint="2–4 sentences">
+        <Field label="Case study" htmlFor="description" hint="2-4 sentences">
           <textarea
             id="description"
             required
@@ -196,7 +196,7 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
               <Image src={p.image.url} alt="" fill sizes="320px" className="object-cover object-top" />
             ) : (
               <span className="relative font-mono text-[11px] text-muted">
-                No screenshot — the card uses the accent gradient.
+                No screenshot. The card uses the accent gradient.
               </span>
             )}
           </div>
@@ -229,7 +229,7 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
           />
           <Check
             label="Embed live demo"
-            hint="Untick if the site blocks framing — visitors get the screenshot and a link instead."
+            hint="Untick if the site blocks framing; visitors get the screenshot and a link instead."
             checked={p.embeddable !== false}
             onChange={(v) => set("embeddable", v)}
           />

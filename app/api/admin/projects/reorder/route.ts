@@ -15,7 +15,7 @@ export const POST = route(async (req: Request) => {
 
   const existing = new Set((await db.project.findMany({ select: { id: true } })).map((p) => p.id));
   if (ids.length !== existing.size || !ids.every((id) => existing.has(id))) {
-    throw new HttpError(409, "The project list changed — reload and try again.");
+    throw new HttpError(409, "The project list changed. Reload and try again.");
   }
 
   await db.$transaction(ids.map((id, order) => db.project.update({ where: { id }, data: { order } })));

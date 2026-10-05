@@ -47,7 +47,7 @@ export function LeadForm({ projectRef }: { projectRef?: string }) {
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-live">
           Request sent
         </p>
-        <h3 className="mt-3 font-display text-2xl">Got it — thank you.</h3>
+        <h3 className="mt-3 font-display text-2xl">Got it, thank you.</h3>
         <p className="mx-auto mt-2 max-w-sm text-muted">
           I read every request myself and reply within one business day, usually
           sooner.
@@ -66,7 +66,7 @@ export function LeadForm({ projectRef }: { projectRef?: string }) {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Your name" htmlFor="name">
-          <input id="name" name="name" required className="input" placeholder="Jane Doe" />
+          <input id="name" name="name" required className="input" placeholder="Lena Hoffmann" autoComplete="name" />
         </Field>
         <Field label="Email" htmlFor="email">
           <input
@@ -75,17 +75,18 @@ export function LeadForm({ projectRef }: { projectRef?: string }) {
             type="email"
             required
             className="input"
-            placeholder="jane@business.de"
+            placeholder="lena@cafe-hoffmann.de"
+            autoComplete="email"
           />
         </Field>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Phone (optional)" htmlFor="phone">
-          <input id="phone" name="phone" className="input" placeholder="+49 ..." />
+          <input id="phone" name="phone" className="input" placeholder="+49 151 2345 6789" autoComplete="tel" type="tel" />
         </Field>
         <Field label="Business name" htmlFor="business">
-          <input id="business" name="business" required className="input" placeholder="What should the site say?" />
+          <input id="business" name="business" required className="input" placeholder="Café Hoffmann" autoComplete="organization" />
         </Field>
       </div>
 
@@ -140,7 +141,7 @@ export function LeadForm({ projectRef }: { projectRef?: string }) {
           name="message"
           rows={4}
           className="input resize-none"
-          placeholder="Tell me about your business, your customers, or a site you like"
+          placeholder="What you sell, who your customers are, a site you like"
         />
       </Field>
 
@@ -172,7 +173,7 @@ export function LeadForm({ projectRef }: { projectRef?: string }) {
 
       {status === "error" && (
         <p className="font-mono text-[12px] text-signal">
-          {error ?? "Something went wrong sending that — please try again."}
+          {error ?? "Something went wrong sending that. Please try again."}
           {site.owner.email && (
             <>
               {" "}You can also email{" "}

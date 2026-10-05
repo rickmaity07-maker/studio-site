@@ -49,7 +49,7 @@ export function DemoFrame({ project }: { project: Project }) {
             Demo coming soon
           </span>
           <p className="relative max-w-sm text-balance text-lg text-text/80">
-            This build isn&apos;t hosted yet — as soon as it goes live, this
+            This build isn&apos;t hosted yet. As soon as it goes live, this
             panel turns into a real, clickable preview.
           </p>
         </div>
@@ -87,7 +87,7 @@ export function DemoFrame({ project }: { project: Project }) {
         <div className="flex items-center gap-3">
           {slow && (
             <span className="hidden font-mono text-[11px] text-muted sm:inline">
-              Slow to load? It may not allow embedding —
+              Slow to load? It may not allow embedding.
             </span>
           )}
           <a

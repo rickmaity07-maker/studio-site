@@ -1,6 +1,6 @@
 export function LiveDot({ live }: { live: boolean }) {
   return (
-    <span className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.15em] uppercase">
+    <span className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.15em]">
       <span className="relative flex h-1.5 w-1.5">
         <span
           className={

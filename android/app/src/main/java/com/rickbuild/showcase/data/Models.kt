@@ -36,7 +36,7 @@ data class LeadOptions(
         /* Used until the first successful load — same lists as lib/lead-schema.ts. */
         val Default = LeadOptions(
             projectTypes = listOf("New website", "Redesign of an existing site", "Booking / appointment system", "Online store", "Something else"),
-            budgets = listOf("Under €1,000", "€1,000 – €3,000", "€3,000 – €7,000", "Not sure yet"),
+            budgets = listOf("Under €1,000", "€1,000 - €3,000", "€3,000 - €7,000", "Not sure yet"),
             timelines = listOf("Whenever it's ready", "Within a month", "Within 2 weeks", "It's urgent"),
         )
     }

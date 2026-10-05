@@ -49,12 +49,12 @@ export function ownerAlert(lead: LeadInput) {
     message: escape(lead.message)
   };
   const replyHref = `mailto:${encodeURIComponent(lead.email)}?subject=${encodeURIComponent(
-    `Re: your project request — ${lead.business}`
+    `Re: your project request (${lead.business})`
   )}`;
 
   const rows: [string, string][] = [
     ["Email", link(e.email, `mailto:${encodeURIComponent(lead.email)}`)],
-    ["Phone", lead.phone ? link(e.phone, `tel:${lead.phone.replace(/[^\d+]/g, "")}`) : "—"],
+    ["Phone", lead.phone ? link(e.phone, `tel:${lead.phone.replace(/[^\d+]/g, "")}`) : "Not given"],
     ["Project", escape(lead.projectType)],
     ["Budget", escape(lead.budget)],
     ["Timeline", escape(lead.timeline)]
@@ -67,7 +67,7 @@ export function ownerAlert(lead: LeadInput) {
       ${eyebrow(`New project request · ${viaLabel(lead)}`, "#4CE8B0")}
       ${heading(`${e.name} <span style="color:#8991A3;font-weight:500;">· ${e.business}</span>`)}
       ${details(rows)}
-      ${lead.message ? quote(e.message) : paragraph("No message — just the details above.")}
+      ${lead.message ? quote(e.message) : paragraph("No message, just the details above.")}
       <div style="margin-top:24px;">
         ${button(`Reply to ${e.first}`, replyHref)}
         ${button("Open inbox", `${site.url}/admin`, false)}
@@ -80,7 +80,7 @@ export function ownerAlert(lead: LeadInput) {
     "",
     `${lead.name} · ${lead.business}`,
     `Email: ${lead.email}`,
-    `Phone: ${lead.phone || "—"}`,
+    `Phone: ${lead.phone || "not given"}`,
     `Project: ${lead.projectType}`,
     `Budget: ${lead.budget}`,
     `Timeline: ${lead.timeline}`,
@@ -97,7 +97,7 @@ export function ownerAlert(lead: LeadInput) {
     from: fromAddress(),
     to: ownerAddress(),
     replyTo: `${lead.name} <${lead.email}>`,
-    subject: `New request — ${lead.business} (${lead.projectType})`,
+    subject: `New request: ${lead.business} (${lead.projectType})`,
     html,
     text
   };
@@ -121,10 +121,10 @@ export function confirmation(lead: LeadInput) {
   ];
 
   const html = layout({
-    preview: "Thanks — I read every request myself and reply within one business day.",
+    preview: "Thanks! I read every request myself and reply within one business day.",
     body: `
       ${eyebrow("Request received", "#4CE8B0")}
-      ${heading(`Got it — thank you, ${first}.`)}
+      ${heading(`Got it, thank you, ${first}.`)}
       ${paragraph("I read every request myself and reply within one business day, usually sooner. Here's what you sent:")}
       ${details(rows)}
       ${lead.message ? quote(escape(lead.message)) : ""}
@@ -135,7 +135,7 @@ export function confirmation(lead: LeadInput) {
   });
 
   const text = [
-    `Got it — thank you, ${firstName(lead.name)}.`,
+    `Got it, thank you, ${firstName(lead.name)}.`,
     "",
     "I read every request myself and reply within one business day, usually sooner.",
     "",
@@ -151,7 +151,7 @@ export function confirmation(lead: LeadInput) {
     "02  You'll see a working demo before anything is final.",
     "03  Nothing goes live for your customers until you approve it.",
     "",
-    `${site.name} — ${site.url}`
+    `${site.name}: ${site.url}`
   ]
     .filter((l) => l !== null)
     .join("\n");
@@ -160,7 +160,7 @@ export function confirmation(lead: LeadInput) {
     from: fromAddress(),
     to: `${lead.name} <${lead.email}>`,
     replyTo: ownerAddress(),
-    subject: "Got your request — Rick.build",
+    subject: "Got your request | Rick.build",
     html,
     text
   };

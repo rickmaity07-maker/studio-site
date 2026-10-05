@@ -136,7 +136,7 @@ export const projects: Project[] = [
     year: "2026",
     stack: ["Next.js", "Prisma", "Tailwind"],
     description:
-      "An online storefront for a family-run market: product search and category filters, a basket drawer, customer accounts, and orders for cash-on-delivery or in-store pickup — in German and English.",
+      "An online storefront for a family-run market: product search and category filters, a basket drawer, customer accounts, and orders for cash-on-delivery or in-store pickup, in German and English.",
     liveUrl: "https://al-madina-delta.vercel.app",
     embeddable: false,
     accent: "#A12E3D",
@@ -206,7 +206,7 @@ export const projects: Project[] = [
     year: "2025",
     stack: ["Next.js", "NextAuth", "i18n"],
     description:
-      "A restaurant site that switches theme and language without reloading — built for a room that seats German and English-speaking guests in the same evening.",
+      "A restaurant site that switches theme and language without reloading, built for a room that seats German and English-speaking guests in the same evening.",
     liveUrl: "https://taj-mahal-schweinfurt.vercel.app",
     embeddable: true,
     accent: "#9C3D3D",

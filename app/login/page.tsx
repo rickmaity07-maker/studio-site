@@ -32,7 +32,7 @@ export default function LoginPage() {
       <p className="eyebrow">Sign in</p>
       <h1 className="mt-2 font-display text-3xl">Welcome back</h1>
       <p className="mt-2 text-sm text-muted">
-        This is only used for the admin area — visitors never need an
+        This is only used for the admin area. Visitors never need an
         account to request a project.
       </p>
 

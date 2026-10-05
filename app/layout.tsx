@@ -14,14 +14,14 @@ import { site } from "@/data/site";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Rick.build — Websites you can actually click through",
-    template: "%s — Rick.build"
+    default: "Rick.build | Websites you can actually click through",
+    template: "%s | Rick.build"
   },
   description: site.description,
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: "Rick.build — Websites you can actually click through",
+    title: "Rick.build | Websites you can actually click through",
     description: site.description
   }
 };

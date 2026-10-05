@@ -32,7 +32,7 @@ export const PUT = route(async (req: Request, { params }: Ctx) => {
   }
   const imageId = result.value.image?.id;
   if (imageId && !(await db.image.findUnique({ where: { id: imageId }, select: { id: true } }))) {
-    throw new HttpError(400, "That screenshot no longer exists — upload it again.");
+    throw new HttpError(400, "That screenshot no longer exists. Upload it again.");
   }
 
   await db.project.update({ where: { id: params.id }, data: toRow(result.value) });

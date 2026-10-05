@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Rick.build — Websites you can actually click through";
+export const alt = "Rick.build | Websites you can actually click through";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 // The Node runtime fails to load the bundled font from paths with spaces on Windows.

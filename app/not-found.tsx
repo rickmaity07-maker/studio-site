@@ -6,7 +6,7 @@ export default function NotFound() {
       <p className="eyebrow">404</p>
       <h1 className="mt-3 font-display text-3xl">Nothing to click through here</h1>
       <p className="mt-3 text-muted">
-        This page doesn&apos;t exist — or it hasn&apos;t been built yet.
+        This page doesn&apos;t exist, or it hasn&apos;t been built yet.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-4">
         <Link

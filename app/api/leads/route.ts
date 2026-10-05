@@ -23,7 +23,7 @@ export const POST = route(async (req: Request) => {
     bucket: "leads",
     max: 5,
     windowMs: 60 * 60 * 1000,
-    message: "Too many requests from your connection — please try again later or email directly."
+    message: "Too many requests from your connection. Please try again later or email directly."
   });
 
   await db.lead.create({ data: { ...result.value, status: "new" } });
