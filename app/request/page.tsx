@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { LeadForm } from "@/components/LeadForm";
 import { Reveal } from "@/components/motion/Reveal";
+import { SplitHeading } from "@/components/motion/SplitHeading";
 import { getProjectBySlug } from "@/lib/server/projects";
 
 export const metadata: Metadata = {
@@ -19,11 +20,12 @@ export default async function RequestPage({
   return (
     <section className="mx-auto grid max-w-7xl gap-14 px-4 pb-28 pt-16 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20 lg:pt-24">
       <div className="lg:sticky lg:top-28 lg:self-start">
-        <Reveal>
-          <h1 className="font-display text-5xl font-medium leading-[1.04] tracking-[-0.03em] sm:text-6xl">
-            Tell me about your business.
-          </h1>
-        </Reveal>
+        <SplitHeading
+          as="h1"
+          immediate
+          lines={["Tell me about", "your business."]}
+          className="font-display text-5xl font-medium leading-[1.04] tracking-[-0.03em] sm:text-6xl"
+        />
         <Reveal delay={0.08}>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">
             A few details are enough to get started. No jargon, no obligation.

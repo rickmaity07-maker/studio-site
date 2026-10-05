@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { SplitHeading } from "@/components/motion/SplitHeading";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import type { Project } from "@/data/projects";
 
@@ -37,6 +38,8 @@ export function Showreel({ projects }: { projects: Project[] }) {
   const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end end"] });
   const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+  // Screenshots drift inside their frames against the pan: a little depth.
+  const drift = useTransform(scrollYProgress, [0, 1], ["4%", "-4%"]);
 
   // The pan is a desktop moment; phones keep the native swipe row.
   const [wide, setWide] = useState(false);
@@ -60,9 +63,10 @@ export function Showreel({ projects }: { projects: Project[] }) {
     >
       <div className={pinned ? "sticky top-0 flex h-[100dvh] flex-col justify-center overflow-hidden" : ""}>
         <div className={"mx-auto w-full max-w-7xl px-4 sm:px-6 " + (pinned ? "" : "pt-24")}>
-          <h2 className="max-w-xl font-display text-3xl font-medium leading-tight tracking-[-0.02em] sm:text-4xl">
-            {projects.length} builds you can open right now.
-          </h2>
+          <SplitHeading
+            lines={[`${projects.length} builds you can`, "open right now."]}
+            className="max-w-xl font-display text-3xl font-medium leading-tight tracking-[-0.02em] sm:text-5xl"
+          />
         </div>
 
         <motion.div
@@ -75,7 +79,7 @@ export function Showreel({ projects }: { projects: Project[] }) {
           }
         >
           {projects.map((p) => (
-            <ReelCard key={p.slug} project={p} />
+            <ReelCard key={p.slug} project={p} drift={pinned ? drift : undefined} />
           ))}
           <Link
             href="/work"
@@ -98,7 +102,7 @@ export function Showreel({ projects }: { projects: Project[] }) {
   );
 }
 
-function ReelCard({ project }: { project: Project }) {
+function ReelCard({ project, drift }: { project: Project; drift?: MotionValue<string> }) {
   return (
     <Link
       href={`/work/${project.slug}`}
@@ -109,15 +113,17 @@ function ReelCard({ project }: { project: Project }) {
         style={{ background: `linear-gradient(155deg, ${project.accent}40 0%, #0B0D12 72%)` }}
       >
         {project.image && (
-          <Image
-            src={project.image.url}
-            alt={`${project.name} website`}
-            fill
-            sizes="(min-width: 1024px) 680px, (min-width: 640px) 560px, 82vw"
-            // The track moves with transforms, which can outrun lazy loading.
-            loading="eager"
-            className="object-cover object-top transition duration-700 ease-out group-hover:scale-[1.04]"
-          />
+          <motion.div className="absolute inset-y-0 -left-[5%] -right-[5%]" style={{ x: drift }}>
+            <Image
+              src={project.image.url}
+              alt={`${project.name} website`}
+              fill
+              sizes="(min-width: 1024px) 720px, (min-width: 640px) 600px, 88vw"
+              // The track moves with transforms, which can outrun lazy loading.
+              loading="eager"
+              className="object-cover object-top transition duration-700 ease-out group-hover:scale-[1.04]"
+            />
+          </motion.div>
         )}
         <div className="absolute inset-0 bg-ink/0 transition duration-500 group-hover:bg-ink/25" />
         <span className="absolute right-4 top-4 flex h-11 w-11 translate-y-2 items-center justify-center rounded-full bg-live text-ink opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">

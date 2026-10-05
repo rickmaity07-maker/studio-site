@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { FooterWordmark } from "./FooterWordmark";
 
 const COLUMNS = [
   {
@@ -58,6 +59,8 @@ export function Footer() {
           </nav>
         ))}
       </div>
+
+      <FooterWordmark />
 
       <div className="border-t border-line/60">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-5 font-mono text-[11px] text-muted/70 sm:px-6">

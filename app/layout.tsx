@@ -9,6 +9,9 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { AuthProvider } from "@/components/AuthProvider";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { IntroProvider } from "@/components/motion/Intro";
+import { IntroCurtain, introScript } from "@/components/motion/intro-shared";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -32,12 +35,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
+      </head>
       <body className="flex min-h-screen flex-col">
+        <IntroCurtain />
         <AuthProvider>
-          <Nav />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <SmoothScroll />
+          <IntroProvider>
+            <Nav />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </IntroProvider>
         </AuthProvider>
       </body>
     </html>

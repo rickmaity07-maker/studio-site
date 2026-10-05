@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { AuthStatus } from "./AuthStatus";
 import { MobileMenu } from "./MobileMenu";
 
@@ -19,7 +19,8 @@ const LINKS = [
 export function Nav() {
   const pathname = usePathname();
   const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 40, restDelta: 0.001 });
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -68,6 +69,12 @@ export function Nav() {
         </nav>
         <MobileMenu />
       </div>
+      {/* How far down the page you are. */}
+      <motion.div
+        aria-hidden
+        style={{ scaleX: progress }}
+        className={"absolute inset-x-0 bottom-[-1px] h-px origin-left bg-live/80 transition-opacity " + (scrolled ? "opacity-100" : "opacity-0")}
+      />
     </motion.header>
   );
 }

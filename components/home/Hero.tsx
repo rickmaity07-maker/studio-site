@@ -1,20 +1,32 @@
 "use client";
 
+import { useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/data/projects";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { EASE } from "@/components/motion/Reveal";
+import { SplitHeading } from "@/components/motion/SplitHeading";
+import { useIntroDone } from "@/components/motion/Intro";
 import { ScreenDeck } from "./ScreenDeck";
-
-const HEADLINE = [["Websites", "you", "can"], ["actually", "click", "through."]];
 
 export function Hero({ projects }: { projects: Project[] }) {
   const reduce = useReducedMotion();
-  let wordIndex = 0;
+  const introDone = useIntroDone();
+  const section = useRef<HTMLElement>(null);
+  const go = reduce || introDone;
+
+  // A mint light that follows the cursor over the dot grid. CSS variables
+  // only, so moving the mouse never re-renders.
+  function onMove(e: React.PointerEvent) {
+    const el = section.current;
+    if (!el || e.pointerType !== "mouse") return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--hx", `${e.clientX - r.left}px`);
+    el.style.setProperty("--hy", `${e.clientY - r.top}px`);
+  }
 
   return (
-    <section className="relative overflow-hidden">
-      {/* Soft mint light behind the deck; static, so it costs nothing to scroll. */}
+    <section ref={section} onPointerMove={onMove} className="hero-light relative overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute -right-40 top-10 h-[640px] w-[640px] rounded-full opacity-[0.13] blur-[120px]"
@@ -25,41 +37,26 @@ export function Hero({ projects }: { projects: Project[] }) {
         <div>
           <motion.p
             className="eyebrow"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={go ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.8, ease: EASE }}
           >
             Web studio in Schweinfurt
           </motion.p>
 
-          <h1 className="mt-5 font-display text-[2.6rem] font-medium leading-[1.04] tracking-[-0.03em] sm:text-6xl lg:text-[4.1rem]">
-            {HEADLINE.map((line, li) => (
-              <span key={li} className="block">
-                {line.map((word) => {
-                  const i = wordIndex++;
-                  const accent = word === "click";
-                  return (
-                    <span key={word} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                      <motion.span
-                        className={"inline-block " + (accent ? "text-live" : "")}
-                        initial={reduce ? false : { y: "105%" }}
-                        animate={{ y: 0 }}
-                        transition={{ duration: 0.9, delay: 0.08 + i * 0.07, ease: EASE }}
-                      >
-                        {word}
-                      </motion.span>
-                      {" "}
-                    </span>
-                  );
-                })}
-              </span>
-            ))}
-          </h1>
+          <SplitHeading
+            as="h1"
+            immediate
+            delay={0.08}
+            accent="click"
+            lines={["Websites you can", "actually click through."]}
+            className="mt-5 font-display text-[2.6rem] font-medium leading-[1.04] tracking-[-0.03em] sm:text-6xl lg:text-[4.1rem]"
+          />
 
           <motion.p
             className="mt-6 max-w-md text-lg leading-relaxed text-muted"
             initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={go ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.9, delay: 0.55, ease: EASE }}
           >
             Every project here is a real, working build. Open one, click around,
@@ -69,7 +66,7 @@ export function Hero({ projects }: { projects: Project[] }) {
           <motion.div
             className="mt-9 flex flex-wrap items-center gap-3"
             initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={go ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.9, delay: 0.7, ease: EASE }}
           >
             <MagneticButton href="/work">See the work</MagneticButton>
@@ -81,9 +78,10 @@ export function Hero({ projects }: { projects: Project[] }) {
 
         {projects.length > 0 && (
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 40, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1.1, delay: 0.25, ease: EASE }}
+            initial={reduce ? false : { opacity: 0, y: 60, scale: 0.94, rotateX: 12 }}
+            animate={go ? { opacity: 1, y: 0, scale: 1, rotateX: 0 } : undefined}
+            transition={{ duration: 1.3, delay: 0.3, ease: EASE }}
+            style={{ transformPerspective: 1600 }}
           >
             <ScreenDeck projects={projects} />
           </motion.div>

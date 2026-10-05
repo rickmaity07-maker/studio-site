@@ -87,6 +87,23 @@
   }
 }
 
+@layer components {
+  /* Hero: the dot grid brightens to mint inside a soft circle around the
+     cursor (--hx / --hy, set in components/home/Hero.tsx). */
+  .hero-light::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle at 1px 1px, rgba(76, 232, 176, 0.55) 1px, transparent 0);
+    background-size: 22px 22px;
+    /* The hero starts under the 4.5rem nav; shift so these dots sit exactly on the body's grid. */
+    background-position: 0 -4.5rem;
+    -webkit-mask-image: radial-gradient(260px circle at var(--hx, -999px) var(--hy, -999px), #000 0%, transparent 100%);
+    mask-image: radial-gradient(260px circle at var(--hx, -999px) var(--hy, -999px), #000 0%, transparent 100%);
+  }
+}
+
 @layer utilities {
   .eyebrow {
     @apply font-mono text-[11px] tracking-[0.22em] uppercase text-muted;
@@ -94,6 +111,84 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* First-visit intro (components/motion/Intro.tsx). Hidden unless the
+   <head> script marked this load with data-intro="play". */
+.intro-curtain {
+  display: none;
+}
+html[data-intro="play"] .intro-curtain,
+html[data-intro="exit"] .intro-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b0d12;
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+html[data-intro="exit"] .intro-curtain {
+  transform: translateY(-100%);
+}
+.intro-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.875rem, 4vw, 2.25rem);
+}
+.intro-diamond {
+  color: #4ce8b0;
+  animation: intro-diamond 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.intro-word {
+  overflow: hidden;
+  display: inline-block;
+}
+.intro-word > span {
+  display: inline-block;
+  animation: intro-rise 0.8s 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.intro-line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: #4ce8b0;
+  transform-origin: left;
+  animation: intro-line 1.4s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+@keyframes intro-diamond {
+  from { transform: rotate(-135deg) scale(0); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes intro-rise {
+  from { transform: translateY(110%); }
+  to { transform: none; }
+}
+@keyframes intro-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Lenis smooth scrolling. Its stock stylesheet also disables iframe clicks,
+   which would break the live demos, so only these rules are used. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+html.lenis {
+  scroll-behavior: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {

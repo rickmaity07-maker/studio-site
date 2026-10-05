@@ -3,6 +3,9 @@ import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { Spotlight } from "@/components/motion/Spotlight";
 import { Reveal } from "@/components/motion/Reveal";
+import { SplitHeading } from "@/components/motion/SplitHeading";
+import { ClipReveal } from "@/components/motion/ClipReveal";
+import { CountUp } from "@/components/motion/CountUp";
 import { LanguageToggle } from "./LanguageToggle";
 
 function pick(projects: Project[], slug: string) {
@@ -18,11 +21,10 @@ export function Capabilities({ projects }: { projects: Project[] }) {
 
   return (
     <section className="mx-auto max-w-7xl px-4 pb-28 sm:px-6 lg:pb-36">
-      <Reveal>
-        <h2 className="max-w-2xl font-display text-3xl font-medium tracking-[-0.02em] sm:text-4xl">
-          What I build for local businesses.
-        </h2>
-      </Reveal>
+      <SplitHeading
+        lines={["What I build for", "local businesses."]}
+        className="max-w-2xl font-display text-3xl font-medium leading-tight tracking-[-0.02em] sm:text-5xl"
+      />
 
       <div className="mt-12 grid gap-4 lg:grid-cols-6 lg:grid-rows-[minmax(340px,auto)_minmax(300px,auto)]">
         {/* Bookings: the widest tile, with the salon system as its picture. */}
@@ -86,9 +88,10 @@ export function Capabilities({ projects }: { projects: Project[] }) {
                 Online now
               </span>
               <span>
-                <span className="block font-display text-[5.5rem] font-medium leading-none tracking-[-0.04em] text-text">
-                  {live}
-                </span>
+                <CountUp
+                  to={live}
+                  className="block font-display text-[5.5rem] font-medium leading-none tracking-[-0.04em] text-text"
+                />
                 <span className="mt-2 block text-muted">
                   client sites live and clickable, from bars to barbershops.
                 </span>
@@ -103,18 +106,20 @@ export function Capabilities({ projects }: { projects: Project[] }) {
 
 function ShotLink({ project, className, sizes }: { project: Project; className: string; sizes: string }) {
   return (
-    <Link
-      href={`/work/${project.slug}`}
-      aria-label={`${project.name} case study`}
-      className={`group/shot relative z-10 block overflow-hidden border border-b-0 border-line ${className}`}
-    >
-      <Image
-        src={project.image!.url}
-        alt={`${project.name} website`}
-        fill
-        sizes={sizes}
-        className="object-cover object-top transition duration-700 ease-out group-hover/shot:scale-[1.03]"
-      />
-    </Link>
+    <ClipReveal className={`relative z-10 ${className}`} radius={12}>
+      <Link
+        href={`/work/${project.slug}`}
+        aria-label={`${project.name} case study`}
+        className="group/shot relative block h-full w-full overflow-hidden rounded-t-xl border border-b-0 border-line"
+      >
+        <Image
+          src={project.image!.url}
+          alt={`${project.name} website`}
+          fill
+          sizes={sizes}
+          className="object-cover object-top transition duration-700 ease-out group-hover/shot:scale-[1.03]"
+        />
+      </Link>
+    </ClipReveal>
   );
 }

@@ -8,6 +8,8 @@ import { DemoFrame } from "@/components/DemoFrame";
 import { LiveDot } from "@/components/LiveDot";
 import { Reveal } from "@/components/motion/Reveal";
 import { MagneticButton } from "@/components/motion/MagneticButton";
+import { SplitHeading } from "@/components/motion/SplitHeading";
+import { ClipReveal } from "@/components/motion/ClipReveal";
 
 // Projects added in the admin portal after a deploy still render on demand.
 export const dynamicParams = true;
@@ -52,9 +54,12 @@ export default async function ProjectPage({ params }: { params: { slug: string }
 
       <div className="mt-10 grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
         <Reveal>
-          <h1 className="font-display text-5xl font-medium leading-[1.02] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
-            {project.name}
-          </h1>
+          <SplitHeading
+            as="h1"
+            immediate
+            lines={[project.name]}
+            className="font-display text-5xl font-medium leading-[1.02] tracking-[-0.03em] sm:text-6xl lg:text-7xl"
+          />
           <p className="mt-4 text-xl text-muted">{project.tagline}</p>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-text/85">{project.description}</p>
         </Reveal>
@@ -91,9 +96,9 @@ export default async function ProjectPage({ params }: { params: { slug: string }
         </Reveal>
       </div>
 
-      <Reveal className="mt-16" y={40}>
+      <ClipReveal className="mt-16" delay={0.15}>
         <DemoFrame project={project} />
-      </Reveal>
+      </ClipReveal>
 
       <Reveal className="mt-20">
         <div className="flex flex-col items-start justify-between gap-8 border-y border-line py-12 md:flex-row md:items-center">
@@ -109,7 +114,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
 
       {/* The next project, as a large panel built from its own screenshot. */}
       {next && next.slug !== project.slug && (
-        <Reveal className="mt-20">
+        <ClipReveal className="mt-20">
           <Link
             href={`/work/${next.slug}`}
             className="group relative block overflow-hidden rounded-2xl border border-line"
@@ -134,7 +139,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
               <span className="text-muted">{next.tagline}</span>
             </div>
           </Link>
-        </Reveal>
+        </ClipReveal>
       )}
     </article>
   );

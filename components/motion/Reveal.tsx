@@ -1,10 +1,15 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useIntroDone } from "./Intro";
 
 export const EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Fades content up into place the first time it scrolls into view. */
+/**
+ * Fades content up into place the first time it scrolls into view.
+ * Waits for the first-visit intro so nothing animates behind the curtain.
+ */
 export function Reveal({
   children,
   delay = 0,
@@ -16,14 +21,18 @@ export function Reveal({
   y?: number;
   className?: string;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const introDone = useIntroDone();
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+
   return (
     <motion.div
+      ref={ref}
       className={className}
       initial={reduce ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.8, delay, ease: EASE }}
+      animate={reduce || (introDone && inView) ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 0.9, delay, ease: EASE }}
     >
       {children}
     </motion.div>

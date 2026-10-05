@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { EASE } from "@/components/motion/Reveal";
+import { SplitHeading } from "@/components/motion/SplitHeading";
 
 const STEPS = [
   {
@@ -38,11 +39,10 @@ export function Process() {
       <div className="mx-auto grid max-w-7xl gap-14 px-4 py-28 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20 lg:py-36">
         <div className="lg:sticky lg:top-32 lg:self-start">
           <p className="eyebrow">How a project runs</p>
-          <h2 className="mt-4 font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl">
-            Four stages,
-            <br />
-            no surprises.
-          </h2>
+          <SplitHeading
+            lines={["Four stages,", "no surprises."]}
+            className="mt-4 font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl"
+          />
           <p className="mt-5 max-w-sm text-lg leading-relaxed text-muted">
             You click through a working demo of your own site before anything goes live.
           </p>

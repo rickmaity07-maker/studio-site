@@ -1,5 +1,6 @@
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { Reveal } from "@/components/motion/Reveal";
+import { SplitHeading } from "@/components/motion/SplitHeading";
 
 /** The last thing on the page: one statement, one action. */
 export function ClosingCta() {
@@ -11,11 +12,10 @@ export function ClosingCta() {
         style={{ background: "radial-gradient(circle, #4CE8B0 0%, transparent 70%)" }}
       />
       <div className="relative mx-auto max-w-4xl px-4 py-32 text-center sm:px-6 lg:py-44">
-        <Reveal>
-          <h2 className="text-balance font-display text-4xl font-medium leading-[1.05] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
-            Have a business that needs a site?
-          </h2>
-        </Reveal>
+        <SplitHeading
+          lines={["Have a business", "that needs a site?"]}
+          className="font-display text-4xl font-medium leading-[1.05] tracking-[-0.03em] sm:text-6xl lg:text-7xl"
+        />
         <Reveal delay={0.1}>
           <p className="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-muted">
             Tell me what it needs to do. You get a working demo before anything goes live.

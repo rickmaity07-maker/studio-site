@@ -13,6 +13,7 @@ import {
 import { ArrowUpRight } from "@phosphor-icons/react";
 import type { Project } from "@/data/projects";
 import { LiveDot } from "@/components/LiveDot";
+import { SplitHeading } from "@/components/motion/SplitHeading";
 
 /**
  * Every project as one big line of type. On desktop, hovering a row
@@ -39,9 +40,10 @@ export function WorkIndex({ projects }: { projects: Project[] }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:py-36">
       <div className="flex flex-wrap items-end justify-between gap-6">
-        <h2 className="font-display text-3xl font-medium tracking-[-0.02em] sm:text-4xl">
-          Every build, one line each.
-        </h2>
+        <SplitHeading
+          lines={["Every build,", "one line each."]}
+          className="font-display text-3xl font-medium leading-tight tracking-[-0.02em] sm:text-5xl"
+        />
         <Link
           href="/work"
           className="group inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.1em] text-muted transition hover:text-live"
