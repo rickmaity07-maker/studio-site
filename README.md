@@ -4,7 +4,7 @@ A portfolio/agency site that showcases real client builds as **live, clickable
 demos** and collects project requests, plus a native Android app (`android/`)
 that shows the same projects and sends requests to the same backend.
 
-Stack: Next.js 14 · Neon Postgres (Frankfurt) · Prisma 6 · Vercel · Resend.
+Stack: Next.js 14 · Neon Postgres (Frankfurt) · Prisma 6 · Vercel · Gmail (nodemailer).
 
 ## Run it locally
 
@@ -71,8 +71,8 @@ so deleting an `Admin` row revokes access immediately.
 
 See `.env.local.example`. On Vercel: `DATABASE_URL` and
 `DATABASE_URL_UNPOOLED` (from the Neon integration), `SESSION_SECRET`,
-`NEXT_PUBLIC_SITE_URL`, and optionally `RESEND_API_KEY`, `LEAD_NOTIFY_EMAIL`,
-`LEAD_FROM_EMAIL` for new-lead emails.
+`NEXT_PUBLIC_SITE_URL`, and for email `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `GMAIL_FROM_NAME`,
+`LEAD_NOTIFY_EMAIL`. Each new request emails you an alert (reply goes straight to the sender) and sends the sender a confirmation; both templates live in `lib/server/notify.ts`, styled by `lib/server/email.ts`.
 
 ## Deploying
 

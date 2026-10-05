@@ -53,9 +53,10 @@ export default function PrivacyPage() {
             the EU.
           </p>
           <p>
-            When a request comes in, a copy is emailed to me through Resend
-            (Resend Inc., USA), which acts as a processor under a data
-            processing agreement and standard contractual clauses.
+            When a request comes in, a copy is emailed to me, and a
+            confirmation of what you sent is emailed to you. Both are sent
+            through Google Gmail (Google Ireland Ltd.); Google is certified
+            under the EU–US Data Privacy Framework.
           </p>
           <p>
             To block spam, the form keeps a one-way hash of your IP address
