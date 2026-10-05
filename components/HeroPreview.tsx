@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Project } from "@/data/projects";
@@ -56,11 +57,24 @@ export function HeroPreview({ projects }: { projects: Project[] }) {
                 background: `linear-gradient(160deg, ${project.accent}33 0%, #0B0D12 75%)`
               }}
             >
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+              {project.image && (
+                <>
+                  <Image
+                    src={project.image.url}
+                    alt=""
+                    fill
+                    sizes="448px"
+                    className="object-cover object-top"
+                    priority={i === 0}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-transparent" />
+                </>
+              )}
+              <span className="relative font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
                 {project.category}
               </span>
-              <h3 className="mt-1 font-display text-2xl">{project.name}</h3>
-              <p className="mt-1 text-sm text-muted">{project.tagline}</p>
+              <h3 className="relative mt-1 font-display text-2xl">{project.name}</h3>
+              <p className="relative mt-1 text-sm text-muted">{project.tagline}</p>
             </motion.div>
           </AnimatePresence>
         </div>

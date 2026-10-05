@@ -23,6 +23,9 @@ export function Footer() {
           <Link href="/privacy" className="transition hover:text-text">
             Privacy
           </Link>
+          <Link href="/impressum" className="transition hover:text-text">
+            Impressum
+          </Link>
         </div>
       </div>
       <div className="border-t border-line/60 px-6 py-4 text-center font-mono text-[11px] text-muted/70">

@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import { LeadForm } from "@/components/LeadForm";
-import { getProject } from "@/data/projects";
+import { getProjectBySlug } from "@/lib/server/projects";
 
 export const metadata: Metadata = {
-  title: "Start a project — Rick.build",
+  title: "Start a project",
   description: "Tell me about your business and what your site needs to do."
 };
 
-export default function RequestPage({
+export default async function RequestPage({
   searchParams
 }: {
   searchParams: { ref?: string };
 }) {
-  const refProject = searchParams.ref ? getProject(searchParams.ref) : undefined;
+  const refProject = searchParams.ref ? await getProjectBySlug(searchParams.ref) : undefined;
 
   return (
     <section className="mx-auto grid max-w-5xl gap-12 px-6 py-16 lg:grid-cols-[0.9fr_1.1fr]">

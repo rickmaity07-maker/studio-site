@@ -30,6 +30,18 @@
   }
 }
 
+@layer components {
+  .input {
+    @apply w-full rounded-[0.6rem] border border-line bg-surface2 px-[0.85rem] py-[0.65rem] text-[0.925rem] text-text;
+  }
+  .input:focus {
+    @apply border-live;
+  }
+  select.input {
+    appearance: none;
+  }
+}
+
 @layer utilities {
   .eyebrow {
     @apply font-mono text-[11px] tracking-[0.22em] uppercase text-muted;

@@ -2,51 +2,52 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
   type ReactNode
 } from "react";
-import { onAuthStateChanged, type User } from "firebase/auth";
-import { auth, firebaseConfigured } from "@/lib/firebase";
-import { isAdmin as checkIsAdmin } from "@/lib/auth";
+import { api } from "@/lib/admin-api";
 
 type AuthState = {
-  user: User | null;
   loading: boolean;
   isAdmin: boolean;
+  email: string | null;
+  /** Re-checks the session, e.g. right after signing in. */
+  refresh: () => Promise<void>;
+  signOut: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthState>({
-  user: null,
   loading: true,
-  isAdmin: false
+  isAdmin: false,
+  email: null,
+  refresh: async () => {},
+  signOut: async () => {}
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<AuthState>({
-    user: null,
-    loading: true,
-    isAdmin: false
-  });
+  const [session, setSession] = useState({ loading: true, isAdmin: false, email: null as string | null });
 
-  useEffect(() => {
-    if (!firebaseConfigured) {
-      setState({ user: null, loading: false, isAdmin: false });
-      return;
-    }
-    const unsub = onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        setState({ user: null, loading: false, isAdmin: false });
-        return;
-      }
-      const admin = await checkIsAdmin(user.uid).catch(() => false);
-      setState({ user, loading: false, isAdmin: admin });
-    });
-    return unsub;
+  // Admin status is decided server-side from the httpOnly session cookie.
+  const refresh = useCallback(async () => {
+    const me = await api<{ isAdmin: boolean; email: string | null }>("/api/admin/me").catch(() => null);
+    setSession({ loading: false, isAdmin: Boolean(me?.isAdmin), email: me?.email ?? null });
   }, []);
 
-  return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;
+  const signOut = useCallback(async () => {
+    await api("/api/auth/logout", { method: "POST" }).catch(() => {});
+    setSession({ loading: false, isAdmin: false, email: null });
+  }, []);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  return (
+    <AuthContext.Provider value={{ ...session, refresh, signOut }}>{children}</AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

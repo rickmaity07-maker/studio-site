@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
-import { projects, getCategories } from "@/data/projects";
+import { CATEGORIES } from "@/data/projects";
+import { getProjects } from "@/lib/server/projects";
 import { WorkGrid } from "@/components/WorkGrid";
 
 export const metadata: Metadata = {
-  title: "Work — Rick.build",
+  title: "Work",
   description: "Every project, live and clickable."
 };
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const projects = await getProjects();
+  const categories = CATEGORIES.filter((c) => projects.some((p) => p.category === c));
+
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
       <p className="eyebrow">All work</p>
@@ -18,7 +22,7 @@ export default function WorkPage() {
       </p>
 
       <div className="mt-10">
-        <WorkGrid projects={projects} categories={getCategories()} />
+        <WorkGrid projects={projects} categories={categories} />
       </div>
     </section>
   );

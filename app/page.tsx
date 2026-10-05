@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { projects } from "@/data/projects";
+import { getProjects } from "@/lib/server/projects";
 import { ProjectCard } from "@/components/ProjectCard";
 import { HeroPreview } from "@/components/HeroPreview";
 import { ProcessSteps } from "@/components/ProcessSteps";
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getProjects();
   const featured = projects.filter((p) => p.featured).slice(0, 5);
 
   return (
@@ -37,9 +38,11 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex justify-center lg:justify-end">
-          <HeroPreview projects={featured} />
-        </div>
+        {featured.length > 0 && (
+          <div className="flex justify-center lg:justify-end">
+            <HeroPreview projects={featured} />
+          </div>
+        )}
       </section>
 
       {/* Value props */}

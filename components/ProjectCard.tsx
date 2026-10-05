@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { LiveDot } from "./LiveDot";
@@ -7,7 +8,6 @@ export function ProjectCard({ project }: { project: Project }) {
     <Link
       href={`/work/${project.slug}`}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card transition duration-300 hover:-translate-y-1 hover:border-line/0"
-      style={{ boxShadow: undefined }}
     >
       <div
         className="relative flex aspect-[4/3] items-end overflow-hidden p-5"
@@ -15,10 +15,23 @@ export function ProjectCard({ project }: { project: Project }) {
           background: `linear-gradient(155deg, ${project.accent}26 0%, #0B0D12 70%)`
         }}
       >
-        <div
-          className="absolute -right-10 -top-10 h-40 w-40 rounded-full opacity-30 blur-3xl transition group-hover:opacity-50"
-          style={{ background: project.accent }}
-        />
+        {project.image ? (
+          <>
+            <Image
+              src={project.image.url}
+              alt={`Screenshot of ${project.name}`}
+              fill
+              sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+              className="object-cover object-top transition duration-500 group-hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
+          </>
+        ) : (
+          <div
+            className="absolute -right-10 -top-10 h-40 w-40 rounded-full opacity-30 blur-3xl transition group-hover:opacity-50"
+            style={{ background: project.accent }}
+          />
+        )}
         <div className="relative flex w-full items-center justify-between rounded-lg border border-line/70 bg-ink/60 px-3 py-2 backdrop-blur">
           <div className="flex gap-1.5">
             <span className="h-2 w-2 rounded-full bg-white/15" />

@@ -9,11 +9,21 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { AuthProvider } from "@/components/AuthProvider";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Rick.build — Websites you can actually click through",
-  description:
-    "A working showcase of real client websites: live, clickable demos, and a straight path to requesting your own."
+  metadataBase: new URL(site.url),
+  title: {
+    default: "Rick.build — Websites you can actually click through",
+    template: "%s — Rick.build"
+  },
+  description: site.description,
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    title: "Rick.build — Websites you can actually click through",
+    description: site.description
+  }
 };
 
 export default function RootLayout({

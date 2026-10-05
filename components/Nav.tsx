@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AuthStatus } from "./AuthStatus";
+import { MobileMenu } from "./MobileMenu";
 
 export function Nav() {
   return (
@@ -26,12 +27,7 @@ export function Nav() {
             Start a project
           </Link>
         </nav>
-        <Link
-          href="/request"
-          className="rounded-full border border-live/40 bg-live/10 px-3 py-1.5 font-mono text-[12px] text-live sm:hidden"
-        >
-          Start
-        </Link>
+        <MobileMenu />
       </div>
     </header>
   );

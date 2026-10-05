@@ -1,0 +1,3 @@
+android
+*.tsbuildinfo
+.env*.local

@@ -1,29 +1,35 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { projects, getProject } from "@/data/projects";
+import { getProjectBySlug, getProjects } from "@/lib/server/projects";
 import { DemoFrame } from "@/components/DemoFrame";
 import { LiveDot } from "@/components/LiveDot";
 
-export function generateStaticParams() {
+// Projects added in the admin portal after a deploy still render on demand.
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const projects = await getProjects();
   return projects.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params
 }: {
   params: { slug: string };
-}): Metadata {
-  const project = getProject(params.slug);
+}): Promise<Metadata> {
+  const project = await getProjectBySlug(params.slug);
   if (!project) return {};
   return {
-    title: `${project.name} — Rick.build`,
-    description: project.tagline
+    title: project.name,
+    description: project.tagline,
+    openGraph: project.image ? { images: [project.image.url] } : undefined
   };
 }
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
-  const project = getProject(params.slug);
+export default async function ProjectPage({ params }: { params: { slug: string } }) {
+  const projects = await getProjects();
+  const project = projects.find((p) => p.slug === params.slug);
   if (!project) notFound();
 
   const currentIndex = projects.findIndex((p) => p.slug === project.slug);

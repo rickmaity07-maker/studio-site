@@ -1,46 +1,39 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { submitLead } from "@/lib/firebase";
-
-const PROJECT_TYPES = [
-  "New website",
-  "Redesign of an existing site",
-  "Booking / appointment system",
-  "Online store",
-  "Something else"
-];
-
-const BUDGETS = ["Under €1,000", "€1,000 – €3,000", "€3,000 – €7,000", "Not sure yet"];
-
-const TIMELINES = ["Whenever it's ready", "Within a month", "Within 2 weeks", "It's urgent"];
+import { site } from "@/data/site";
+import { BUDGETS, PROJECT_TYPES, TIMELINES } from "@/lib/lead-schema";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
 export function LeadForm({ projectRef }: { projectRef?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [consent, setConsent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!consent) return;
     setStatus("submitting");
+    setError(null);
 
     const form = new FormData(e.currentTarget);
     try {
-      await submitLead({
-        name: String(form.get("name") || ""),
-        email: String(form.get("email") || ""),
-        phone: String(form.get("phone") || ""),
-        business: String(form.get("business") || ""),
-        projectType: String(form.get("projectType") || ""),
-        budget: String(form.get("budget") || ""),
-        timeline: String(form.get("timeline") || ""),
-        message:
-          String(form.get("message") || "") +
-          (projectRef ? `\n\n(Reference: ${projectRef})` : ""),
-        consent
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...Object.fromEntries(form),
+          projectRef: projectRef ?? "",
+          consent
+        })
       });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        setError(typeof body.error === "string" ? body.error : null);
+        setStatus("error");
+        return;
+      }
       setStatus("success");
     } catch (err) {
       console.error(err);
@@ -64,7 +57,7 @@ export function LeadForm({ projectRef }: { projectRef?: string }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-5">
+    <form onSubmit={handleSubmit} className="relative grid gap-5">
       {projectRef && (
         <div className="rounded-lg border border-line bg-surface2 px-4 py-2 font-mono text-[12px] text-muted">
           Referencing: <span className="text-text">{projectRef}</span>
@@ -135,6 +128,12 @@ export function LeadForm({ projectRef }: { projectRef?: string }) {
         </Field>
       </div>
 
+      {/* Honeypot — hidden from people, irresistible to spam bots. */}
+      <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="website">Website</label>
+        <input id="website" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <Field label="Anything else? (optional)" htmlFor="message">
         <textarea
           id="message"
@@ -173,27 +172,18 @@ export function LeadForm({ projectRef }: { projectRef?: string }) {
 
       {status === "error" && (
         <p className="font-mono text-[12px] text-signal">
-          Something went wrong sending that — please try again, or email directly.
+          {error ?? "Something went wrong sending that — please try again."}
+          {site.owner.email && (
+            <>
+              {" "}You can also email{" "}
+              <a href={`mailto:${site.owner.email}`} className="underline underline-offset-2">
+                {site.owner.email}
+              </a>
+              .
+            </>
+          )}
         </p>
       )}
-
-      <style jsx global>{`
-        .input {
-          background: #1b202b;
-          border: 1px solid #262b38;
-          border-radius: 0.6rem;
-          padding: 0.65rem 0.85rem;
-          color: #eceef3;
-          font-size: 0.925rem;
-          width: 100%;
-        }
-        .input:focus {
-          border-color: #4ce8b0;
-        }
-        select.input {
-          appearance: none;
-        }
-      `}</style>
     </form>
   );
 }
