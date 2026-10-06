@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 
 /**
  * Re-mounts on every navigation, so each page arrives with a short rise
@@ -10,9 +11,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const reduce = useReducedMotion();
   return (
     <motion.div
-      initial={reduce ? false : { opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={instant(reduce, { duration: 0.6, ease: [0.16, 1, 0.3, 1] })}
     >
       {children}
     </motion.div>

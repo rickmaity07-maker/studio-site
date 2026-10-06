@@ -2,3 +2,8 @@ android
 *.tsbuildinfo
 .env*.local
 .next-prod
+playwright-report
+test-results
+.next-test
+e2e
+tests

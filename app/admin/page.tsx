@@ -299,6 +299,10 @@ function downloadCsv(leads: Lead[]) {
   const a = document.createElement("a");
   a.href = url;
   a.download = `requests-${new Date().toISOString().slice(0, 10)}.csv`;
+  // Attached + released a moment later: revoking right after click() can
+  // cancel the download in some browsers, and Firefox needs it in the DOM.
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(url);
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 
 const COPY = {
   de: { cta: "Tisch reservieren", hours: "Heute geöffnet bis 23 Uhr" },
@@ -48,10 +49,10 @@ export function LanguageToggle() {
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={lang}
-            initial={reduce ? false : { opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? undefined : { opacity: 0, y: -8 }}
-            transition={{ duration: 0.25 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={instant(reduce, { duration: 0.25 })}
           >
             <p className="text-sm text-muted">{t.hours}</p>
             <span className="mt-3 inline-flex rounded-full bg-text px-5 py-2.5 font-mono text-[12px] uppercase tracking-[0.1em] text-ink">

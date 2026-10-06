@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import type { Project } from "@/data/projects";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { EASE } from "@/components/motion/Reveal";
@@ -37,9 +38,9 @@ export function Hero({ projects }: { projects: Project[] }) {
         <div>
           <motion.p
             className="eyebrow"
-            initial={reduce ? false : { opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={go ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.8, ease: EASE }}
+            transition={instant(reduce, { duration: 0.8, ease: EASE })}
           >
             Web studio in Schweinfurt
           </motion.p>
@@ -55,9 +56,9 @@ export function Hero({ projects }: { projects: Project[] }) {
 
           <motion.p
             className="mt-6 max-w-md text-lg leading-relaxed text-muted"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={go ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.9, delay: 0.55, ease: EASE }}
+            transition={instant(reduce, { duration: 0.9, delay: 0.55, ease: EASE })}
           >
             Every project here is a real, working build. Open one, click around,
             then tell me what your business needs.
@@ -65,9 +66,9 @@ export function Hero({ projects }: { projects: Project[] }) {
 
           <motion.div
             className="mt-9 flex flex-wrap items-center gap-3"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={go ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.9, delay: 0.7, ease: EASE }}
+            transition={instant(reduce, { duration: 0.9, delay: 0.7, ease: EASE })}
           >
             <MagneticButton href="/work">See the work</MagneticButton>
             <MagneticButton href="/request" variant="ghost">
@@ -78,9 +79,9 @@ export function Hero({ projects }: { projects: Project[] }) {
 
         {projects.length > 0 && (
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 60, scale: 0.94, rotateX: 12 }}
+            initial={{ opacity: 0, y: 60, scale: 0.94, rotateX: 12 }}
             animate={go ? { opacity: 1, y: 0, scale: 1, rotateX: 0 } : undefined}
-            transition={{ duration: 1.3, delay: 0.3, ease: EASE }}
+            transition={instant(reduce, { duration: 1.3, delay: 0.3, ease: EASE })}
             style={{ transformPerspective: 1600 }}
           >
             <ScreenDeck projects={projects} />

@@ -8,7 +8,8 @@ const COLUMNS = [
     links: [
       { href: "/work", label: "Work" },
       { href: "/#process", label: "Process" },
-      { href: "/request", label: "Start a project" }
+      { href: "/request", label: "Start a project" },
+      { href: "/app", label: "Android app" }
     ]
   },
   {

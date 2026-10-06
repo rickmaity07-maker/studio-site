@@ -34,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -92,7 +93,7 @@ fun RequestScreen(vm: AppViewModel, projectRef: String?) {
         Text("Tell me about your business", style = MaterialTheme.typography.displaySmall)
         Spacer(Modifier.height(10.dp))
         Text(
-            "A few details are enough to get started — no jargon, no obligation. I read every request myself and reply within one business day.",
+            "A few details are enough to get started. No jargon, no obligation. I read every request myself and reply within one business day.",
             style = MaterialTheme.typography.bodyLarge,
             color = Palette.Muted,
         )
@@ -129,6 +130,7 @@ fun RequestScreen(vm: AppViewModel, projectRef: String?) {
                 Checkbox(
                     checked = consent,
                     onCheckedChange = { consent = it },
+                    modifier = Modifier.testTag("consent"),
                     colors = CheckboxDefaults.colors(checkedColor = Palette.Live, checkmarkColor = Palette.Ink, uncheckedColor = Palette.Muted),
                 )
                 Spacer(Modifier.width(4.dp))
@@ -182,7 +184,7 @@ private fun Sent(onDone: () -> Unit) {
     ) {
         Eyebrow("Request sent", color = Palette.Live)
         Spacer(Modifier.height(12.dp))
-        Text("Got it — thank you.", style = MaterialTheme.typography.headlineMedium, textAlign = TextAlign.Center)
+        Text("Got it, thank you.", style = MaterialTheme.typography.headlineMedium, textAlign = TextAlign.Center)
         Spacer(Modifier.height(10.dp))
         Text(
             "I read every request myself and reply within one business day, usually sooner.",
@@ -230,7 +232,7 @@ private fun Field(
             keyboardOptions = KeyboardOptions(keyboardType = keyboard, capitalization = capitalization),
             shape = RoundedCornerShape(10.dp),
             colors = fieldColors(),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().testTag("field:$label"),
         )
     }
 }
@@ -244,7 +246,7 @@ private fun Select(label: String, value: String, choices: List<String>, onSelect
             Row(
                 Modifier.fillMaxWidth().clip(RoundedCornerShape(10.dp)).background(Palette.Surface2)
                     .border(1.dp, if (open) Palette.Live else Palette.Line, RoundedCornerShape(10.dp))
-                    .clickable { open = true }.padding(horizontal = 16.dp, vertical = 17.dp),
+                    .clickable { open = true }.testTag("select:$label").padding(horizontal = 16.dp, vertical = 17.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(

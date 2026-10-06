@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import type { Project, ProjectCategory } from "@/data/projects";
 import { ProjectCard } from "./ProjectCard";
 import { EASE } from "./motion/Reveal";
@@ -64,16 +65,16 @@ export function WorkGrid({
         })}
       </div>
 
-      <motion.ul layout={!reduce} className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.ul layout className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {filtered.map((p, i) => (
             <motion.li
               key={p.slug}
-              layout={!reduce}
-              initial={reduce ? false : { opacity: 0, y: 40, scale: 0.97 }}
+              layout
+              initial={{ opacity: 0, y: 40, scale: 0.97 }}
               animate={introDone ? { opacity: 1, y: 0, scale: 1 } : undefined}
-              exit={reduce ? undefined : { opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.7, delay: first ? Math.min(i * 0.06, 0.5) : 0, ease: EASE }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={instant(reduce, { duration: 0.7, delay: first ? Math.min(i * 0.06, 0.5) : 0, ease: EASE })}
               className={useWide && WIDE.has(i) ? "lg:col-span-2" : ""}
             >
               <ProjectCard project={p} wide={useWide && WIDE.has(i)} priority={i < 3} />

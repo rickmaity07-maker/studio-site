@@ -2,12 +2,12 @@ package com.rickbuild.showcase.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rickbuild.showcase.BuildConfig
 import com.rickbuild.showcase.data.Api
 import com.rickbuild.showcase.data.ApiException
 import com.rickbuild.showcase.data.LeadOptions
 import com.rickbuild.showcase.data.LeadRequest
 import com.rickbuild.showcase.data.Project
+import com.rickbuild.showcase.data.Services
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -37,8 +37,7 @@ sealed interface SendState {
     data class Failed(val message: String) : SendState
 }
 
-class AppViewModel : ViewModel() {
-    val api = Api(BuildConfig.SITE_URL)
+class AppViewModel(val api: Api = Services.api) : ViewModel() {
 
     private val _feed = MutableStateFlow(FeedState())
     val feed: StateFlow<FeedState> = _feed.asStateFlow()
@@ -99,7 +98,7 @@ class AppViewModel : ViewModel() {
                 api.sendLead(lead)
                 SendState.Sent
             } catch (e: ApiException) {
-                SendState.Failed(e.message ?: "Something went wrong — please try again.")
+                SendState.Failed(e.message ?: "Something went wrong. Please try again.")
             }
         }
     }

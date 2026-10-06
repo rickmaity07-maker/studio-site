@@ -98,7 +98,7 @@ export const steps = (items: string[]) =>
 export const link = (label: string, href: string) =>
   `<a href="${href}" style="color:${C.text};text-decoration:underline;">${label}</a>`;
 
-/** The full email: brand header, one card of content, quiet footer. */
+/** The full email: brand header, one card of content, quiet footer. `preview` is plain text and escaped here. */
 export function layout({ preview, body, footer }: { preview: string; body: string; footer: string }) {
   return `<!doctype html>
 <html lang="en">
@@ -110,7 +110,7 @@ export function layout({ preview, body, footer }: { preview: string; body: strin
 <title>${site.name}</title>
 </head>
 <body style="margin:0;padding:0;background:${C.ink};" bgcolor="${C.ink}">
-<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:${C.ink};">${preview}</div>
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:${C.ink};">${escape(preview)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="${C.ink}" style="background:${C.ink};">
   <tr><td align="center" style="padding:32px 16px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;">

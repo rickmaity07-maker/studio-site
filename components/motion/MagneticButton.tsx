@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useReducedMotion } from "@/components/motion/useReducedMotion";
 import { ArrowRight } from "@phosphor-icons/react";
 
 const MotionLink = motion.create(Link);

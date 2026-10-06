@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
+import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
+import { useReducedMotion } from "@/components/motion/useReducedMotion";
 
 /** A real number that counts up from zero when it scrolls into view. */
 export function CountUp({ to, className }: { to: number; className?: string }) {
@@ -12,7 +13,11 @@ export function CountUp({ to, className }: { to: number; className?: string }) {
   const rounded = useTransform(value, (v) => Math.round(v).toString());
 
   useEffect(() => {
-    if (!inView || reduce) return;
+    if (reduce) {
+      value.set(to); // no counting for reduced motion: show the number
+      return;
+    }
+    if (!inView) return;
     const controls = animate(value, to, { duration: 1.6, ease: [0.16, 1, 0.3, 1] });
     return () => controls.stop();
   }, [inView, reduce, to, value]);

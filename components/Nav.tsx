@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { motion, useMotionValueEvent, useScroll, useSpring } from "framer-motion";
+import { useReducedMotion } from "@/components/motion/useReducedMotion";
 import { AuthStatus } from "./AuthStatus";
 import { MobileMenu } from "./MobileMenu";
 

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useReducedMotion } from "@/components/motion/useReducedMotion";
 
 /**
  * The page signs off with the wordmark at full width, rising out of the
@@ -17,7 +18,7 @@ export function FooterWordmark() {
   return (
     <div ref={ref} aria-hidden className="relative overflow-hidden">
       <motion.p
-        style={reduce ? undefined : { y, opacity }}
+        style={{ y: reduce ? 0 : y, opacity: reduce ? 1 : opacity }}
         className="select-none whitespace-nowrap px-4 pb-2 text-center font-display text-[17.5vw] font-medium leading-[0.8] tracking-[-0.06em] text-text/[0.06] sm:px-6"
       >
         Rick<span className="text-live/30">.</span>build

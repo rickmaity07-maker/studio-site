@@ -3,14 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform
-} from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import type { Project } from "@/data/projects";
 import { EASE } from "@/components/motion/Reveal";
@@ -90,10 +84,10 @@ export function ScreenDeck({ projects }: { projects: Project[] }) {
                   key={project.slug}
                   className="absolute inset-0"
                   style={{ zIndex: pos.z }}
-                  initial={reduce ? false : { opacity: 0, x: 96, y: -72, scale: 0.84, rotate: 4.5 }}
+                  initial={{ opacity: 0, x: 96, y: -72, scale: 0.84, rotate: 4.5 }}
                   animate={{ opacity: pos.opacity, x: pos.x, y: pos.y, scale: pos.scale, rotate: pos.rotate }}
                   exit={{ opacity: 0, x: -70, y: 30, scale: 0.96, rotate: -3, transition: { duration: 0.5, ease: EASE } }}
-                  transition={{ duration: 0.9, ease: EASE }}
+                  transition={instant(reduce, { duration: 0.9, ease: EASE })}
                 >
                   <DeckCard project={project} front={d === 0} />
                 </motion.div>
@@ -127,7 +121,7 @@ export function ScreenDeck({ projects }: { projects: Project[] }) {
                     className="block h-full origin-left bg-live"
                     initial={{ scaleX: reduce || paused ? 1 : 0 }}
                     animate={{ scaleX: 1 }}
-                    transition={{ duration: reduce || paused ? 0 : INTERVAL / 1000, ease: "linear" }}
+                    transition={instant(reduce, { duration: reduce || paused ? 0 : INTERVAL / 1000, ease: "linear" })}
                   />
                 </span>
               )}

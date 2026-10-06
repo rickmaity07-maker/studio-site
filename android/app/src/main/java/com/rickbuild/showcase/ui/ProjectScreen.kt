@@ -68,7 +68,7 @@ fun ProjectScreen(vm: AppViewModel, slug: String) {
             PrimaryButton("Open live demo", Modifier.fillMaxWidth()) { vm.open(Screen.Demo(slug)) }
         } else {
             Text(
-                "This build isn't hosted yet — as soon as it goes live, you can click through it right here.",
+                "This build isn't hosted yet. As soon as it goes live, you can click through it right here.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Palette.Muted,
             )
@@ -82,7 +82,7 @@ fun ProjectScreen(vm: AppViewModel, slug: String) {
             Text("Want something like this?", style = MaterialTheme.typography.titleLarge)
             Spacer(Modifier.height(6.dp))
             Text(
-                "Tell me about your business and I'll put together something built for it — not a copy of this one.",
+                "Tell me about your business and I'll put together something built for it, not a copy of this one.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Palette.Muted,
             )

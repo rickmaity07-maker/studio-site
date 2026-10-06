@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { useIntroDone } from "./Intro";
 import { EASE } from "./Reveal";
 
@@ -38,29 +39,31 @@ export function SplitHeading({
 
   return (
     <As ref={ref} className={className}>
-      <span className="sr-only">{lines.join(" ")}</span>
-      <span aria-hidden>
-        {lines.map((line, li) => (
-          <span key={li} className="block">
-            {line.split(" ").map((word, wi) => {
-              const n = i++;
-              return (
-                <span key={wi} className="-mb-[0.1em] inline-block overflow-hidden pb-[0.1em] align-bottom">
+      {/* Each word appears once in the text (clean for search engines and
+          screen readers); only its presentation is split for the reveal. */}
+      {lines.map((line, li) => (
+        <span key={li} className="block">
+          {line.split(" ").map((word, wi, words) => {
+            const n = i++;
+            return (
+              <span key={wi}>
+                <span className="-mb-[0.1em] inline-block overflow-hidden pb-[0.1em] align-bottom">
                   <motion.span
+                    data-word
                     className={"inline-block " + (accent && word.replace(/[.,]/g, "") === accent ? "text-live" : "")}
-                    initial={reduce ? false : { y: "110%", rotate: 4 }}
+                    initial={{ y: "110%", rotate: 4 }}
                     animate={show ? { y: 0, rotate: 0 } : undefined}
-                    transition={{ duration: 0.95, delay: delay + n * 0.06, ease: EASE }}
+                    transition={instant(reduce, { duration: 0.95, delay: delay + n * 0.06, ease: EASE })}
                   >
                     {word}
                   </motion.span>
-                  {" "}
                 </span>
-              );
-            })}
-          </span>
-        ))}
-      </span>
+                {wi < words.length - 1 ? " " : li < lines.length - 1 ? " " : null}
+              </span>
+            );
+          })}
+        </span>
+      ))}
     </As>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { useIntroDone } from "./Intro";
 
 export const EASE = [0.16, 1, 0.3, 1] as const;
@@ -30,9 +31,9 @@ export function Reveal({
     <motion.div
       ref={ref}
       className={className}
-      initial={reduce ? false : { opacity: 0, y }}
+      initial={{ opacity: 0, y }}
       animate={reduce || (introDone && inView) ? { opacity: 1, y: 0 } : undefined}
-      transition={{ duration: 0.9, delay, ease: EASE }}
+      transition={instant(reduce, { duration: 0.9, delay, ease: EASE })}
     >
       {children}
     </motion.div>

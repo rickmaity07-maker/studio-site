@@ -5,3 +5,7 @@ node_modules
 *.log
 *.tsbuildinfo
 .next-prod
+.env*.local
+playwright-report
+test-results
+.next-test

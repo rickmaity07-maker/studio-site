@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { useIntroDone } from "./Intro";
 
 /**
@@ -33,15 +34,15 @@ export function ClipReveal({
     <div ref={ref} className={className}>
       <motion.div
         className="h-full w-full"
-        initial={reduce ? false : { clipPath: `inset(100% 0% 0% 0% round ${radius}px)` }}
+        initial={{ clipPath: `inset(100% 0% 0% 0% round ${radius}px)` }}
         animate={open ? { clipPath: `inset(0% 0% 0% 0% round ${radius}px)` } : undefined}
-        transition={{ duration: 1.2, delay, ease: [0.76, 0, 0.24, 1] }}
+        transition={instant(reduce, { duration: 1.2, delay, ease: [0.76, 0, 0.24, 1] })}
       >
         <motion.div
           className="h-full w-full"
-          initial={reduce ? false : { scale: 1.12 }}
+          initial={{ scale: 1.12 }}
           animate={open ? { scale: 1 } : undefined}
-          transition={{ duration: 1.6, delay, ease: [0.16, 1, 0.3, 1] }}
+          transition={instant(reduce, { duration: 1.6, delay, ease: [0.16, 1, 0.3, 1] })}
         >
           {children}
         </motion.div>

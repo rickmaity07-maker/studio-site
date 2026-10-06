@@ -100,6 +100,22 @@ The release key lives **outside the repo** in `~/.android-rick-build/`
 every future update must be signed with the same key, or Android (and Google
 Play) will refuse to install it over the old version.
 
+## Tests
+
+| Command | What |
+|---|---|
+| `npm test` | Website unit tests (Vitest): validation, passwords, email templates |
+| `npm run test:e2e` | Website end-to-end suite (Playwright) against an isolated test database; see `e2e/README.md` |
+| `cd android && ./gradlew testDebugUnitTest` | App unit tests: API client, models, navigation and sending logic |
+| `cd android && ./gradlew connectedDebugAndroidTest` | App UI tests on a running emulator, against an on-device fake of the website |
+
+## Publishing a new app version
+
+1. `cd android && ./gradlew assembleRelease -PversionCode=2 -PversionName=1.0.1`
+2. Copy `app/build/outputs/apk/release/app-release.apk` to `public/downloads/rick-build.apk`.
+3. Update `version` in `data/app.ts`. The `/app` page reads the size and SHA-256 from the file.
+4. Commit and push; the site banner and `/app` page offer the new version.
+
 ## Before this goes live for real clients
 
 - Fill in your details in `data/site.ts` — full name, street address, email

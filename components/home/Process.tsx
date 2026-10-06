@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { EASE } from "@/components/motion/Reveal";
 import { SplitHeading } from "@/components/motion/SplitHeading";
 
@@ -61,15 +62,15 @@ export function Process() {
             <motion.li
               key={s.title}
               className="relative pb-20 last:pb-0"
-              initial={reduce ? false : { opacity: 0.25 }}
+              initial={{ opacity: 0.25 }}
               whileInView={{ opacity: 1 }}
               viewport={{ amount: 0.6, margin: "0px 0px -20% 0px" }}
-              transition={{ duration: 0.6, ease: EASE }}
+              transition={instant(reduce, { duration: 0.6, ease: EASE })}
             >
               <motion.span
                 aria-hidden
                 className="absolute -left-10 top-2 flex h-[15px] w-[15px] items-center justify-center rounded-full border border-line bg-ink sm:-left-14 sm:h-[23px] sm:w-[23px]"
-                initial={reduce ? false : { borderColor: "#262B38" }}
+                initial={{ borderColor: "#262B38" }}
                 whileInView={{ borderColor: "#4CE8B0" }}
                 viewport={{ amount: 1, margin: "0px 0px -35% 0px" }}
               >

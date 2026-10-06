@@ -28,7 +28,9 @@ class Api(baseUrl: String) {
         .callTimeout(30, TimeUnit.SECONDS)
         .build()
 
-    private val json = Json { ignoreUnknownKeys = true; explicitNulls = false; coerceInputValues = true }
+    // encodeDefaults: LeadRequest.source defaults to "android" and must still be sent,
+    // or the website files app requests as coming from the website.
+    private val json = Json { ignoreUnknownKeys = true; explicitNulls = false; coerceInputValues = true; encodeDefaults = true }
     private val jsonType = "application/json; charset=utf-8".toMediaType()
 
     /* Site-relative paths ("/api/images/…", "/privacy") become absolute URLs. */
@@ -45,7 +47,7 @@ class Api(baseUrl: String) {
         val response = try {
             http.newCall(builder.header("Accept", "application/json").build()).execute()
         } catch (e: IOException) {
-            throw ApiException("Couldn't reach the server — check your connection and try again.")
+            throw ApiException("Couldn't reach the server. Check your connection and try again.")
         }
         response.use {
             val text = it.body?.string().orEmpty()

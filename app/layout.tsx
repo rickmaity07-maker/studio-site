@@ -7,6 +7,7 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
+import { AppBanner } from "@/components/AppBanner";
 import { Footer } from "@/components/Footer";
 import { AuthProvider } from "@/components/AuthProvider";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
@@ -44,6 +45,7 @@ export default function RootLayout({
         <AuthProvider>
           <SmoothScroll />
           <IntroProvider>
+            <AppBanner />
             <Nav />
             <main className="flex-1">{children}</main>
             <Footer />

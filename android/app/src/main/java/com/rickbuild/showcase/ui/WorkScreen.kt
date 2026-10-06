@@ -61,7 +61,7 @@ fun WorkScreen(vm: AppViewModel) {
                         Text("Every build, live and clickable", style = MaterialTheme.typography.displaySmall)
                         Spacer(Modifier.height(10.dp))
                         Text(
-                            "Real client websites — open any of them and click around, then tell me what your business needs.",
+                            "Real client websites. Open any of them and click around, then tell me what your business needs.",
                             style = MaterialTheme.typography.bodyLarge,
                             color = Palette.Muted,
                         )
