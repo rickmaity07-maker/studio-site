@@ -38,6 +38,19 @@ class Api(baseUrl: String) {
 
     suspend fun feed(): Feed = json.decodeFromString(call(Request.Builder().url("$base/api/projects").get()))
 
+    /* Is there a newer app version, and must this one update first? */
+    suspend fun updateInfo(currentVersionCode: Int): UpdateInfo {
+        val info: UpdateInfo = json.decodeFromString(
+            call(Request.Builder().url("$base/api/app/version?current=$currentVersionCode").get()),
+        )
+        // Release URLs are site-relative; the updater needs them absolute.
+        return info.copy(latest = info.latest?.let { it.copy(url = absolute(it.url)) })
+    }
+
+    fun encodeFeed(feed: Feed): String = json.encodeToString(Feed.serializer(), feed)
+
+    fun decodeFeed(text: String): Feed = json.decodeFromString(Feed.serializer(), text)
+
     suspend fun sendLead(lead: LeadRequest) {
         val body = json.encodeToString(LeadRequest.serializer(), lead).toRequestBody(jsonType)
         call(Request.Builder().url("$base/api/leads").post(body))

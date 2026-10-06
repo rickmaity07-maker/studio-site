@@ -40,7 +40,12 @@ class AppFlowTest {
     @Before
     fun reset() = FakeSite.reset()
 
-    private fun waitForList() = rule.waitUntilExactlyOneExists(hasText("Bar-05"), 10_000)
+    /* The app opens on Home; most tests start from the Work tab. */
+    private fun waitForList() {
+        rule.waitUntilAtLeastOneExists(hasText("WORK"), 10_000)
+        rule.onNodeWithText("WORK").performClick()
+        rule.waitUntilExactlyOneExists(hasText("Bar-05"), 10_000)
+    }
 
     private fun back() = rule.runOnUiThread { rule.activity.onBackPressedDispatcher.onBackPressed() }
 
@@ -112,7 +117,7 @@ class AppFlowTest {
     @Test
     fun requestFormValidatesSendsAndConfirms() {
         waitForList()
-        rule.onNodeWithText("START A PROJECT").performClick()
+        rule.onNodeWithText("START").performClick()
         rule.waitUntilExactlyOneExists(hasText("Tell me about your business"), 5_000)
 
         val send = rule.onNodeWithText("SEND REQUEST")
@@ -148,7 +153,7 @@ class AppFlowTest {
     @Test
     fun anInvalidEmailCannotBeSent() {
         waitForList()
-        rule.onNodeWithText("START A PROJECT").performClick()
+        rule.onNodeWithText("START").performClick()
         rule.onNodeWithTag("field:Your name").performScrollTo().performTextInput("Lena")
         rule.onNodeWithTag("field:Email").performScrollTo().performTextInput("not-an-email")
         rule.onNodeWithTag("field:Business name").performScrollTo().performTextInput("Café")
@@ -164,7 +169,7 @@ class AppFlowTest {
         FakeSite.leadResponse = MockResponse().setResponseCode(429)
             .setBody("""{"error":"Too many requests from your connection. Please try again later or email directly."}""")
         waitForList()
-        rule.onNodeWithText("START A PROJECT").performClick()
+        rule.onNodeWithText("START").performClick()
         rule.onNodeWithTag("field:Your name").performScrollTo().performTextInput("Lena")
         rule.onNodeWithTag("field:Email").performScrollTo().performTextInput("lena@example.test")
         rule.onNodeWithTag("field:Business name").performScrollTo().performTextInput("Café")

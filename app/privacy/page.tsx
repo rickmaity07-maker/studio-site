@@ -82,7 +82,9 @@ export default function PrivacyPage() {
             It has no accounts, no analytics and no advertising IDs. A project
             request sent from the app is handled exactly like one from the
             form above, and live demos opened in the app load straight from
-            each client&apos;s own server.
+            each client&apos;s own server. When it opens, the app asks this site
+            whether a newer version exists; that check sends only the app&apos;s
+            version number.
           </p>
         </Block>
 

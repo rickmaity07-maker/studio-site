@@ -3,6 +3,7 @@ package com.rickbuild.showcase.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rickbuild.showcase.data.Api
+import com.rickbuild.showcase.data.FeedCache
 import com.rickbuild.showcase.data.ApiException
 import com.rickbuild.showcase.data.LeadOptions
 import com.rickbuild.showcase.data.LeadRequest
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 
 /* Where the user is. The last entry of the back stack is on screen. */
 sealed interface Screen {
+    data object Home : Screen
     data object Work : Screen
     data class Detail(val slug: String) : Screen
     data class Demo(val slug: String) : Screen
@@ -28,6 +30,8 @@ data class FeedState(
     val projects: List<Project> = emptyList(),
     val options: LeadOptions = LeadOptions.Default,
     val error: String? = null,
+    /* Showing projects saved on the device because the site couldn't be reached. */
+    val offline: Boolean = false,
 )
 
 sealed interface SendState {
@@ -37,30 +41,58 @@ sealed interface SendState {
     data class Failed(val message: String) : SendState
 }
 
-class AppViewModel(val api: Api = Services.api) : ViewModel() {
+class AppViewModel(
+    val api: Api = Services.api,
+    private val cache: FeedCache? = Services.cache,
+) : ViewModel() {
 
     private val _feed = MutableStateFlow(FeedState())
     val feed: StateFlow<FeedState> = _feed.asStateFlow()
 
-    private val _stack = MutableStateFlow<List<Screen>>(listOf(Screen.Work))
+    private val _stack = MutableStateFlow<List<Screen>>(listOf(Screen.Home))
     val stack: StateFlow<List<Screen>> = _stack.asStateFlow()
 
     private val _send = MutableStateFlow<SendState>(SendState.Idle)
     val send: StateFlow<SendState> = _send.asStateFlow()
 
     init {
+        // Saved projects first (instant, works offline), then the live list.
+        viewModelScope.launch {
+            val saved = cache?.read() ?: return@launch
+            _feed.update {
+                if (it.projects.isEmpty() && it.loading) {
+                    it.copy(loading = false, refreshing = true, projects = saved.projects, options = saved.leadOptions)
+                } else it
+            }
+        }
         load()
     }
 
     fun load(refresh: Boolean = false) {
-        _feed.update { it.copy(loading = !refresh && it.projects.isEmpty(), refreshing = refresh, error = null) }
+        _feed.update { it.copy(loading = !refresh && it.projects.isEmpty(), refreshing = refresh || it.projects.isNotEmpty(), error = null) }
         viewModelScope.launch {
             try {
                 val feed = api.feed()
                 _feed.update { FeedState(loading = false, projects = feed.projects, options = feed.leadOptions) }
+                cache?.write(feed)
             } catch (e: ApiException) {
-                _feed.update { it.copy(loading = false, refreshing = false, error = e.message) }
+                _feed.update {
+                    it.copy(loading = false, refreshing = false, error = e.message, offline = it.projects.isNotEmpty())
+                }
             }
+        }
+    }
+
+    /*
+      A rickbuild.vercel.app link opened from outside (App Links):
+      /work/<slug> opens that project, /work the list, /request the form.
+    */
+    fun openLink(path: String) {
+        val parts = path.trim('/').split('/').filter { it.isNotBlank() }
+        when {
+            parts.firstOrNull() == "work" && parts.size >= 2 -> _stack.value = listOf(Screen.Work, Screen.Detail(parts[1]))
+            parts.firstOrNull() == "work" -> _stack.value = listOf(Screen.Work)
+            parts.firstOrNull() == "request" -> showTab(Screen.Request())
         }
     }
 

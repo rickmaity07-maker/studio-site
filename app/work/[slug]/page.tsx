@@ -10,6 +10,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { SplitHeading } from "@/components/motion/SplitHeading";
 import { ClipReveal } from "@/components/motion/ClipReveal";
+import { ShareButton } from "@/components/ShareButton";
 
 // Projects added in the admin portal after a deploy still render on demand.
 export const dynamicParams = true;
@@ -82,17 +83,20 @@ export default async function ProjectPage({ params }: { params: { slug: string }
               </span>
             </Fact>
           </dl>
+          <div className="mt-8 flex flex-wrap gap-3">
           {project.liveUrl && (
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="group mt-8 inline-flex items-center gap-3 rounded-full border border-line px-5 py-3 font-mono text-[12px] uppercase tracking-[0.1em] transition hover:border-live hover:text-live"
+              className="group inline-flex items-center gap-3 rounded-full border border-line px-5 py-3 font-mono text-[12px] uppercase tracking-[0.1em] transition hover:border-live hover:text-live"
             >
               Visit {host}
               <ArrowUpRight weight="bold" className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
             </a>
           )}
+          <ShareButton title={project.name} text={project.tagline} />
+          </div>
         </Reveal>
       </div>
 

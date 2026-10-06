@@ -1,6 +1,7 @@
 package com.rickbuild.showcase
 
 import com.rickbuild.showcase.data.Api
+import com.rickbuild.showcase.data.FeedCache
 import com.rickbuild.showcase.data.LeadRequest
 import com.rickbuild.showcase.ui.AppViewModel
 import com.rickbuild.showcase.ui.Screen
@@ -72,8 +73,9 @@ class AppViewModelTest {
     @Test
     fun `navigation supports open, back, replace and tabs`() {
         val vm = loadedViewModel()
-        assertEquals(listOf(Screen.Work), vm.stack.value)
+        assertEquals("the app opens on Home", listOf(Screen.Home), vm.stack.value)
 
+        vm.showTab(Screen.Work)
         vm.open(Screen.Detail("bar-05"))
         vm.open(Screen.Demo("bar-05"))
         assertEquals(Screen.Demo("bar-05"), vm.stack.value.last())
@@ -135,5 +137,45 @@ class AppViewModelTest {
         withTimeout(5_000) { vm.send.first { it == SendState.Sent } }
         vm.showTab(Screen.Request())
         assertEquals(SendState.Idle, vm.send.value)
+    }
+
+    @Test
+    fun `links from the website open the right screen`() {
+        val vm = loadedViewModel()
+        vm.openLink("/work/bar-05")
+        assertEquals(listOf(Screen.Work, Screen.Detail("bar-05")), vm.stack.value)
+        vm.openLink("/work")
+        assertEquals(listOf(Screen.Work), vm.stack.value)
+        vm.openLink("/request")
+        assertEquals(listOf(Screen.Request()), vm.stack.value)
+        // Anything else leaves the app where it is.
+        vm.openLink("/privacy")
+        assertEquals(listOf(Screen.Request()), vm.stack.value)
+    }
+
+    @Test
+    fun `saved projects show instantly, and stay when the site is unreachable`() = runBlocking {
+        val api = Api(server.url("/").toString())
+        val cache = FeedCache(kotlin.io.path.createTempFile("feed", ".json").toFile().also { it.delete() }) { api }
+        cache.write(api.decodeFeed(Fixtures.FEED))
+
+        server.enqueue(MockResponse().setResponseCode(503).setBody("""{"error":"Down for maintenance."}"""))
+        val vm = AppViewModel(api, cache)
+        val state = withTimeout(5_000) { vm.feed.first { !it.loading && !it.refreshing } }
+        assertEquals(3, state.projects.size)
+        assertTrue("marked as offline", state.offline)
+        assertEquals("Down for maintenance.", state.error)
+    }
+
+    @Test
+    fun `a successful load is saved for next time`() = runBlocking {
+        val api = Api(server.url("/").toString())
+        val file = kotlin.io.path.createTempFile("feed", ".json").toFile().also { it.delete() }
+        val cache = FeedCache(file) { api }
+        server.enqueue(MockResponse().setBody(Fixtures.FEED))
+        val vm = AppViewModel(api, cache)
+        withTimeout(5_000) { vm.feed.first { it.projects.isNotEmpty() && !it.refreshing } }
+        withTimeout(5_000) { while (!file.exists()) kotlinx.coroutines.delay(20) }
+        assertEquals(3, cache.read()?.projects?.size)
     }
 }

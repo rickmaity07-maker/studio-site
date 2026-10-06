@@ -1,4 +1,5 @@
 import { execSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 import { importStarterProjects } from "../lib/server/seed";
 import { hashPassword } from "../lib/server/password";
@@ -35,7 +36,20 @@ execSync("npx prisma db push --force-reset --skip-generate --accept-data-loss", 
         passwordHash: await hashPassword(process.env.E2E_ADMIN_PASSWORD!)
       }
     });
-    console.log(`[e2e] test database reset: ${imported} projects, 1 admin`);
+    // A published app version for /download and /api/app/version. The bytes
+    // start like a zip (an APK is one); the e2e suite only checks headers + checksum.
+    const apk = Buffer.concat([Buffer.from("PK\x03\x04"), Buffer.from("e2e test apk ".repeat(2000))]);
+    await db.appRelease.create({
+      data: {
+        versionCode: 1,
+        versionName: "1.0.0",
+        data: new Uint8Array(apk),
+        sha256: createHash("sha256").update(apk).digest("hex"),
+        sizeBytes: apk.byteLength,
+        notes: "First release for the test run."
+      }
+    });
+    console.log(`[e2e] test database reset: ${imported} projects, 1 admin, 1 app release`);
   } finally {
     await db.$disconnect();
   }

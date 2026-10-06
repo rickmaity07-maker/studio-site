@@ -185,8 +185,11 @@ test.describe("projects", () => {
     await page.getByLabel("Case study").fill("A test project created by the end-to-end suite.");
 
     // Screenshot upload goes to Postgres and previews immediately.
-    await page.locator('input[type="file"]').setInputFiles(path.join(process.cwd(), "public/screens/bar-05.jpg"));
+    await page.locator('input[type="file"]').first().setInputFiles(path.join(process.cwd(), "public/screens/bar-05.jpg"));
     await expect(page.getByRole("button", { name: "Replace" })).toBeVisible();
+    // And the phone-width capture.
+    await page.getByLabel("Phone screenshot file").setInputFiles(path.join(process.cwd(), "public/screens-mobile/bar-05.jpg"));
+    await expect(page.getByRole("button", { name: "Replace" })).toHaveCount(2);
 
     // Leave it hidden at first.
     await expect(page.getByLabel("Visible on the site")).not.toBeChecked();
@@ -220,6 +223,9 @@ test.describe("projects", () => {
     await expect(page.getByText("Coffee house and roastery, Bamberg")).toBeVisible();
     await expect(page.locator("iframe")).toHaveCount(0);
     await expect(page.getByRole("link", { name: /Open live site/ })).toBeVisible();
+    // The uploaded phone screenshot is offered on the public page.
+    await page.getByRole("button", { name: "Mobile" }).click();
+    await expect(page.getByRole("img", { name: "E2E Kaffeehaus on a phone" })).toBeVisible();
 
     // Reorder: new projects go last; move it up one place and check the saved order.
     await page.goto("/admin/projects");

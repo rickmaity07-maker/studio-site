@@ -32,6 +32,7 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
 
   function set<K extends keyof ProjectInput>(key: K, value: ProjectInput[K]) {
     setP((prev) => ({ ...prev, [key]: value }));
@@ -41,7 +42,7 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
     setP((prev) => ({ ...prev, name, slug: slugTouched ? prev.slug : slugify(name) }));
   }
 
-  async function upload(file: File) {
+  async function upload(file: File, key: "image" | "mobileImage" = "image") {
     setError(null);
     setUploading(true);
     try {
@@ -51,12 +52,13 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
         method: "POST",
         form
       });
-      set("image", image);
+      set(key, image);
     } catch (err) {
       setError((err as Error).message);
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = "";
+      if (phoneRef.current) phoneRef.current.value = "";
     }
   }
 
@@ -218,6 +220,39 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
             )}
           </div>
           <p className="text-[12px] text-muted">PNG, JPG, WebP or AVIF, up to 4 MB. 1600×1200 works well.</p>
+        </div>
+
+        <div className="grid gap-2">
+          <span className={labelCls}>Phone screenshot</span>
+          <div className="flex items-end gap-4">
+            <div
+              className="relative aspect-[390/844] w-24 shrink-0 overflow-hidden rounded-xl border border-line"
+              style={{ background: `linear-gradient(155deg, ${p.accent}40 0%, #0B0D12 70%)` }}
+            >
+              {p.mobileImage && <Image src={p.mobileImage.url} alt="" fill sizes="96px" className="object-cover object-top" />}
+            </div>
+            <div className="grid gap-2">
+              <input
+                ref={phoneRef}
+                type="file"
+                aria-label="Phone screenshot file"
+                accept="image/png,image/jpeg,image/webp,image/avif"
+                className="hidden"
+                onChange={(e) => e.target.files?.[0] && upload(e.target.files[0], "mobileImage")}
+              />
+              <div className="flex gap-2">
+                <button type="button" onClick={() => phoneRef.current?.click()} disabled={uploading} className={btnGhost}>
+                  {p.mobileImage ? "Replace" : "Upload"}
+                </button>
+                {p.mobileImage && (
+                  <button type="button" onClick={() => set("mobileImage", undefined)} className={btnGhost}>
+                    Remove
+                  </button>
+                )}
+              </div>
+              <p className="text-[12px] text-muted">A phone-width capture (390 × 844). Shown with a Desktop / Mobile switch.</p>
+            </div>
+          </div>
         </div>
 
         <div className="grid gap-3 rounded-2xl border border-line bg-surface p-5">

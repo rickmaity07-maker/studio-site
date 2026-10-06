@@ -109,12 +109,27 @@ Play) will refuse to install it over the old version.
 | `cd android && ./gradlew testDebugUnitTest` | App unit tests: API client, models, navigation and sending logic |
 | `cd android && ./gradlew connectedDebugAndroidTest` | App UI tests on a running emulator, against an on-device fake of the website |
 
-## Publishing a new app version
+## The Android app: download link and releases
 
-1. `cd android && ./gradlew assembleRelease -PversionCode=2 -PversionName=1.0.1`
-2. Copy `app/build/outputs/apk/release/app-release.apk` to `public/downloads/rick-build.apk`.
-3. Update `version` in `data/app.ts`. The `/app` page reads the size and SHA-256 from the file.
-4. Commit and push; the site banner and `/app` page offer the new version.
+Works like the Paulaner app. The link to share is **https://rickbuild.vercel.app/download**,
+which always serves the newest published version.
+
+```bash
+npm run app:release -- --notes "New: home tab, phone screenshots"   # build, verify, publish
+npm run app:release -- --notes "..." --mandatory                    # installed apps must update
+npm run app:release -- --dry-run                                    # build and check only
+```
+
+The script picks the next build number, builds the signed APK with the key in
+`~/.android-rick-build`, and stores it in Postgres with its SHA-256. Installed
+apps check `/api/app/version` whenever they open, download the new version,
+verify the checksum and install it (on Redmi/Xiaomi phones through Android's
+standard install screen if MIUI blocks the silent route). Admin > App lists the
+versions: hide one, mark it mandatory, or copy the download link.
+
+Links to `rickbuild.vercel.app/work/...` open in the app when it's installed
+(Android App Links, verified via `/.well-known/assetlinks.json`, which carries
+the release key's fingerprint).
 
 ## Before this goes live for real clients
 

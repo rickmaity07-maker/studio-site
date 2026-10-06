@@ -20,6 +20,9 @@ object FakeSite {
     /** How many upcoming feed requests should fail (to test the retry path). */
     @Volatile var failNextFeeds = 0
 
+    /** A newer app version to announce (null: the app is up to date). */
+    @Volatile var latestRelease: String? = null
+
     /** Response for the next project request. */
     @Volatile var leadResponse: MockResponse = MockResponse().setResponseCode(201).setBody("""{"ok":true}""")
 
@@ -33,6 +36,9 @@ object FakeSite {
                     MockResponse().setResponseCode(503).setBody("""{"error":"The backend isn't configured yet."}""")
                 }
                 request.path == "/api/projects" -> MockResponse().setBody(FEED)
+                request.path?.startsWith("/api/app/version") == true -> MockResponse().setBody(
+                    """{"latest":${latestRelease ?: "null"},"minSupportedVersionCode":0,"mustUpdate":false}""",
+                )
                 request.path == "/api/leads" && request.method == "POST" -> {
                     leads += request.body.readUtf8()
                     leadResponse
@@ -48,6 +54,9 @@ object FakeSite {
     fun reset() {
         leads.clear()
         failNextFeeds = 0
+        latestRelease = null
+        // Start every test without saved projects.
+        java.io.File(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().targetContext.filesDir, "feed.json").delete()
         leadResponse = MockResponse().setResponseCode(201).setBody("""{"ok":true}""")
     }
 
@@ -56,7 +65,8 @@ object FakeSite {
       "projects": [
         {"slug":"bar-05","name":"Bar-05","tagline":"Cocktail bar","category":"Hospitality","year":"2026",
          "stack":["Next.js","Neon Postgres"],"description":"A late-night bar site.",
-         "liveUrl":"https://the-bar-project.vercel.app","embeddable":false,"accent":"#FF6B35","featured":true},
+         "liveUrl":"https://the-bar-project.vercel.app","embeddable":false,"accent":"#FF6B35","featured":true,
+         "mobileImage":{"id":"m1","url":"/api/images/m1"}},
         {"slug":"rebo-salon","name":"Rebo Salon","tagline":"Barbershop booking","category":"Beauty & Booking","year":"2025",
          "stack":["Next.js"],"description":"A booking platform.","liveUrl":"https://rebo-salon.vercel.app","accent":"#E0B12E"},
         {"slug":"vespre","name":"Vespre","tagline":"Perfume store","category":"E-commerce","year":"2026",

@@ -20,6 +20,8 @@ data class Project(
     val accent: String,
     val featured: Boolean = false,
     val image: ProjectImage? = null,
+    /* The same site captured at phone width. */
+    val mobileImage: ProjectImage? = null,
 ) {
     val isLive get() = !liveUrl.isNullOrBlank()
     val displayUrl get() = liveUrl?.removePrefix("https://")?.removePrefix("http://")?.trimEnd('/') ?: "$slug.build"
@@ -61,3 +63,18 @@ data class LeadRequest(
     val consent: Boolean,
     val source: String = "android",
 )
+
+/* A published app version (GET /api/app/version), same shape as the Paulaner app's. */
+@Serializable
+data class Release(
+    val versionCode: Int,
+    val versionName: String,
+    val url: String,
+    val sha256: String,
+    val sizeBytes: Long,
+    val notes: String = "",
+    val mandatory: Boolean = false,
+)
+
+@Serializable
+data class UpdateInfo(val latest: Release? = null, val minSupportedVersionCode: Int = 0, val mustUpdate: Boolean = false)

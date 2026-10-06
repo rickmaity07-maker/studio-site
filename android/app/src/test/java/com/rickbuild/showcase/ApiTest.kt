@@ -110,4 +110,30 @@ class ApiTest {
         assertEquals("$base/api/images/abc", api.absolute("/api/images/abc"))
         assertEquals("https://cdn.example/x.png", api.absolute("https://cdn.example/x.png"))
     }
+
+    @Test
+    fun `updateInfo asks with the current version and returns an absolute download URL`() = runBlocking {
+        server.enqueue(
+            MockResponse().setBody(
+                """{"latest":{"versionCode":2,"versionName":"1.1.0","url":"/api/app/download/2","sha256":"ab","sizeBytes":10,"notes":"New home tab","mandatory":false},"minSupportedVersionCode":0,"mustUpdate":false}""",
+            ),
+        )
+        val info = api.updateInfo(1)
+        assertEquals("/api/app/version?current=1", server.takeRequest().path)
+        assertEquals(2, info.latest?.versionCode)
+        assertEquals(server.url("/api/app/download/2").toString(), info.latest?.url)
+        assertFalse(info.mustUpdate)
+    }
+
+    @Test
+    fun `no newer version means latest is null`() = runBlocking {
+        server.enqueue(MockResponse().setBody("""{"latest":null,"minSupportedVersionCode":0,"mustUpdate":false}"""))
+        assertNull(api.updateInfo(5).latest)
+    }
+
+    @Test
+    fun `phone screenshots come through with the feed`() = runBlocking {
+        server.enqueue(MockResponse().setBody(Fixtures.FEED.replace(""""image":{"id":"abc","url":"/api/images/abc"}""", """"image":{"id":"abc","url":"/api/images/abc"},"mobileImage":{"id":"m1","url":"/api/images/m1"}""")))
+        assertEquals("/api/images/m1", api.feed().projects[0].mobileImage?.url)
+    }
 }

@@ -51,6 +51,18 @@ export function ProjectCard({
             <span className="truncate font-mono text-[11px] text-muted">{url}</span>
           </div>
 
+          {project.mobileImage && (
+            // The same site on a phone, peeking up; rises fully on hover.
+            <div
+              aria-hidden
+              className="absolute bottom-16 right-5 w-[19%] min-w-[64px] translate-y-3 rotate-[4deg] overflow-hidden rounded-[0.85rem] border-[3px] border-surface2 shadow-[0_20px_40px_-12px_rgba(0,0,0,0.9)] ring-1 ring-line transition duration-500 ease-out group-hover:-translate-y-1 group-hover:rotate-0"
+            >
+              <div className="relative aspect-[390/844]">
+                <Image src={project.mobileImage.url} alt="" fill sizes="96px" className="object-cover object-top" />
+              </div>
+            </div>
+          )}
+
           <span className="absolute right-4 top-4 flex h-10 w-10 translate-y-1 items-center justify-center rounded-full bg-live text-ink opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
             <ArrowUpRight weight="bold" className="h-4 w-4" aria-hidden />
           </span>
