@@ -22,6 +22,7 @@ export function toStoredProject(row: ProjectRow): StoredProject {
   };
   if (row.liveUrl) p.liveUrl = row.liveUrl;
   if (row.imageId) p.image = { id: row.imageId, url: imageUrl(row.imageId) };
+  if (row.mobileImageId) p.mobileImage = { id: row.mobileImageId, url: imageUrl(row.mobileImageId) };
   return p;
 }
 
@@ -40,7 +41,8 @@ export function toRow(input: ProjectInput): Omit<Prisma.ProjectUncheckedCreateIn
     accent: input.accent,
     featured: Boolean(input.featured),
     published: input.published,
-    imageId: input.image?.id ?? null
+    imageId: input.image?.id ?? null,
+    mobileImageId: input.mobileImage?.id ?? null
   };
 }
 

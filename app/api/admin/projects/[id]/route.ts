@@ -30,9 +30,10 @@ export const PUT = route(async (req: Request, { params }: Ctx) => {
   if (clash && clash.id !== params.id) {
     throw new HttpError(409, `Another project already uses the slug "${result.value.slug}".`);
   }
-  const imageId = result.value.image?.id;
-  if (imageId && !(await db.image.findUnique({ where: { id: imageId }, select: { id: true } }))) {
-    throw new HttpError(400, "That screenshot no longer exists. Upload it again.");
+  for (const imageId of [result.value.image?.id, result.value.mobileImage?.id]) {
+    if (imageId && !(await db.image.findUnique({ where: { id: imageId }, select: { id: true } }))) {
+      throw new HttpError(400, "That screenshot no longer exists. Upload it again.");
+    }
   }
 
   await db.project.update({ where: { id: params.id }, data: toRow(result.value) });
@@ -46,7 +47,9 @@ export const DELETE = route(async (_req: Request, { params }: Ctx) => {
   await requireAdmin();
   const row = await load(params.id);
   await db.project.delete({ where: { id: row.id } });
-  if (row.imageId) await db.image.delete({ where: { id: row.imageId } }).catch(() => {});
+  for (const id of [row.imageId, row.mobileImageId]) {
+    if (id) await db.image.delete({ where: { id } }).catch(() => {});
+  }
   refreshPublicPages();
   return NextResponse.json({ ok: true });
 });

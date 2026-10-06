@@ -23,7 +23,7 @@ export async function deleteOrphanImages() {
   try {
     // Keep fresh uploads: the form may not have been saved yet.
     const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000);
-    await db.image.deleteMany({ where: { project: null, createdAt: { lt: cutoff } } });
+    await db.image.deleteMany({ where: { project: null, mobileProjects: { none: {} }, createdAt: { lt: cutoff } } });
   } catch (err) {
     console.error("Couldn't clean up images", err);
   }

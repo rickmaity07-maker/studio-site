@@ -64,11 +64,13 @@ export function validateProject(
   }
 
   // Only images uploaded through the admin portal can be attached.
-  const image = raw.image as { id?: unknown } | null | undefined;
-  if (image && image.id !== undefined) {
-    if (typeof image.id !== "string" || !ID_RE.test(image.id))
-      return { ok: false, error: "Image must be uploaded through the admin portal." };
-    value.image = { id: image.id, url: imageUrl(image.id) };
+  for (const key of ["image", "mobileImage"] as const) {
+    const image = raw[key] as { id?: unknown } | null | undefined;
+    if (image && image.id !== undefined) {
+      if (typeof image.id !== "string" || !ID_RE.test(image.id))
+        return { ok: false, error: "Image must be uploaded through the admin portal." };
+      value[key] = { id: image.id, url: imageUrl(image.id) };
+    }
   }
 
   if (!value.name) return { ok: false, error: "Name is required." };

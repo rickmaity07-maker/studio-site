@@ -61,7 +61,8 @@ export function AppBanner() {
               <span className="hidden text-muted sm:inline"> Every build and every live demo, on your phone.</span>
             </p>
             <Link
-              href="/app"
+              // Android phones download straight away; everyone else gets the app page.
+              href={state === "android" ? "/download" : "/app"}
               className="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-live px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-ink transition hover:bg-[#6bf0c1]"
             >
               {state === "android" ? "Download" : "See the app"}

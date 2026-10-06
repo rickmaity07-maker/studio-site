@@ -6,7 +6,8 @@ import { useAuth } from "@/components/AuthProvider";
 
 const TABS = [
   { href: "/admin", label: "Inbox" },
-  { href: "/admin/projects", label: "Projects" }
+  { href: "/admin/projects", label: "Projects" },
+  { href: "/admin/app", label: "App" }
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

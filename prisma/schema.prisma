@@ -11,37 +11,41 @@ datasource db {
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  name        String
-  tagline     String
-  category    String
-  year        String
-  stack       String[]
-  description String
-  liveUrl     String?
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  name          String
+  tagline       String
+  category      String
+  year          String
+  stack         String[]
+  description   String
+  liveUrl       String?
   /// False when the live site refuses to be framed (X-Frame-Options / CSP);
   /// the detail page then shows the screenshot and an "open" link instead.
-  embeddable  Boolean  @default(true)
-  accent      String
-  featured    Boolean  @default(false)
-  published   Boolean  @default(false)
-  order       Int      @default(0)
-  imageId     String?  @unique
-  image       Image?   @relation(fields: [imageId], references: [id], onDelete: SetNull)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  embeddable    Boolean  @default(true)
+  accent        String
+  featured      Boolean  @default(false)
+  published     Boolean  @default(false)
+  order         Int      @default(0)
+  imageId       String?  @unique
+  image         Image?   @relation("ProjectImage", fields: [imageId], references: [id], onDelete: SetNull)
+  /// Phone-sized screenshot (390px wide viewport), shown beside the desktop one.
+  mobileImageId String?
+  mobileImage   Image?   @relation("ProjectMobileImage", fields: [mobileImageId], references: [id], onDelete: SetNull)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([order])
 }
 
 /// Project screenshots, stored in Postgres and served from /api/images/:id.
 model Image {
-  id          String   @id @default(cuid())
-  contentType String
-  data        Bytes
-  createdAt   DateTime @default(now())
-  project     Project?
+  id             String    @id @default(cuid())
+  contentType    String
+  data           Bytes
+  createdAt      DateTime  @default(now())
+  project        Project?  @relation("ProjectImage")
+  mobileProjects Project[] @relation("ProjectMobileImage")
 }
 
 model Lead {
@@ -83,4 +87,21 @@ model Admin {
   email        String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
+}
+
+/// Published versions of the Android app. The newest published one is what
+/// /download serves and what installed apps update to (see lib/server/app-releases.ts).
+model AppRelease {
+  id          String   @id @default(cuid())
+  versionCode Int      @unique
+  versionName String
+  /// The signed release APK itself (a few MB; served by /api/app/download/:versionCode).
+  data        Bytes
+  sha256      String
+  sizeBytes   Int
+  notes       String   @default("")
+  /// Installed apps below the newest mandatory version must update before continuing.
+  mandatory   Boolean  @default(false)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
 }

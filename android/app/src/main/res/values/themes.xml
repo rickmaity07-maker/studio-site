@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="ink">#FF0B0D12</color>
 
     <!-- Splash: the mint diamond on ink, then straight into the app. -->
@@ -11,6 +11,9 @@
 
     <style name="Theme.RickBuild" parent="android:Theme.Material.NoActionBar">
         <item name="android:windowBackground">@color/ink</item>
+        <!-- MIUI (Redmi, Xiaomi) and other skins can force-recolour apps in dark
+             mode; the app is designed dark already, so opt out. -->
+        <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>

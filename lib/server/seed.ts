@@ -12,15 +12,8 @@ export async function importStarterProjects(db: PrismaClient) {
   if ((await db.project.count()) > 0) return { imported: 0 };
 
   for (const [order, p] of starterProjects.entries()) {
-    let imageId: string | null = null;
-    if (p.image?.url.startsWith("/screens/")) {
-      const file = path.join(process.cwd(), "public", p.image.url);
-      const data = await readFile(file).catch(() => null);
-      if (data) {
-        const image = await db.image.create({ data: { data: new Uint8Array(data), contentType: "image/jpeg" } });
-        imageId = image.id;
-      }
-    }
+    const imageId = await storeStatic(db, p.image?.url);
+    const mobileImageId = await storeStatic(db, p.mobileImage?.url);
 
     await db.project.create({
       data: {
@@ -37,10 +30,20 @@ export async function importStarterProjects(db: PrismaClient) {
         featured: p.featured ?? false,
         published: true,
         order,
-        imageId
+        imageId,
+        mobileImageId
       }
     });
   }
 
   return { imported: starterProjects.length };
+}
+
+/** Copies a starter screenshot from /public into the Image table. */
+export async function storeStatic(db: PrismaClient, url: string | undefined) {
+  if (!url?.startsWith("/screens")) return null;
+  const data = await readFile(path.join(process.cwd(), "public", url)).catch(() => null);
+  if (!data) return null;
+  const image = await db.image.create({ data: { data: new Uint8Array(data), contentType: "image/jpeg" } });
+  return image.id;
 }

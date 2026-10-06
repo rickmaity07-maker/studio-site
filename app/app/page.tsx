@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { AndroidLogo, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
 import { androidApp } from "@/data/app";
-import { getApkInfo } from "@/lib/server/app-file";
+import { latestRelease } from "@/lib/server/app-releases";
 import { Reveal } from "@/components/motion/Reveal";
 import { SplitHeading } from "@/components/motion/SplitHeading";
 
@@ -25,8 +25,12 @@ const FEATURES = [
   { title: "No account, no tracking", body: "Nothing to sign up for, no analytics, no ads. It only talks to this website." }
 ];
 
+// Always reflects the newest published release.
+export const dynamic = "force-dynamic";
+
 export default async function AppPage() {
-  const apk = await getApkInfo();
+  const release = await latestRelease();
+  const apk = release && { sizeMb: (release.sizeBytes / 1048576).toFixed(1), sha256: release.sha256 };
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-28 pt-16 sm:px-6 lg:pt-24">
@@ -49,17 +53,17 @@ export default async function AppPage() {
           </Reveal>
           <Reveal delay={0.3} className="mt-9 flex flex-wrap items-center gap-4">
             <a
-              href={androidApp.path}
-              download
+              href={androidApp.downloadPath}
               className="group inline-flex items-center gap-3 rounded-full bg-live px-7 py-4 font-mono text-[13px] uppercase tracking-[0.1em] text-ink shadow-[0_10px_40px_-12px_rgba(76,232,176,0.6)] transition hover:bg-[#6bf0c1] active:scale-[0.98]"
             >
               <DownloadSimple weight="bold" className="h-5 w-5 transition group-hover:translate-y-0.5" aria-hidden />
               Download the app
             </a>
-            <span className="font-mono text-[12px] text-muted">
-              Version {androidApp.version}
-              {apk && <>, {apk.sizeMb} MB</>}
-            </span>
+            {release && (
+              <span className="font-mono text-[12px] text-muted">
+                Version {release.versionName}, {apk!.sizeMb} MB
+              </span>
+            )}
           </Reveal>
         </div>
 
@@ -102,7 +106,7 @@ export default async function AppPage() {
           </p>
           <ol className="mt-8 grid gap-5">
             {[
-              "Tap Download the app above. Your browser saves rick-build.apk.",
+              "Tap Download the app above. Your browser saves the app file (rick-build-…apk).",
               "Open the download. If Android asks, allow your browser to install apps.",
               "Tap Install, then Open. That's it."
             ].map((step, i) => (
@@ -112,6 +116,12 @@ export default async function AppPage() {
               </li>
             ))}
           </ol>
+          {release?.notes && (
+            <div className="mt-8 rounded-xl border border-line bg-surface p-5">
+              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted">What&apos;s new in {release.versionName}</p>
+              <p className="mt-2 whitespace-pre-line text-text/85">{release.notes}</p>
+            </div>
+          )}
           <p className="mt-8 text-sm text-muted">
             On an iPhone? There&apos;s no iOS app yet, but this website works the same in Safari.
           </p>
@@ -120,7 +130,7 @@ export default async function AppPage() {
         <Reveal delay={0.1}>
           <div className="grid gap-4 rounded-2xl border border-line bg-surface p-6 sm:p-8">
             <Detail label="App">{androidApp.name}</Detail>
-            <Detail label="Version">{androidApp.version}</Detail>
+            {release && <Detail label="Version">{release.versionName}</Detail>}
             <Detail label="Requires">Android {androidApp.minAndroid} or newer</Detail>
             {apk && <Detail label="Size">{apk.sizeMb} MB</Detail>}
             <Detail label="Permissions">Internet only</Detail>

@@ -39,6 +39,8 @@ export type Project = {
    * served from /api/images/:id; starter screenshots are static files.
    */
   image?: { url: string; id?: string };
+  /** Phone-sized screenshot (390px viewport), shown beside the desktop one. */
+  mobileImage?: { url: string; id?: string };
 };
 
 /**
@@ -66,7 +68,8 @@ export const projects: Project[] = [
     embeddable: false,
     accent: "#C4253C",
     featured: true,
-    image: { url: "/screens/paulaner-route-66.jpg" }
+    image: { url: "/screens/paulaner-route-66.jpg" },
+    mobileImage: { url: "/screens-mobile/paulaner-route-66.jpg" }
   },
   {
     slug: "bar-05",
@@ -81,7 +84,8 @@ export const projects: Project[] = [
     embeddable: false,
     accent: "#FF6B35",
     featured: true,
-    image: { url: "/screens/bar-05.jpg" }
+    image: { url: "/screens/bar-05.jpg" },
+    mobileImage: { url: "/screens-mobile/bar-05.jpg" }
   },
   {
     slug: "rebo-salon",
@@ -96,7 +100,8 @@ export const projects: Project[] = [
     embeddable: false,
     accent: "#E0B12E",
     featured: true,
-    image: { url: "/screens/rebo-salon.jpg" }
+    image: { url: "/screens/rebo-salon.jpg" },
+    mobileImage: { url: "/screens-mobile/rebo-salon.jpg" }
   },
   {
     slug: "karmel",
@@ -111,7 +116,8 @@ export const projects: Project[] = [
     embeddable: false,
     accent: "#F5A524",
     featured: true,
-    image: { url: "/screens/karmel.jpg" }
+    image: { url: "/screens/karmel.jpg" },
+    mobileImage: { url: "/screens-mobile/karmel.jpg" }
   },
   {
     slug: "atlantic-lounge",
@@ -126,7 +132,8 @@ export const projects: Project[] = [
     embeddable: false,
     accent: "#D4AF37",
     featured: true,
-    image: { url: "/screens/atlantic-lounge.jpg" }
+    image: { url: "/screens/atlantic-lounge.jpg" },
+    mobileImage: { url: "/screens-mobile/atlantic-lounge.jpg" }
   },
   {
     slug: "al-madina",
@@ -140,7 +147,8 @@ export const projects: Project[] = [
     liveUrl: "https://al-madina-delta.vercel.app",
     embeddable: false,
     accent: "#A12E3D",
-    image: { url: "/screens/al-madina.jpg" }
+    image: { url: "/screens/al-madina.jpg" },
+    mobileImage: { url: "/screens-mobile/al-madina.jpg" }
   },
   {
     slug: "mainbar",
@@ -154,7 +162,8 @@ export const projects: Project[] = [
     liveUrl: "https://mainbar-website.vercel.app",
     embeddable: true,
     accent: "#B9A6C9",
-    image: { url: "/screens/mainbar.jpg" }
+    image: { url: "/screens/mainbar.jpg" },
+    mobileImage: { url: "/screens-mobile/mainbar.jpg" }
   },
   {
     slug: "dhurdur",
@@ -168,7 +177,8 @@ export const projects: Project[] = [
     liveUrl: "https://avdar-orpin.vercel.app",
     embeddable: false,
     accent: "#C9A45C",
-    image: { url: "/screens/dhurdur.jpg" }
+    image: { url: "/screens/dhurdur.jpg" },
+    mobileImage: { url: "/screens-mobile/dhurdur.jpg" }
   },
   {
     slug: "hungry-chicken",
@@ -182,7 +192,8 @@ export const projects: Project[] = [
     liveUrl: "https://hungry-chiken.vercel.app",
     embeddable: true,
     accent: "#D9482B",
-    image: { url: "/screens/hungry-chicken.jpg" }
+    image: { url: "/screens/hungry-chicken.jpg" },
+    mobileImage: { url: "/screens-mobile/hungry-chicken.jpg" }
   },
   {
     slug: "lijo-papad",
@@ -196,7 +207,8 @@ export const projects: Project[] = [
     liveUrl: "https://lijopapad.vercel.app",
     embeddable: true,
     accent: "#C6742E",
-    image: { url: "/screens/lijo-papad.jpg" }
+    image: { url: "/screens/lijo-papad.jpg" },
+    mobileImage: { url: "/screens-mobile/lijo-papad.jpg" }
   },
   {
     slug: "tajmahal",
@@ -210,7 +222,8 @@ export const projects: Project[] = [
     liveUrl: "https://taj-mahal-schweinfurt.vercel.app",
     embeddable: true,
     accent: "#9C3D3D",
-    image: { url: "/screens/tajmahal.jpg" }
+    image: { url: "/screens/tajmahal.jpg" },
+    mobileImage: { url: "/screens-mobile/tajmahal.jpg" }
   },
   {
     slug: "aura-nail-studio",
@@ -224,7 +237,8 @@ export const projects: Project[] = [
     liveUrl: "https://nail-salon-liard.vercel.app",
     embeddable: true,
     accent: "#D6A84F",
-    image: { url: "/screens/aura-nail-studio.jpg" }
+    image: { url: "/screens/aura-nail-studio.jpg" },
+    mobileImage: { url: "/screens-mobile/aura-nail-studio.jpg" }
   },
   {
     slug: "vespre",
