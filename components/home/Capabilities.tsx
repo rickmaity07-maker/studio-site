@@ -47,7 +47,7 @@ export function Capabilities({ projects }: { projects: Project[] }) {
         <Reveal className="lg:col-span-2" delay={0.08}>
           <Spotlight className="flex h-full flex-col justify-between p-7 sm:p-8">
             <div className="relative z-10">
-              <h3 className="font-display text-2xl font-medium">German and English, built in</h3>
+              <h3 className="font-display text-2xl font-medium">Your language and English, built in</h3>
               <p className="mt-2 text-muted">The language switches instantly, without a reload. Try it.</p>
             </div>
             <div className="relative z-10 mt-8">

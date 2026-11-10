@@ -1,70 +1,120 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "motion/react";
+import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { AuthStatus } from "./AuthStatus";
 
+const LINKS = [
+  { href: "/work", label: "Work" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/#process", label: "Process" },
+  { href: "/request", label: "Start a project" }
+];
+const EASE = [0.32, 0.72, 0, 1] as const;
+
+/** Burger that morphs to an X; the menu is a full-screen glass overlay. */
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const reduce = useReducedMotion();
 
+  useEffect(() => setMounted(true), []);
   // Close after navigating.
   useEffect(() => setOpen(false), [pathname]);
+  // Escape closes; the page behind doesn't scroll while it's open.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.documentElement.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <div className="sm:hidden">
-      <button
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        aria-controls="mobile-menu"
-        aria-label={open ? "Close menu" : "Open menu"}
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-text"
-      >
-        <span className="relative block h-3 w-4">
-          <span
-            className={
-              "absolute left-0 h-px w-4 bg-current transition " +
-              (open ? "top-1.5 rotate-45" : "top-0")
-            }
-          />
-          <span
-            className={
-              "absolute left-0 top-1.5 h-px w-4 bg-current transition " +
-              (open ? "opacity-0" : "")
-            }
-          />
-          <span
-            className={
-              "absolute left-0 h-px w-4 bg-current transition " +
-              (open ? "top-1.5 -rotate-45" : "top-3")
-            }
-          />
-        </span>
-      </button>
+      <Burger open={open} onClick={() => setOpen((o) => !o)} />
 
-      {open && (
-        <nav
-          id="mobile-menu"
-          className="absolute inset-x-0 top-full border-b border-line/80 bg-ink shadow-card"
-        >
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6 font-mono text-[13px] uppercase tracking-[0.1em] text-muted">
-            <Link href="/work" className="transition hover:text-text">
-              Work
-            </Link>
-            <Link href="/#process" onClick={() => setOpen(false)} className="transition hover:text-text">
-              Process
-            </Link>
-            <AuthStatus />
-            <Link
-              href="/request"
-              className="self-start rounded-full border border-live/40 bg-live/10 px-4 py-1.5 text-live"
-            >
-              Start a project
-            </Link>
-          </div>
-        </nav>
-      )}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {open && (
+              <motion.nav
+                id="mobile-menu"
+                aria-label="Menu"
+                className="fixed inset-0 z-[70] flex flex-col bg-[#07080b]/85 px-6 pb-10 pt-6 backdrop-blur-2xl"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={instant(reduce, { duration: 0.4, ease: EASE })}
+              >
+                <div className="flex justify-end">
+                  <Burger open onClick={() => setOpen(false)} />
+                </div>
+                <ul className="mt-10 grid gap-2">
+                  {LINKS.map((l, i) => (
+                    <li key={l.href} className="overflow-hidden">
+                      <motion.div
+                        initial={{ y: "100%", opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={instant(reduce, { duration: 0.7, delay: 0.08 + i * 0.06, ease: EASE })}
+                      >
+                        <Link
+                          href={l.href}
+                          onClick={() => setOpen(false)}
+                          className={
+                            "block py-2 font-display text-5xl font-medium tracking-[-0.03em] transition-colors " +
+                            (l.href === "/request" ? "text-live" : "text-text hover:text-live")
+                          }
+                        >
+                          {l.label}
+                        </Link>
+                      </motion.div>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto font-mono text-[12px] uppercase tracking-[0.1em] text-muted">
+                  <AuthStatus />
+                </div>
+              </motion.nav>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
     </div>
+  );
+}
+
+function Burger({ open, onClick }: { open: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-expanded={open}
+      aria-controls="mobile-menu"
+      aria-label={open ? "Close menu" : "Open menu"}
+      className="flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.06] text-text ring-1 ring-white/10 transition active:scale-95"
+    >
+      <span className="relative block h-3 w-4">
+        <span
+          className={
+            "absolute left-0 h-px w-4 bg-current transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] " +
+            (open ? "top-1.5 rotate-45" : "top-0.5")
+          }
+        />
+        <span
+          className={
+            "absolute left-0 h-px w-4 bg-current transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] " +
+            (open ? "top-1.5 -rotate-45" : "top-2.5")
+          }
+        />
+      </span>
+    </button>
   );
 }

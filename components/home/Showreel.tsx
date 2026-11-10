@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
 import { useReducedMotion } from "@/components/motion/useReducedMotion";
 import { SplitHeading } from "@/components/motion/SplitHeading";
 import { ArrowUpRight } from "@phosphor-icons/react";
@@ -111,7 +111,7 @@ function ReelCard({ project, drift }: { project: Project; drift?: MotionValue<st
     >
       <div
         className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-line"
-        style={{ background: `linear-gradient(155deg, ${project.accent}40 0%, #0B0D12 72%)` }}
+        style={{ background: `linear-gradient(155deg, ${project.accent}40 0%, #07080B 72%)` }}
       >
         {project.image && (
           <motion.div className="absolute inset-y-0 -left-[5%] -right-[5%]" style={{ x: drift }}>

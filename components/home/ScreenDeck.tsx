@@ -3,11 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import type { Project } from "@/data/projects";
 import { EASE } from "@/components/motion/Reveal";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 const INTERVAL = 4200;
 // Front, middle, back: each card steps up and to the right, smaller and dimmer.
@@ -157,7 +158,7 @@ function DeckCard({ project, front }: { project: Project; front: boolean }) {
       </div>
       <div
         className="relative flex-1"
-        style={{ background: `linear-gradient(155deg, ${project.accent}33 0%, #0B0D12 72%)` }}
+        style={{ background: `linear-gradient(155deg, ${project.accent}33 0%, #07080B 72%)` }}
       >
         {project.image && (
           <Image
@@ -180,6 +181,13 @@ function DeckCard({ project, front }: { project: Project; front: boolean }) {
           </span>
         </div>
       </div>
+      {/* Two beams chasing each other round the front card (Magic UI). */}
+      {front && (
+        <>
+          <BorderBeam size={140} duration={9} />
+          <BorderBeam size={140} duration={9} delay={4.5} colorFrom="#A9F5D9" colorTo="#4CE8B0" />
+        </>
+      )}
     </Link>
   );
 }

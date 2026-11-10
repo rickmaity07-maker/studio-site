@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 const config: Config = {
   content: [
@@ -9,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#0B0D12",
+        ink: "#07080B",
         surface: "#141821",
         surface2: "#1B202B",
         line: "#262B38",
@@ -21,7 +22,8 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)"],
         body: ["var(--font-body)"],
-        mono: ["var(--font-mono)"]
+        mono: ["var(--font-mono)"],
+        serif: ["var(--font-serif)"]
       },
       backgroundImage: {
         grain: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0)"
@@ -37,15 +39,22 @@ const config: Config = {
         marquee: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" }
+        },
+        // Magic UI animated-shiny-text: the highlight sweeps across, then rests.
+        "shiny-text": {
+          "0%, 90%, 100%": { backgroundPosition: "calc(-100% - var(--shiny-width)) 0" },
+          "30%, 60%": { backgroundPosition: "calc(100% + var(--shiny-width)) 0" }
         }
       },
       animation: {
         blink: "blink 1.6s ease-in-out infinite",
-        marquee: "marquee 28s linear infinite"
+        marquee: "marquee 28s linear infinite",
+        "shiny-text": "shiny-text 8s infinite"
       }
     }
   },
-  plugins: []
+  // animate-in / fade-in classes used by shadcn-style components.
+  plugins: [animate]
 };
 
 export default config;

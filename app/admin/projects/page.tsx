@@ -124,7 +124,7 @@ export default function ProjectsAdminPage() {
 
               <div
                 className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border border-line"
-                style={{ background: `linear-gradient(155deg, ${p.accent}55 0%, #0B0D12 80%)` }}
+                style={{ background: `linear-gradient(155deg, ${p.accent}55 0%, #07080B 80%)` }}
               >
                 {p.image && (
                   <Image src={p.image.url} alt="" fill sizes="80px" className="object-cover object-top" />

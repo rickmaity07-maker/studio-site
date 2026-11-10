@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import type { Project, ProjectCategory } from "@/data/projects";
 import { ProjectCard } from "./ProjectCard";

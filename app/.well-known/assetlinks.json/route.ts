@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 /*
-  Android App Links: tells Android that the Rick.build app may open this
+  Android App Links: tells Android that the rira.build app may open this
   site's project links. The fingerprint is the app's release signing
   certificate (~/.android-rick-build/release.jks), which is public by design;
   only an app signed with that key can claim the links.

@@ -52,7 +52,7 @@ test.describe("app banner", () => {
 test.describe("/app page and downloads", () => {
   test("shows the newest release: version, size, notes, requirements, install steps", async ({ page }) => {
     await page.goto("/app");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Rick.build, on your phone.");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("rira.build, on your phone.");
     await expect(page.getByRole("link", { name: "Download the app" })).toHaveAttribute("href", "/download");
     await expect(page.getByText("Version 1.0.0", { exact: false }).first()).toBeVisible();
     await expect(page.getByText("First release for the test run.")).toBeVisible();

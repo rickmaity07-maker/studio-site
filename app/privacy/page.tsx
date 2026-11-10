@@ -78,7 +78,7 @@ export default function PrivacyPage() {
 
         <Block title="The Android app">
           <p>
-            The Rick.build Android app shows the same projects as this site.
+            The rira.build Android app shows the same projects as this site.
             It has no accounts, no analytics and no advertising IDs. A project
             request sent from the app is handled exactly like one from the
             form above, and live demos opened in the app load straight from

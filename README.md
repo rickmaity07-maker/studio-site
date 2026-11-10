@@ -1,10 +1,10 @@
-# Rick.build — showcase site + Android app
+# rira.build — showcase site + Android app
 
 A portfolio/agency site that showcases real client builds as **live, clickable
 demos** and collects project requests, plus a native Android app (`android/`)
 that shows the same projects and sends requests to the same backend.
 
-Stack: Next.js 14 · Neon Postgres (Frankfurt) · Prisma 6 · Vercel · Gmail (nodemailer).
+Stack: Next.js 15 (React 19) · Neon Postgres (Frankfurt) · Prisma 6 · Vercel · Gmail (nodemailer).
 
 ## Run it locally
 
@@ -25,6 +25,7 @@ request form need the database.
 |---|---|
 | `npm run db:push` | Creates/updates the tables from `prisma/schema.prisma` |
 | `npm run db:seed` | Copies `data/projects.ts` (with the screenshots in `public/screens/`) into an empty database |
+| `npm run db:add-starters` | Adds projects from `data/projects.ts` whose slug isn't in the database yet; never changes existing ones |
 | `npm run admin:create -- you@example.com` | Creates an admin (or resets their password) and prints a generated password |
 | `npm run db:studio` | Browse the data in Prisma Studio |
 
@@ -80,6 +81,22 @@ See `.env.local.example`. On Vercel: `DATABASE_URL` and
 **https://rickbuild.vercel.app** — the team URL
 (`studio-site-…-projects.vercel.app`) sits behind Vercel's login, so share the
 alias, and keep `NEXT_PUBLIC_SITE_URL` and the app's `siteUrl` pointing at it.
+
+## Pricing (`/pricing`)
+
+Local prices for 115 countries, from the approved client price guide in
+`docs/pricing-source/` (`client_pricing.html`, research in `price_comparison.md`).
+The numbers live in `data/pricing.json`; the logic (formatting, which country
+to show first, the comparison chart) is in `lib/pricing.ts`.
+
+- First country shown: `?country=de`, then the visitor's country (Vercel geo
+  header), then their browser language, then Germany. A `#ke` link wins on load,
+  and choosing a country writes `#code` so the link can be shared.
+- "Request a free mock-up" opens `/request?mockup=<code>`, so the request
+  says which country's prices the visitor saw.
+- To change prices: edit `PRICES` in `docs/pricing-source/pricing.py`, rebuild the
+  guide, then copy its `DATA` object into `data/pricing.json`. Quotes are valid
+  until the date in `VALID_UNTIL` (`lib/pricing.ts`).
 
 ## Android app (`android/`)
 

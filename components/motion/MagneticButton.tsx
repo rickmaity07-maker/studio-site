@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { useReducedMotion } from "@/components/motion/useReducedMotion";
 import { ArrowRight } from "@phosphor-icons/react";
 
@@ -55,8 +55,8 @@ export function MagneticButton({
   const primary = variant === "primary";
   const look = primary
     ? "bg-live text-ink shadow-[0_10px_40px_-12px_rgba(76,232,176,0.6)] hover:shadow-[0_14px_50px_-10px_rgba(76,232,176,0.75)]"
-    : "border border-line text-text hover:border-live hover:text-ink";
-  const pad = size === "lg" ? "px-8 py-4 text-[14px]" : "px-6 py-3 text-[13px]";
+    : "bg-white/[0.03] text-text ring-1 ring-white/10 hover:text-ink";
+  const pad = size === "lg" ? "py-2 pl-7 pr-2 text-[16px]" : "py-1.5 pl-6 pr-1.5 text-[15px]";
 
   return (
     <MotionLink
@@ -66,7 +66,7 @@ export function MagneticButton({
       onPointerEnter={onEnter}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      className={`group relative isolate inline-flex items-center gap-3 overflow-hidden whitespace-nowrap rounded-full font-mono uppercase tracking-[0.1em] transition-[color,border-color,box-shadow] duration-300 active:scale-[0.98] ${look} ${pad} ${className}`}
+      className={`group relative isolate inline-flex items-center gap-3 overflow-hidden whitespace-nowrap rounded-full font-medium tracking-[-0.01em] transition-[color,border-color,box-shadow] duration-300 active:scale-[0.98] ${look} ${pad} ${className}`}
     >
       {primary ? (
         // Sheen: a soft band of light that crosses the button on hover.
@@ -82,11 +82,17 @@ export function MagneticButton({
         />
       )}
       {children}
-      <ArrowRight
-        weight="bold"
-        className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+      {/* The arrow sits in its own island and leans forward on hover. */}
+      <span
         aria-hidden
-      />
+        className={
+          "flex items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:scale-105 " +
+          (size === "lg" ? "h-10 w-10 " : "h-9 w-9 ") +
+          (primary ? "bg-ink/10" : "bg-white/[0.07] group-hover:bg-ink/10")
+        }
+      >
+        <ArrowRight weight="bold" className="h-4 w-4" />
+      </span>
     </MotionLink>
   );
 }

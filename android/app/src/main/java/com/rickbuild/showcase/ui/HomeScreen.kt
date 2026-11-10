@@ -287,7 +287,7 @@ private fun Footer(vm: AppViewModel) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("◆", color = Palette.Live)
             Spacer(Modifier.width(8.dp))
-            Text("Rick.build", style = MaterialTheme.typography.titleMedium)
+            Text("rira.build", style = MaterialTheme.typography.titleMedium)
         }
         Spacer(Modifier.height(14.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(18.dp)) {

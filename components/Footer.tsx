@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { FooterWordmark } from "./FooterWordmark";
+import { BrandMark } from "./brand/BrandMark";
 
 const COLUMNS = [
   {
     title: "Studio",
     links: [
       { href: "/work", label: "Work" },
+      { href: "/pricing", label: "Pricing" },
       { href: "/#process", label: "Process" },
       { href: "/request", label: "Start a project" },
       { href: "/app", label: "Android app" }
@@ -26,15 +28,12 @@ export function Footer() {
     <footer className="border-t border-line/80">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <Link href="/" className="inline-flex items-center gap-2 font-display text-2xl font-medium">
-            <span className="text-live">◆</span>
-            <span>
-              Rick<span className="text-muted">.build</span>
-            </span>
+          <Link href="/" className="group inline-flex" aria-label="rira.build home">
+            <BrandMark size="lg" />
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
-            Websites built to be clicked through, not just looked at. Based in
-            Schweinfurt, working with clients everywhere.
+            Websites built to be clicked through, not just looked at. Made in
+            Germany for businesses in every country.
           </p>
           <Link
             href="/request"
@@ -65,7 +64,7 @@ export function Footer() {
 
       <div className="border-t border-line/60">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-5 font-mono text-[11px] text-muted/70 sm:px-6">
-          <span>© {new Date().getFullYear()} Rick.build</span>
+          <span>© {new Date().getFullYear()} rira.build</span>
           <span>Built with Next.js, shipped on Vercel.</span>
         </div>
       </div>

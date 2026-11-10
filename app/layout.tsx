@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import "@fontsource/space-grotesk/500.css";
-import "@fontsource/space-grotesk/700.css";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource/geist-sans/400.css";
+import "@fontsource/geist-sans/500.css";
+import "@fontsource/geist-sans/600.css";
+import "@fontsource/geist-mono/400.css";
+import "@fontsource/geist-mono/500.css";
+import "@fontsource/instrument-serif/400-italic.css";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { AppBanner } from "@/components/AppBanner";
@@ -14,18 +14,19 @@ import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { IntroProvider } from "@/components/motion/Intro";
 import { IntroCurtain, introScript } from "@/components/motion/intro-shared";
 import { site } from "@/data/site";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Rick.build | Websites you can actually click through",
-    template: "%s | Rick.build"
+    default: "rira.build | Websites you can actually click through",
+    template: "%s | rira.build"
   },
   description: site.description,
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: "Rick.build | Websites you can actually click through",
+    title: "rira.build | Websites you can actually click through",
     description: site.description
   }
 };
@@ -42,6 +43,9 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-screen flex-col">
         <IntroCurtain />
+        {/* Film grain over everything: fixed, so it never repaints on scroll. */}
+        <div aria-hidden className="grain" />
+        <ScrollProgress />
         <AuthProvider>
           <SmoothScroll />
           <IntroProvider>

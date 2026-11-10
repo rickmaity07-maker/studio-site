@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import type { Project } from "@/data/projects";
 import { MagneticButton } from "@/components/motion/MagneticButton";
@@ -9,6 +9,8 @@ import { EASE } from "@/components/motion/Reveal";
 import { SplitHeading } from "@/components/motion/SplitHeading";
 import { useIntroDone } from "@/components/motion/Intro";
 import { ScreenDeck } from "./ScreenDeck";
+import { HeroBackdrop } from "./HeroBackdrop";
+import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 
 export function Hero({ projects }: { projects: Project[] }) {
   const reduce = useReducedMotion();
@@ -27,22 +29,18 @@ export function Hero({ projects }: { projects: Project[] }) {
   }
 
   return (
-    <section ref={section} onPointerMove={onMove} className="hero-light relative overflow-hidden">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-40 top-10 h-[640px] w-[640px] rounded-full opacity-[0.13] blur-[120px]"
-        style={{ background: "radial-gradient(circle, #4CE8B0 0%, transparent 70%)" }}
-      />
+    <section ref={section} onPointerMove={onMove} className="hero-light relative isolate -mt-[4.5rem] overflow-hidden pt-[4.5rem]">
+      <HeroBackdrop />
 
       <div className="relative mx-auto grid min-h-[calc(100dvh-4.5rem)] max-w-7xl items-center gap-14 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_1.12fr] lg:gap-10 lg:py-20">
         <div>
           <motion.p
-            className="eyebrow"
+            className="eyebrow inline-flex items-center gap-2 rounded-full bg-white/[0.04] px-3 py-1.5 ring-1 ring-white/10 backdrop-blur-sm"
             initial={{ opacity: 0, y: 10 }}
             animate={go ? { opacity: 1, y: 0 } : undefined}
             transition={instant(reduce, { duration: 0.8, ease: EASE })}
           >
-            Web studio in Schweinfurt
+            <AnimatedShinyText>Web studio · clients in every country</AnimatedShinyText>
           </motion.p>
 
           <SplitHeading
@@ -51,7 +49,7 @@ export function Hero({ projects }: { projects: Project[] }) {
             delay={0.08}
             accent="click"
             lines={["Websites you can", "actually click through."]}
-            className="mt-5 font-display text-[2.6rem] font-medium leading-[1.04] tracking-[-0.03em] sm:text-6xl lg:text-[4.1rem]"
+            className="mt-5 font-display text-[2.8rem] font-medium leading-[0.98] tracking-[-0.045em] sm:text-7xl lg:text-[5.2rem]"
           />
 
           <motion.p

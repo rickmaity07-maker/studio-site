@@ -23,7 +23,7 @@ export function ProjectCard({
       <Link href={`/work/${project.slug}`} className="group relative z-10 flex h-full flex-col">
         <div
           className={"relative overflow-hidden " + (wide ? "aspect-[4/3] lg:aspect-auto lg:min-h-[300px] lg:flex-1" : "aspect-[4/3]")}
-          style={{ background: `linear-gradient(155deg, ${project.accent}30 0%, #0B0D12 72%)` }}
+          style={{ background: `linear-gradient(155deg, ${project.accent}30 0%, #07080B 72%)` }}
         >
           {project.image ? (
             <Image

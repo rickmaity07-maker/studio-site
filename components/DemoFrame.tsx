@@ -30,7 +30,7 @@ export function DemoFrame({ project }: { project: Project }) {
         <div
           className="relative flex h-[420px] flex-col items-center justify-center gap-3 px-6 text-center"
           style={{
-            background: `linear-gradient(160deg, ${project.accent}20 0%, #0B0D12 75%)`
+            background: `linear-gradient(160deg, ${project.accent}20 0%, #07080B 75%)`
           }}
         >
           {project.image && (
@@ -161,7 +161,7 @@ function ScreenshotDemo({ project, liveUrl }: { project: Project; liveUrl: strin
       ) : (
         <div
           className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]"
-          style={{ background: `linear-gradient(160deg, ${project.accent}20 0%, #0B0D12 75%)` }}
+          style={{ background: `linear-gradient(160deg, ${project.accent}20 0%, #07080B 75%)` }}
         >
           {project.image && (
             <Image

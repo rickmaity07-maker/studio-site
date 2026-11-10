@@ -4,7 +4,8 @@ import { HttpError, route } from "@/lib/server/http";
 export const dynamic = "force-dynamic";
 
 /** Serves a stored screenshot. Images never change once uploaded, so they cache forever. */
-export const GET = route(async (_req: Request, { params }: { params: { id: string } }) => {
+export const GET = route(async (_req: Request, ctx: { params: Promise<{ id: string }> }) => {
+  const params = await ctx.params;
   const image = await db.image.findUnique({ where: { id: params.id } });
   if (!image) throw new HttpError(404, "Image not found.");
   return new Response(image.data, {

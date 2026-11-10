@@ -7,7 +7,8 @@ export const dynamic = "force-dynamic";
  * Serves one published APK. A given version never changes, so it caches
  * forever; /download always points at the newest one.
  */
-export const GET = route(async (_req: Request, { params }: { params: { versionCode: string } }) => {
+export const GET = route(async (_req: Request, ctx: { params: Promise<{ versionCode: string }> }) => {
+  const params = await ctx.params;
   const versionCode = Number(params.versionCode);
   if (!Number.isInteger(versionCode) || versionCode < 1) throw new HttpError(404, "No such version.");
   const release = await db.appRelease.findUnique({ where: { versionCode } });

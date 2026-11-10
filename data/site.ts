@@ -11,7 +11,7 @@
  * ─────────────────────────────────────────────────────────────
  */
 export const site = {
-  name: "Rick.build",
+  name: "rira.build",
   /** Production URL, no trailing slash. Used for sitemap + social cards. */
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://rickbuild.vercel.app",
   description:

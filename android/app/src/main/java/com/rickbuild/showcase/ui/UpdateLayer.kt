@@ -80,7 +80,7 @@ fun UpdateLayer(modifier: Modifier = Modifier) {
         is UpdateState.NeedsPermission -> UpdateCard(
             modifier,
             "Allow updates",
-            "To install its own updates, Rick.build needs \"Install unknown apps\". On Redmi and Xiaomi phones the switch is called \"Allow from this source\".",
+            "To install its own updates, rira.build needs \"Install unknown apps\". On Redmi and Xiaomi phones the switch is called \"Allow from this source\".",
         ) {
             GhostButton("Later") { updater.dismiss() }
             PrimaryButton("Allow") { context.startActivity(updater.permissionIntent()) }

@@ -21,9 +21,12 @@ export function ClosingCta() {
             Tell me what it needs to do. You get a working demo before anything goes live.
           </p>
         </Reveal>
-        <Reveal delay={0.2} className="mt-10 flex justify-center">
+        <Reveal delay={0.2} className="mt-10 flex flex-wrap justify-center gap-4">
           <MagneticButton href="/request" size="lg">
             Start a project
+          </MagneticButton>
+          <MagneticButton href="/pricing" size="lg" variant="ghost">
+            See prices
           </MagneticButton>
         </Reveal>
       </div>

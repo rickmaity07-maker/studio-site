@@ -8,7 +8,7 @@ import { SplitHeading } from "@/components/motion/SplitHeading";
 
 export const metadata: Metadata = {
   title: "Android app",
-  description: "Every Rick.build project on your phone: live demos full screen, and a project request in a minute."
+  description: "Every rira.build project on your phone: live demos full screen, and a project request in a minute."
 };
 
 const SCREENS = [
@@ -43,7 +43,7 @@ export default async function AppPage() {
           <SplitHeading
             as="h1"
             immediate
-            lines={["Rick.build,", "on your phone."]}
+            lines={["rira.build,", "on your phone."]}
             className="mt-5 font-display text-5xl font-medium leading-[1.04] tracking-[-0.03em] sm:text-7xl"
           />
           <Reveal delay={0.2}>
