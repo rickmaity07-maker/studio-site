@@ -17,6 +17,8 @@ import {
 import { getProjects } from "@/lib/server/projects";
 import { DecodeText } from "@/components/science/DecodeText";
 import { pickCountry } from "@/lib/pricing";
+import { FAQ as ALL_FAQ } from "@/data/faq";
+import { List, Section } from "@/components/PageSection";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -82,15 +84,8 @@ const NEED = [
   "For shops: product list, prices and how you want to be paid"
 ];
 
-const FAQ = [
-  { q: "I already have Instagram. Why do I need a website?", a: "Google shows websites first when people search for places to eat. A site gives them your menu, hours and location in one tap, works for people without Instagram, and sends them to your Instagram too." },
-  { q: "Can I change the menu and prices myself?", a: "Yes. Every site comes with an admin panel. You log in on your phone or laptop and edit text, prices and photos. No coding." },
-  { q: "Do I have to pay every month?", a: "No. The website is a one-off price. Care plans are optional, for people who want hosting, backups and changes handled for them." },
-  { q: "Who owns the website?", a: "You do. The domain is registered in your name, and after the final payment you get all logins and files." },
-  { q: "What if I don't like the design?", a: "The first mock-up is free and comes with no obligation. During the build you get two rounds of changes, and you see every version on a preview link." },
-  { q: "Can the site take orders or bookings?", a: "Yes. It can link to your existing booking and delivery services, or include an online shop with payments." },
-  { q: "Can the site be in more than one language?", a: "Yes. Sites can switch between languages, for example English and your local language." }
-];
+// Shared with /faq (data/faq.ts).
+const FAQ = ALL_FAQ.filter((f) => f.pricing);
 
 export default async function PricingPage(props: { searchParams: Promise<{ country?: string | string[] }> }) {
   const searchParams = await props.searchParams;
@@ -342,63 +337,5 @@ export default async function PricingPage(props: { searchParams: Promise<{ count
         </div>
       </section>
     </CountryProvider>
-  );
-}
-
-function Section({
-  id,
-  eyebrow,
-  title,
-  intro,
-  wide,
-  children
-}: {
-  id?: string;
-  eyebrow: string;
-  title: string[];
-  intro?: string;
-  /** Content spans the full width under the heading instead of sitting beside it. */
-  wide?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <section id={id} className="scroll-mt-20 border-t border-line/70">
-      <div
-        className={
-          "mx-auto grid max-w-7xl gap-12 px-4 py-24 sm:px-6 lg:py-32 " +
-          (wide ? "" : "lg:grid-cols-[0.8fr_1.2fr] lg:gap-20")
-        }
-      >
-        <div className={wide ? "max-w-2xl" : "lg:sticky lg:top-28 lg:self-start"}>
-          <p className="eyebrow">
-            <DecodeText text={eyebrow} />
-          </p>
-          <SplitHeading
-            lines={title}
-            className="mt-4 font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl"
-          />
-          {intro && <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">{intro}</p>}
-        </div>
-        <Reveal delay={0.08}>{children}</Reveal>
-      </div>
-    </section>
-  );
-}
-
-function List({ title, items, mark, columns }: { title?: string; items: string[]; mark: string; columns?: boolean }) {
-  return (
-    <div>
-      {title && <h3 className="font-display text-xl font-medium">{title}</h3>}
-      <ul className={"grid gap-3 " + (title ? "mt-5 " : "") + (columns ? "sm:grid-cols-2 sm:gap-x-10" : "")}>
-        {items.map((it) => (
-          <li key={it} className="grid grid-cols-[1rem_1fr] gap-2 leading-relaxed text-text/85">
-            <span aria-hidden className={mark}>
-              +
-            </span>
-            {it}
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }

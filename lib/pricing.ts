@@ -14,12 +14,27 @@ export type Market = {
   care?: string;
 };
 
+/** Price groups by kind of business (docs/pricing-source/sector_prices.py). */
+export const PRICE_KEYS = ["beauty", "food", "bar", "shop"] as const;
+export type PriceKey = (typeof PRICE_KEYS)[number];
+
+export const PRICE_LABEL: Record<PriceKey, string> = {
+  beauty: "Barbers and salons",
+  food: "Restaurants and takeaway",
+  bar: "Bars and cafés",
+  shop: "Online shop"
+};
+
 export type CountryPrice = {
   name: string;
   /** Currency format, "{}" is replaced by the amount, e.g. "€{}" or "{} zł". */
   fmt: string;
+  /** The restaurant "from" price: the headline website price. */
   site: number;
+  /** The online shop range (same as sectors.shop). */
   shop: [number, number];
+  /** One-off price range for each kind of business. */
+  sectors: Record<PriceKey, [number, number]>;
   /** Essential, Care, Growth (per month). */
   care: [number, number, number];
   market: Market | null;

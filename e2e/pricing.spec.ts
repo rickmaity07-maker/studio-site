@@ -11,15 +11,18 @@ test.describe("pricing page", () => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Websites for restaurants, bars and cafés.");
     await expect(page.getByLabel("Your country")).toHaveValue("de");
     await expect(price(page, "Free mock-up")).toHaveText("Free");
-    await expect(price(page, "Website")).toHaveText("€1,300");
-    await expect(price(page, "Website with online shop")).toHaveText("€1,850 - €2,800");
+    // Rick's sector prices for Germany (docs/pricing-source/sector_prices.py).
+    await expect(price(page, "Barbers and salons")).toHaveText("€400 - €600");
+    await expect(price(page, "Restaurants and takeaway")).toHaveText("€700 - €1,000");
+    await expect(price(page, "Bars and cafés")).toHaveText("€800 - €900");
+    await expect(price(page, "Online shop")).toHaveText("€1,200 - €1,500");
     await expect(page.getByTestId("care-Essential")).toHaveText("€30");
     await expect(page.getByTestId("care-Care")).toHaveText("€65");
     await expect(page.getByTestId("care-Growth")).toHaveText("€120");
     await expect(page.getByTestId("validity")).toHaveText("Prices for Germany, valid for projects agreed by 31 March 2027.");
 
     await page.getByLabel("Your country").selectOption("pl");
-    await expect(price(page, "Website")).toHaveText("2,600 zł");
+    await expect(price(page, "Restaurants and takeaway")).toHaveText("1,800 zł - 2,600 zł");
     await expect(page).toHaveURL(/\/pricing#pl$/);
     await expect(page.getByTestId("validity")).toContainText("Poland");
   });
@@ -27,7 +30,7 @@ test.describe("pricing page", () => {
   test("a #code deep link wins over the default", async ({ page }) => {
     await page.goto("/pricing#ke");
     await expect(page.getByLabel("Your country")).toHaveValue("ke");
-    await expect(price(page, "Website")).toHaveText("KSh 50,000");
+    await expect(price(page, "Restaurants and takeaway")).toHaveText("KSh 35,000 - KSh 50,000");
   });
 
   test("defaults to the browser's country", async ({ browser }) => {
@@ -35,7 +38,7 @@ test.describe("pricing page", () => {
     const page = await ctx.newPage();
     await page.goto("/pricing");
     await expect(page.getByLabel("Your country")).toHaveValue("gb");
-    await expect(price(page, "Website")).toHaveText("£1,400");
+    await expect(price(page, "Restaurants and takeaway")).toHaveText("£600 - £850");
     await ctx.close();
   });
 
@@ -49,7 +52,7 @@ test.describe("pricing page", () => {
     await page.goto("/pricing?country=sn");
     await expect(page.getByTestId("compare")).toHaveCount(0);
     await expect(page.getByTestId("compare-none")).toBeVisible();
-    await expect(price(page, "Website")).toHaveText("180 000 FCFA");
+    await expect(price(page, "Restaurants and takeaway")).toHaveText("150 000 FCFA - 215 000 FCFA");
   });
 
   test("all sections from the approved guide are on the page", async ({ page }) => {

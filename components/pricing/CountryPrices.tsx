@@ -14,12 +14,19 @@ import {
   isCountry,
   money,
   range,
-  type CountryPrice
+  PRICE_LABEL,
+  type CountryPrice,
+  type PriceKey
 } from "@/lib/pricing";
+
+/** "€400 - €600", or one price when the range rounds to a single number. */
+export function span(c: CountryPrice, [lo, hi]: [number, number]) {
+  return lo === hi ? money(c, lo) : range(c, lo, hi);
+}
 
 const Ctx = createContext<{ code: string; c: CountryPrice; setCode: (code: string) => void } | null>(null);
 
-function useCountry() {
+export function useCountry() {
   const v = useContext(Ctx);
   if (!v) throw new Error("useCountry needs <CountryProvider>");
   return v;
@@ -77,8 +84,8 @@ export function CountryName() {
   return <>{useCountry().c.name}</>;
 }
 
-/** The three headline prices, laid out like a menu with dotted leaders. */
-export function PriceMenu() {
+/** The headline prices by kind of business, laid out like a menu with dotted leaders. */
+export function PriceMenu({ highlight }: { highlight?: PriceKey } = {}) {
   const { c } = useCountry();
   const items = [
     {
@@ -87,14 +94,28 @@ export function PriceMenu() {
       body: "A design of your homepage, made for your place, before you pay anything. No obligation."
     },
     {
-      title: "Website",
-      price: money(c, c.site),
-      body: "Custom design, menu, photos, opening hours, map, booking and delivery links, Instagram and WhatsApp buttons, admin panel. One-off price."
+      key: "beauty",
+      title: PRICE_LABEL.beauty,
+      price: span(c, c.sectors.beauty),
+      body: "Services and prices, a gallery of your work, booking links, Instagram and WhatsApp buttons, admin panel. Also for nail, beauty and tattoo studios."
     },
     {
-      title: "Website with online shop",
-      price: range(c, c.shop[0], c.shop[1]),
-      body: "Everything above, plus products, cart, online payments and order emails. Price depends on the number of products and payment options."
+      key: "food",
+      title: PRICE_LABEL.food,
+      price: span(c, c.sectors.food),
+      body: "Custom design, menu, photos, opening hours, map, booking and delivery links, admin panel. Also for bakeries, sweet shops and local services."
+    },
+    {
+      key: "bar",
+      title: PRICE_LABEL.bar,
+      price: span(c, c.sectors.bar),
+      body: "A look that matches the room, drinks and food menus, events, reservations, Instagram and WhatsApp buttons, admin panel."
+    },
+    {
+      key: "shop",
+      title: PRICE_LABEL.shop,
+      price: span(c, c.sectors.shop),
+      body: "A website plus products, cart, online payments and order emails. Price depends on the number of products and payment options."
     }
   ];
 
@@ -102,7 +123,10 @@ export function PriceMenu() {
     <div data-testid="price-menu">
       <ul className="divide-y divide-line/80 border-y border-line/80">
         {items.map((it) => (
-          <li key={it.title} className="py-6">
+          <li
+            key={it.title}
+            className={"py-6 " + (highlight && it.key === highlight ? "-mx-4 rounded-xl bg-live/[0.06] px-4 ring-1 ring-live/30" : "")}
+          >
             <div className="flex items-baseline gap-3">
               <h3 className="font-display text-xl font-medium tracking-[-0.01em] sm:text-2xl">{it.title}</h3>
               <span aria-hidden className="mb-1.5 min-w-6 flex-1 border-b border-dotted border-muted/40" />
@@ -145,7 +169,7 @@ export function PriceCompare() {
   return (
     <div data-testid="compare">
       <p className="max-w-[60ch] text-lg leading-relaxed text-muted">
-        A website here costs <span className="text-text">{money(c, c.site)}</span>,{" "}
+        A restaurant website here costs from <span className="text-text">{money(c, c.site)}</span>,{" "}
         {data.belowMiddle ? "below the middle of" : "within the usual range for"} what local freelancers charge in{" "}
         {c.name} ({range(c, m.free[0], m.free[1])}), with the admin panel and free mock-up included.
       </p>
@@ -313,10 +337,20 @@ export function Validity() {
 }
 
 /** The mock-up CTA carries the country so the request shows which prices were seen. */
-export function MockupLink({ className, children }: { className?: string; children: React.ReactNode }) {
+export function MockupLink({
+  className,
+  children,
+  sector
+}: {
+  className?: string;
+  children: React.ReactNode;
+  /** A sector slug from data/sectors.ts, passed on so the request shows it. */
+  sector?: string;
+}) {
   const { code } = useCountry();
+  const href = `/request?mockup=${code}` + (sector ? `&sector=${encodeURIComponent(sector)}` : "");
   return (
-    <Link href={`/request?mockup=${code}`} className={className}>
+    <Link href={href} className={className}>
       {children}
     </Link>
   );
