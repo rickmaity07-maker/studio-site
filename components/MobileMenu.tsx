@@ -10,8 +10,11 @@ import { AuthStatus } from "./AuthStatus";
 
 const LINKS = [
   { href: "/work", label: "Work" },
+  { href: "/for", label: "Sectors" },
+  { href: "/features", label: "Features" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/#process", label: "Process" },
+  { href: "/estimate", label: "Cost planner" },
+  { href: "/faq", label: "Questions" },
   { href: "/request", label: "Start a project" }
 ];
 const EASE = [0.32, 0.72, 0, 1] as const;

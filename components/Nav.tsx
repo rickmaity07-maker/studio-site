@@ -12,8 +12,9 @@ import { ArrowUpRight } from "@phosphor-icons/react";
 
 const LINKS = [
   { href: "/work", label: "Work" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/#process", label: "Process" }
+  { href: "/for", label: "Sectors" },
+  { href: "/features", label: "Features" },
+  { href: "/pricing", label: "Pricing" }
 ];
 
 /**

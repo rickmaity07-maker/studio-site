@@ -2,17 +2,25 @@ import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { FooterWordmark } from "./FooterWordmark";
 import { BrandMark } from "./brand/BrandMark";
+import { SECTORS } from "@/data/sectors";
 
 const COLUMNS = [
   {
     title: "Studio",
     links: [
       { href: "/work", label: "Work" },
+      { href: "/features", label: "Features" },
       { href: "/pricing", label: "Pricing" },
+      { href: "/estimate", label: "Cost planner" },
+      { href: "/faq", label: "Questions" },
       { href: "/#process", label: "Process" },
       { href: "/request", label: "Start a project" },
       { href: "/app", label: "Android app" }
     ]
+  },
+  {
+    title: "Who it's for",
+    links: SECTORS.map((s) => ({ href: `/for/${s.slug}`, label: s.short }))
   },
   {
     title: "Legal",
@@ -26,7 +34,7 @@ const COLUMNS = [
 export function Footer() {
   return (
     <footer className="border-t border-line/80">
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Link href="/" className="group inline-flex" aria-label="rira.build home">
             <BrandMark size="lg" />

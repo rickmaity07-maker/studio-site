@@ -19,7 +19,7 @@ import {
 
 const Ctx = createContext<{ code: string; c: CountryPrice; setCode: (code: string) => void } | null>(null);
 
-function useCountry() {
+export function useCountry() {
   const v = useContext(Ctx);
   if (!v) throw new Error("useCountry needs <CountryProvider>");
   return v;
@@ -313,10 +313,20 @@ export function Validity() {
 }
 
 /** The mock-up CTA carries the country so the request shows which prices were seen. */
-export function MockupLink({ className, children }: { className?: string; children: React.ReactNode }) {
+export function MockupLink({
+  className,
+  children,
+  sector
+}: {
+  className?: string;
+  children: React.ReactNode;
+  /** A sector slug from data/sectors.ts, passed on so the request shows it. */
+  sector?: string;
+}) {
   const { code } = useCountry();
+  const href = `/request?mockup=${code}` + (sector ? `&sector=${encodeURIComponent(sector)}` : "");
   return (
-    <Link href={`/request?mockup=${code}`} className={className}>
+    <Link href={href} className={className}>
       {children}
     </Link>
   );

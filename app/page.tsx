@@ -3,6 +3,7 @@ import { Hero } from "@/components/home/Hero";
 import { Showreel } from "@/components/home/Showreel";
 import { WorkIndex } from "@/components/home/WorkIndex";
 import { Capabilities } from "@/components/home/Capabilities";
+import { Sectors } from "@/components/home/Sectors";
 import { Process } from "@/components/home/Process";
 import { PricingTeaser } from "@/components/home/PricingTeaser";
 import { ClosingCta } from "@/components/home/ClosingCta";
@@ -19,6 +20,7 @@ export default async function Home() {
       <Showreel projects={live} />
       <WorkIndex projects={projects} />
       <Capabilities projects={projects} />
+      <Sectors projects={projects} />
       <Process />
       <PricingTeaser />
       <ClosingCta />
