@@ -7,7 +7,9 @@ import { SplitHeading } from "@/components/motion/SplitHeading";
 
 export const metadata: Metadata = {
   title: "Work",
-  description: "Every project, live and clickable."
+  description:
+    "Live client websites for restaurants, bars, shops, salons and local services. Open any build, click through it on your phone, and see what yours could do.",
+  alternates: { canonical: "/work" }
 };
 
 export default async function WorkPage() {

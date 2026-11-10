@@ -10,6 +10,9 @@ Germany (EUR), one-off:
 Other countries scale exactly like the original price list did: by the ratio of
 that country's original "normal site" price in pricing.py to Germany's EUR 700
 (so the UK, at GBP 600, gets 600/700 of each number), rounded with pricing._nice.
+Where market research exists, the factor is capped so the top of the restaurant
+range stays 10% under the local freelancer middle (this lowers Egypt, Nigeria and
+South Africa; everywhere else was already below it).
 
 Updates data/pricing.json in place: adds `sectors`, sets `site` to the restaurant
 "from" price and `shop` to the e-commerce range. Care plans and market data stay.
@@ -34,6 +37,12 @@ for code, c in data.items():
     cc = code.upper()
     original = (PRICES.get(cc) or (EUR_LOW if cc in EUROPE else USD_AF))[1]
     k = original / BASE
+    # Rick's rule: cheaper than local competitors. Where there is market research,
+    # keep the top of the restaurant range 10% under the local freelancer middle.
+    m = c.get("market")
+    if m:
+        middle = (m["free"][0] + m["free"][1]) / 2
+        k = min(k, 0.9 * middle / SECTORS_EUR["food"][1])
     sectors = {key: [_nice(lo * k), _nice(hi * k)] for key, (lo, hi) in SECTORS_EUR.items()}
     c["sectors"] = sectors
     c["site"] = sectors["food"][0]

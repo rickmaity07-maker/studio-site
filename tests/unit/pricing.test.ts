@@ -53,11 +53,12 @@ describe("price data", () => {
     expect(PRICES.us.sectors).toEqual({ beauty: [450, 700], food: [800, 1150], bar: [900, 1050], shop: [1350, 1700] });
   });
 
-  it("never charges more than local freelancers' top price, wherever there is research", () => {
+  it("stays cheaper than local freelancers wherever there is research", () => {
     for (const code of COUNTRY_CODES) {
       const c = PRICES[code];
       if (!c.market) continue;
-      for (const key of ["beauty", "food", "bar"] as const) expect(c.sectors[key][1], `${code} ${key}`).toBeLessThanOrEqual(c.market.free[1]);
+      const middle = (c.market.free[0] + c.market.free[1]) / 2;
+      for (const key of ["beauty", "food", "bar"] as const) expect(c.sectors[key][1], `${code} ${key}`).toBeLessThan(middle);
     }
   });
 

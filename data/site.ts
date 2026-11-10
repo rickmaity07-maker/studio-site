@@ -4,9 +4,9 @@
  *  One place for the business details used across the site:
  *  metadata, sitemap, footer, /impressum and /privacy.
  *
- *  German law (§ 5 DDG) requires a full name and a street
- *  address that can receive post in the Impressum — fill these
- *  in before the site goes live. Empty fields render as
+ *  rira.build is run by a company registered in India. The legal
+ *  notice and privacy notice need its registered details: fill
+ *  these in before relying on those pages. Empty fields render as
  *  "[missing]" so they're impossible to overlook.
  * ─────────────────────────────────────────────────────────────
  */
@@ -17,14 +17,22 @@ export const site = {
   description:
     "A working showcase of real client websites: live, clickable demos, and a straight path to requesting your own.",
   owner: {
-    fullName: "",
+    /** Registered company name, e.g. "Example Technologies Private Limited". */
+    companyName: "",
+    /** Legal form as registered with the Ministry of Corporate Affairs. */
+    legalForm: "Private limited company, registered in India",
+    /** Corporate Identification Number (21 characters). */
+    cin: "",
+    /** GST registration number, if registered for GST. Leave empty otherwise. */
+    gstin: "",
+    /** Director who represents the company (and is responsible for content). */
+    director: "",
     street: "",
+    /** City, state and PIN code, e.g. "Kolkata, West Bengal 700001". */
     postalCity: "",
-    country: "Germany",
+    country: "India",
     email: "",
-    phone: "",
-    /** USt-IdNr. — leave empty if you don't have one (e.g. Kleinunternehmer). */
-    vatId: ""
+    phone: ""
   }
 };
 

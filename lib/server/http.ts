@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db, dbConfigured } from "./db";
-import { readSession } from "./session";
+import { passwordVersion, readSession } from "./session";
 
 export class HttpError extends Error {
   constructor(public status: number, message: string) {
@@ -30,15 +30,19 @@ export function route<A extends unknown[]>(
 }
 
 /**
- * Admin = a valid session cookie whose account still exists, so
- * deleting an Admin row revokes access immediately.
+ * Admin = a valid session cookie whose account still exists and whose
+ * password hasn't changed since sign-in, so deleting an Admin row or
+ * resetting the password revokes access immediately.
  */
 export async function requireAdmin() {
   const session = await readSession();
   if (!session) throw new HttpError(401, "Sign in required.");
-  const admin = await db.admin.findUnique({ where: { id: session.id }, select: { id: true, email: true } });
-  if (!admin) throw new HttpError(401, "Your session has expired. Sign in again.");
-  return admin;
+  const admin = await db.admin.findUnique({ where: { id: session.id }, select: { id: true, email: true, passwordHash: true } });
+  // A changed password (or a session from before this check existed) signs you out.
+  if (!admin || session.pv !== passwordVersion(admin.passwordHash)) {
+    throw new HttpError(401, "Your session has expired. Sign in again.");
+  }
+  return { id: admin.id, email: admin.email };
 }
 
 export async function readJson(req: Request): Promise<Record<string, unknown>> {

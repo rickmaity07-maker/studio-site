@@ -40,8 +40,8 @@ export function Footer() {
             <BrandMark size="lg" />
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
-            Websites built to be clicked through, not just looked at. Made in
-            Germany for businesses in every country.
+            Websites built to be clicked through, not just looked at, for
+            businesses in every country.
           </p>
           <Link
             href="/request"

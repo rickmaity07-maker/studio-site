@@ -10,7 +10,9 @@ import { getSector } from "@/data/sectors";
 
 export const metadata: Metadata = {
   title: "Start a project",
-  description: "Tell me about your business and what your site needs to do."
+  description:
+    "Request a free website mock-up. Tell me about your business and what your site needs to do; you get a reply within one business day, with no obligation.",
+  alternates: { canonical: "/request" }
 };
 
 export default async function RequestPage(props: { searchParams: Promise<{ ref?: string; mockup?: string; sector?: string; plan?: string }> }) {
