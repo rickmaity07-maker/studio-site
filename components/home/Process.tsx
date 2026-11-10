@@ -1,89 +1,175 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { EASE } from "@/components/motion/Reveal";
-import { SplitHeading } from "@/components/motion/SplitHeading";
+import { ParticleField } from "@/components/science/ParticleField";
+import { DecodeText } from "@/components/science/DecodeText";
 
 const STEPS = [
   {
     title: "Discover",
+    figure: "Spiral galaxy",
     body: "A short call about your business, your customers, and what the site actually needs to do: book a table, take an order, build trust."
   },
   {
     title: "Design",
+    figure: "Wave interference",
     body: "A direction built around your brand, not a template. Real layout decisions, not a theme picker."
   },
   {
     title: "Build",
+    figure: "Double helix",
     body: "Production code from the first commit: Next.js, proper data handling, and security rules that hold up. Not a throwaway prototype."
   },
   {
     title: "Launch",
+    figure: "Globe in orbit",
     body: "Deployed, tested on real phones, and handed to you as a live demo to click through before your customers ever see it."
   }
 ];
 
+const LAST = STEPS.length - 1;
+
+/** Scroll 0..1 -> shape 0..3, holding still on each shape for a moment. */
+function toMorph(s: number) {
+  const x = Math.min(Math.max(s, 0), 1) * LAST;
+  const seg = Math.min(Math.floor(x), LAST - 1);
+  const t = x - seg;
+  const k = Math.min(Math.max((t - 0.18) / 0.64, 0), 1);
+  return seg + k * k * (3 - 2 * k);
+}
+
 /**
- * The headline stays pinned while the four stages scroll past; a mint
- * line draws down the timeline in step with your scroll position.
+ * How a project runs, as a pinned scroll scene: 14,000 particles burst and
+ * re-form into a galaxy, an interference pattern, a DNA helix and a globe
+ * while the stage title decodes itself and a counter ticks 01 to 04.
  */
 export function Process() {
   const reduce = useReducedMotion();
-  const list = useRef<HTMLOListElement>(null);
-  const { scrollYProgress } = useScroll({ target: list, offset: ["start 75%", "end 55%"] });
-  const line = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+  const track = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: track, offset: ["start start", "end end"] });
+  const morph = useTransform(scrollYProgress, toMorph);
+  const [active, setActive] = useState(0);
+  useMotionValueEvent(morph, "change", (v) => setActive(Math.round(v)));
+
+  // Clicking a stage name scrolls to it (through Lenis when it's running).
+  function jump(i: number) {
+    const el = track.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const y = top + (el.offsetHeight - window.innerHeight) * (i / LAST);
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number, o?: object) => void } }).__lenis;
+    if (lenis) lenis.scrollTo(y, { duration: 1.4 });
+    else window.scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
+  }
+
+  const step = STEPS[active];
 
   return (
-    <section id="process" className="scroll-mt-20 border-t border-line/70">
-      <div className="mx-auto grid max-w-7xl gap-14 px-4 py-28 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20 lg:py-36">
-        <div className="lg:sticky lg:top-32 lg:self-start">
-          <p className="eyebrow">How a project runs</p>
-          <SplitHeading
-            lines={["Four stages,", "no surprises."]}
-            className="mt-4 font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl"
+    <section id="process" aria-labelledby="process-title" className="scroll-mt-20 border-t border-line/70">
+      {/* The full list, for screen readers and search engines. */}
+      <ol className="sr-only">
+        {STEPS.map((s, i) => (
+          <li key={s.title}>
+            Stage {i + 1} of {STEPS.length}: {s.title}. {s.body}
+          </li>
+        ))}
+      </ol>
+
+      <div ref={track} className="relative h-[420vh]">
+        <div className="sticky top-0 h-[100dvh] overflow-hidden">
+          {/* The particle stage: full-bleed on phones, the right side on desktop. */}
+          <ParticleField
+            progress={morph}
+            reduce={reduce}
+            className="absolute inset-x-0 top-0 h-[58%] lg:inset-y-0 lg:left-[38%] lg:right-0 lg:h-auto"
           />
-          <p className="mt-5 max-w-sm text-lg leading-relaxed text-muted">
-            You click through a working demo of your own site before anything goes live.
-          </p>
+          {/* Keeps the text readable where it meets the particles. */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/70 via-40% to-ink/0 to-60% lg:bg-gradient-to-r lg:from-ink lg:via-ink/70 lg:via-35% lg:to-ink/0 lg:to-60%" />
+
+          <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-4 pb-14 pt-28 sm:px-6 lg:justify-center lg:pb-0">
+            <p className="eyebrow">
+              <DecodeText text="How a project runs" />
+            </p>
+            <h2 id="process-title" className="mt-4 max-w-md font-display text-3xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-4xl">
+              Four stages, no surprises.
+            </h2>
+
+            <div aria-hidden className="mt-10 lg:mt-16">
+              {/* Counter: 01 / 04, the current number rolls. */}
+              <div className="flex items-baseline gap-3 font-mono text-sm text-muted">
+                <span className="relative inline-flex h-[1.2em] w-[2ch] overflow-hidden text-live">
+                  <AnimatePresence initial={false} mode="popLayout">
+                    <motion.span
+                      key={active}
+                      initial={{ y: "100%", opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: "-100%", opacity: 0 }}
+                      transition={instant(reduce, { duration: 0.5, ease: EASE })}
+                    >
+                      {String(active + 1).padStart(2, "0")}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+                <span>/ {String(STEPS.length).padStart(2, "0")}</span>
+                <span className="ml-3 hidden text-[11px] uppercase tracking-[0.2em] text-muted/70 sm:inline">
+                  fig. <DecodeText key={step.figure} text={step.figure} speed={22} />
+                </span>
+              </div>
+
+              <p className="mt-3 font-display text-6xl font-medium tracking-[-0.04em] sm:text-7xl lg:text-8xl">
+                <DecodeText key={step.title} text={step.title} speed={45} />
+              </p>
+
+              <div className="relative mt-5 min-h-[7.5rem] max-w-md">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.p
+                    key={active}
+                    className="text-lg leading-relaxed text-muted"
+                    initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -10, filter: "blur(6px)" }}
+                    transition={instant(reduce, { duration: 0.45, ease: EASE })}
+                  >
+                    {step.body}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* Stage rail: where you are, and a way to jump. */}
+            <div aria-hidden className="pointer-events-auto mt-8 flex max-w-md gap-2 lg:mt-14">
+              {STEPS.map((s, i) => (
+                <button
+                  key={s.title}
+                  type="button"
+                  tabIndex={-1}
+                  onClick={() => jump(i)}
+                  className="group flex-1 text-left"
+                >
+                  <span className="block h-px overflow-hidden bg-line">
+                    <span
+                      className={
+                        "block h-full origin-left bg-live transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] " +
+                        (i <= active ? "scale-x-100" : "scale-x-0")
+                      }
+                    />
+                  </span>
+                  <span
+                    className={
+                      "mt-2 block font-mono text-[11px] uppercase tracking-[0.14em] transition-colors " +
+                      (i === active ? "text-text" : "text-muted/60 group-hover:text-muted")
+                    }
+                  >
+                    {s.title}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-
-        <ol ref={list} className="relative pl-10 sm:pl-14">
-          {/* The rail, and the mint line drawing down it. */}
-          <span aria-hidden className="absolute bottom-2 left-[7px] top-2 w-px bg-line sm:left-[11px]" />
-          <motion.span
-            aria-hidden
-            style={{ scaleY: reduce ? 1 : line }}
-            className="absolute bottom-2 left-[7px] top-2 w-px origin-top bg-live sm:left-[11px]"
-          />
-
-          {STEPS.map((s, i) => (
-            <motion.li
-              key={s.title}
-              className="relative pb-20 last:pb-0"
-              initial={{ opacity: 0.25 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ amount: 0.6, margin: "0px 0px -20% 0px" }}
-              transition={instant(reduce, { duration: 0.6, ease: EASE })}
-            >
-              <motion.span
-                aria-hidden
-                className="absolute -left-10 top-2 flex h-[15px] w-[15px] items-center justify-center rounded-full border border-line bg-ink sm:-left-14 sm:h-[23px] sm:w-[23px]"
-                initial={{ borderColor: "#262B38" }}
-                whileInView={{ borderColor: "#4CE8B0" }}
-                viewport={{ amount: 1, margin: "0px 0px -35% 0px" }}
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-live sm:h-2 sm:w-2" />
-              </motion.span>
-              <h3 className="font-display text-3xl font-medium tracking-[-0.02em] sm:text-4xl">
-                {s.title}
-              </h3>
-              <p className="mt-3 max-w-lg text-lg leading-relaxed text-muted">{s.body}</p>
-              <span className="sr-only">Stage {i + 1} of {STEPS.length}</span>
-            </motion.li>
-          ))}
-        </ol>
       </div>
     </section>
   );

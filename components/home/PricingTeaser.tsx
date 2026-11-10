@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { Reveal } from "@/components/motion/Reveal";
 import { SplitHeading } from "@/components/motion/SplitHeading";
+import { DecodeText } from "@/components/science/DecodeText";
 
 const TERMS = [
   { figure: "Free", label: "Mock-up of your homepage", body: "Within 2 to 3 days. Don't like it? You owe nothing." },
@@ -16,7 +17,9 @@ export function PricingTeaser() {
       <div className="mx-auto max-w-7xl px-4 py-28 sm:px-6 lg:py-36">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <div>
-            <p className="eyebrow">Pricing</p>
+            <p className="eyebrow">
+            <DecodeText text="Pricing" />
+          </p>
             <SplitHeading
               lines={["A fixed price for", "your country."]}
               className="mt-4 font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl"

@@ -14,6 +14,7 @@ import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { IntroProvider } from "@/components/motion/Intro";
 import { IntroCurtain, introScript } from "@/components/motion/intro-shared";
 import { site } from "@/data/site";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -44,6 +45,7 @@ export default function RootLayout({
         <IntroCurtain />
         {/* Film grain over everything: fixed, so it never repaints on scroll. */}
         <div aria-hidden className="grain" />
+        <ScrollProgress />
         <AuthProvider>
           <SmoothScroll />
           <IntroProvider>

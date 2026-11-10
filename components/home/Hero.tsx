@@ -10,6 +10,7 @@ import { SplitHeading } from "@/components/motion/SplitHeading";
 import { useIntroDone } from "@/components/motion/Intro";
 import { ScreenDeck } from "./ScreenDeck";
 import { HeroBackdrop } from "./HeroBackdrop";
+import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 
 export function Hero({ projects }: { projects: Project[] }) {
   const reduce = useReducedMotion();
@@ -39,7 +40,7 @@ export function Hero({ projects }: { projects: Project[] }) {
             animate={go ? { opacity: 1, y: 0 } : undefined}
             transition={instant(reduce, { duration: 0.8, ease: EASE })}
           >
-            Web studio · clients in every country
+            <AnimatedShinyText>Web studio · clients in every country</AnimatedShinyText>
           </motion.p>
 
           <SplitHeading

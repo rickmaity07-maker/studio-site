@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { EASE } from "@/components/motion/Reveal";
+import { RollingText } from "@/components/smoothui/rolling-text";
 import {
   COUNTRY_CODES,
   PRICES,
@@ -105,9 +106,11 @@ export function PriceMenu() {
             <div className="flex items-baseline gap-3">
               <h3 className="font-display text-xl font-medium tracking-[-0.01em] sm:text-2xl">{it.title}</h3>
               <span aria-hidden className="mb-1.5 min-w-6 flex-1 border-b border-dotted border-muted/40" />
-              <span className="whitespace-nowrap font-mono text-lg tabular-nums text-live sm:text-xl" data-testid={`price-${it.title}`}>
-                {it.price}
-              </span>
+              <RollingText
+                text={it.price}
+                testId={`price-${it.title}`}
+                className="whitespace-nowrap font-mono text-lg tabular-nums text-live sm:text-xl"
+              />
             </div>
             <p className="mt-2 max-w-[60ch] leading-relaxed text-muted">{it.body}</p>
           </li>
@@ -271,9 +274,11 @@ export function CarePlans() {
             )}
             <h3 className="font-display text-2xl font-medium">{p.name}</h3>
             <p className="mt-4 flex items-baseline gap-2">
-              <span className="font-mono text-3xl tabular-nums text-text" data-testid={`care-${p.name}`}>
-                {money(c, c.care[i])}
-              </span>
+              <RollingText
+                text={money(c, c.care[i])}
+                testId={`care-${p.name}`}
+                className="font-mono text-3xl tabular-nums text-text"
+              />
               <span className="text-sm text-muted">per month</span>
             </p>
             <ul className="mt-6 grid gap-3 border-t border-line/80 pt-6">

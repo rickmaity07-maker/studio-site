@@ -15,6 +15,7 @@ import {
   Validity
 } from "@/components/pricing/CountryPrices";
 import { getProjects } from "@/lib/server/projects";
+import { DecodeText } from "@/components/science/DecodeText";
 import { pickCountry } from "@/lib/pricing";
 
 export const metadata: Metadata = {
@@ -105,7 +106,9 @@ export default async function PricingPage({ searchParams }: { searchParams: { co
       {/* Prices */}
       <section className="mx-auto grid max-w-7xl gap-14 px-4 pb-24 pt-16 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 lg:pb-32 lg:pt-24">
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <p className="eyebrow">Pricing</p>
+          <p className="eyebrow">
+            <DecodeText text="Pricing" />
+          </p>
           <SplitHeading
             as="h1"
             immediate
@@ -151,7 +154,9 @@ export default async function PricingPage({ searchParams }: { searchParams: { co
       {/* What you get */}
       <section className="border-t border-line/70">
         <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:py-32">
-          <p className="eyebrow">Side by side</p>
+          <p className="eyebrow">
+            <DecodeText text="Side by side" />
+          </p>
           <SplitHeading
             lines={["What you get here that you often don't elsewhere."]}
             className="mt-4 max-w-2xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl"
@@ -336,7 +341,9 @@ function Section({
         }
       >
         <div className={wide ? "max-w-2xl" : "lg:sticky lg:top-28 lg:self-start"}>
-          <p className="eyebrow">{eyebrow}</p>
+          <p className="eyebrow">
+            <DecodeText text={eyebrow} />
+          </p>
           <SplitHeading
             lines={title}
             className="mt-4 font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl"

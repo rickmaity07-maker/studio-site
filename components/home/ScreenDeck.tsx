@@ -8,6 +8,7 @@ import { instant, useReducedMotion } from "@/components/motion/useReducedMotion"
 import { ArrowUpRight } from "@phosphor-icons/react";
 import type { Project } from "@/data/projects";
 import { EASE } from "@/components/motion/Reveal";
+import { BorderBeam } from "@/components/ui/border-beam";
 
 const INTERVAL = 4200;
 // Front, middle, back: each card steps up and to the right, smaller and dimmer.
@@ -180,6 +181,13 @@ function DeckCard({ project, front }: { project: Project; front: boolean }) {
           </span>
         </div>
       </div>
+      {/* Two beams chasing each other round the front card (Magic UI). */}
+      {front && (
+        <>
+          <BorderBeam size={140} duration={9} />
+          <BorderBeam size={140} duration={9} delay={4.5} colorFrom="#A9F5D9" colorTo="#4CE8B0" />
+        </>
+      )}
     </Link>
   );
 }
