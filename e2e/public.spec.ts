@@ -192,6 +192,8 @@ test.describe("static pages and metadata", () => {
     await expect(page.getByRole("heading", { name: "The Android app" })).toBeVisible();
     await page.goto("/impressum");
     await expect(page.getByRole("heading", { name: "Impressum" })).toBeVisible();
+    // The company is registered in India: the notice shows its CIN line.
+    await expect(page.getByText(/Corporate Identification Number/)).toBeVisible();
   });
 
   test("sitemap, robots, manifest, icon and social image", async ({ request }) => {

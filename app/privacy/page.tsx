@@ -4,7 +4,8 @@ import { site, field } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Privacy",
-  description: "What happens to the information you send through this site."
+  description:
+    "How rira.build handles the information you send: what is stored, where, for how long, which providers are involved, and your rights under the GDPR and India's DPDP Act."
 };
 
 export default function PrivacyPage() {
@@ -18,12 +19,17 @@ export default function PrivacyPage() {
       <div className="mt-8 grid gap-8 leading-relaxed text-text/85">
         <Block title="Who is responsible">
           <p>
-            {field(o.fullName)}, {field(o.street)}, {field(o.postalCity)},{" "}
-            {o.country}, {field(o.email)}. Full details are in the{" "}
+            {field(o.companyName)}, {field(o.street)}, {field(o.postalCity)}, {o.country},{" "}
+            {field(o.email)}, a company registered in India. Full details are in the{" "}
             <Link href="/impressum" className="underline underline-offset-2 hover:text-live">
               Impressum
             </Link>
             .
+          </p>
+          <p>
+            Because the site offers services to people in the EU, the EU General Data Protection Regulation
+            (GDPR) applies alongside India&apos;s Digital Personal Data Protection Act, 2023. Where they differ,
+            you get whichever protection is stronger.
           </p>
         </Block>
 
@@ -76,6 +82,15 @@ export default function PrivacyPage() {
           </p>
         </Block>
 
+        <Block title="Access from India">
+          <p>
+            The data stays on the servers named above, in the EU. The company reads and answers requests from
+            India, which counts as a transfer outside the EU. India has no EU adequacy decision, so this access
+            relies on your request (Art. 49(1)(b) GDPR, steps you asked for before a contract) and, once we work
+            together, on the contract itself. Access is limited to people who need it to handle your request.
+          </p>
+        </Block>
+
         <Block title="The Android app">
           <p>
             The rira.build Android app shows the same projects as this site.
@@ -99,9 +114,9 @@ export default function PrivacyPage() {
           <p>
             You can ask for access to, correction, deletion or restriction of
             your data, object to its processing, and request a portable copy
-            (Art. 15-21 GDPR). Just email me. You also have the right to
-            complain to a data protection supervisory authority, for example
-            the Bayerisches Landesamt für Datenschutzaufsicht (BayLDA).
+            (Art. 15-21 GDPR; sections 11-14 of the DPDP Act). Just email us. You also have the right to
+            complain to the data protection authority where you live or work. In India, that&apos;s the Data
+            Protection Board of India.
           </p>
         </Block>
       </div>

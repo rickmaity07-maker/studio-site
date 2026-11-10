@@ -3,7 +3,7 @@ import { site, field } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Impressum",
-  description: "Legal notice (Angaben gemäß § 5 DDG)."
+  description: "Legal notice for rira.build: the company behind the site, its registration details and how to reach it."
 };
 
 export default function ImpressumPage() {
@@ -15,12 +15,11 @@ export default function ImpressumPage() {
       <h1 className="mt-2 font-display text-3xl">Impressum</h1>
 
       <div className="mt-8 grid gap-8 leading-relaxed text-text/85">
-        <div>
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
-            Angaben gemäß § 5 DDG
-          </h2>
-          <p className="mt-2">
-            {field(o.fullName)}
+        <Block title="Provider (Anbieter)">
+          <p>
+            {field(o.companyName)}
+            <br />
+            {o.legalForm}
             <br />
             {field(o.street)}
             <br />
@@ -28,14 +27,15 @@ export default function ImpressumPage() {
             <br />
             {o.country}
           </p>
-        </div>
+        </Block>
 
-        <div>
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
-            Kontakt
-          </h2>
-          <p className="mt-2">
-            E-Mail:{" "}
+        <Block title="Represented by (Vertreten durch)">
+          <p>{field(o.director)}, Director</p>
+        </Block>
+
+        <Block title="Contact (Kontakt)">
+          <p>
+            Email:{" "}
             {o.email ? (
               <a href={`mailto:${o.email}`} className="underline underline-offset-2 hover:text-live">
                 {o.email}
@@ -46,42 +46,46 @@ export default function ImpressumPage() {
             {o.phone && (
               <>
                 <br />
-                Telefon: {o.phone}
+                Phone: {o.phone}
               </>
             )}
           </p>
-        </div>
+        </Block>
 
-        {o.vatId && (
-          <div>
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
-              Umsatzsteuer-ID
-            </h2>
-            <p className="mt-2">
-              Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG: {o.vatId}
-            </p>
-          </div>
-        )}
-
-        <div>
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
-            Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
-          </h2>
-          <p className="mt-2">
-            {field(o.fullName)}, Anschrift wie oben.
+        <Block title="Registration (Registereintrag)">
+          <p>
+            Registered with the Registrar of Companies, Ministry of Corporate Affairs, India.
+            <br />
+            Corporate Identification Number (CIN): {field(o.cin)}
+            {o.gstin && (
+              <>
+                <br />
+                GSTIN: {o.gstin}
+              </>
+            )}
           </p>
-        </div>
+        </Block>
 
-        <div>
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
-            Verbraucherstreitbeilegung
-          </h2>
-          <p className="mt-2">
-            Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren
-            vor einer Verbraucherschlichtungsstelle teilzunehmen.
+        <Block title="Responsible for content (Verantwortlich für den Inhalt)">
+          <p>{field(o.director)}, address as above.</p>
+        </Block>
+
+        <Block title="Consumer dispute resolution (Verbraucherstreitbeilegung)">
+          <p>
+            We are not willing or obliged to take part in dispute resolution proceedings before a consumer
+            arbitration board.
           </p>
-        </div>
+        </Block>
       </div>
     </section>
+  );
+}
+
+function Block({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <h2 className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">{title}</h2>
+      <div className="mt-2">{children}</div>
+    </div>
   );
 }

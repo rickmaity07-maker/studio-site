@@ -20,13 +20,20 @@ export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
 
+/** Shortens to about `max` characters at a word boundary, for search snippets. */
+function clip(text: string, max: number) {
+  return text.length <= max ? text : text.slice(0, max).replace(/\s+\S*$/, "") + "…";
+}
+
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const params = await props.params;
   const project = await getProjectBySlug(params.slug);
   if (!project) return {};
   return {
     title: project.name,
-    description: project.tagline,
+    // The case study reads better in search results than the short tagline.
+    description: clip(`${project.tagline}. ${project.description}`, 160),
+    alternates: { canonical: `/work/${project.slug}` },
     openGraph: project.image ? { images: [project.image.url] } : undefined
   };
 }

@@ -10,3 +10,4 @@ playwright-report
 test-results
 .next-test
 graphify-out/
+__pycache__/

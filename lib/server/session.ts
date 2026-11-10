@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
@@ -16,8 +17,16 @@ function secret() {
   return new TextEncoder().encode(value);
 }
 
-export async function startSession(admin: { id: string; email: string }) {
-  const token = await new SignJWT({ email: admin.email })
+/**
+ * A short fingerprint of the password hash, stored in the session. Changing the
+ * password changes it, so every session signed in with the old one stops working.
+ */
+export function passwordVersion(passwordHash: string) {
+  return createHash("sha256").update(passwordHash).digest("hex").slice(0, 16);
+}
+
+export async function startSession(admin: { id: string; email: string; passwordHash: string }) {
+  const token = await new SignJWT({ email: admin.email, pv: passwordVersion(admin.passwordHash) })
     .setProtectedHeader({ alg: "HS256" })
     .setSubject(admin.id)
     .setIssuedAt()
@@ -44,7 +53,7 @@ export async function readSession() {
   try {
     const { payload } = await jwtVerify(token, secret());
     if (!payload.sub || typeof payload.email !== "string") return null;
-    return { id: payload.sub, email: payload.email };
+    return { id: payload.sub, email: payload.email, pv: typeof payload.pv === "string" ? payload.pv : "" };
   } catch {
     return null;
   }
