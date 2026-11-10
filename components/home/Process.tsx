@@ -80,93 +80,103 @@ export function Process() {
 
       <div ref={track} className="relative h-[420vh]">
         <div className="sticky top-0 h-[100dvh] overflow-hidden">
-          {/* The particle stage: full-bleed on phones, the right side on desktop. */}
+          {/* The particle stage: between the heading and the stage text on phones, the right side on desktop. */}
           <ParticleField
             progress={morph}
             reduce={reduce}
-            className="absolute inset-x-0 top-0 h-[58%] lg:inset-y-0 lg:left-[38%] lg:right-0 lg:h-auto"
+            className="absolute inset-x-0 top-[17%] h-[36%] lg:inset-y-0 lg:left-[38%] lg:right-0 lg:top-0 lg:h-auto"
           />
           {/* Keeps the text readable where it meets the particles. */}
-          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/70 via-40% to-ink/0 to-60% lg:bg-gradient-to-r lg:from-ink lg:via-ink/70 lg:via-35% lg:to-ink/0 lg:to-60%" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/0 via-45% to-ink/0 lg:bg-gradient-to-r lg:from-ink lg:via-ink/70 lg:via-35% lg:to-ink/0 lg:to-60%"
+          />
 
-          <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-4 pb-14 pt-28 sm:px-6 lg:justify-center lg:pb-0">
-            <p className="eyebrow">
-              <DecodeText text="How a project runs" />
-            </p>
-            <h2 id="process-title" className="mt-4 max-w-md font-display text-3xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-4xl">
-              Four stages, no surprises.
-            </h2>
-
-            <div aria-hidden className="mt-10 lg:mt-16">
-              {/* Counter: 01 / 04, the current number rolls. */}
-              <div className="flex items-baseline gap-3 font-mono text-sm text-muted">
-                <span className="relative inline-flex h-[1.2em] w-[2ch] overflow-hidden text-live">
-                  <AnimatePresence initial={false} mode="popLayout">
-                    <motion.span
-                      key={active}
-                      initial={{ y: "100%", opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: "-100%", opacity: 0 }}
-                      transition={instant(reduce, { duration: 0.5, ease: EASE })}
-                    >
-                      {String(active + 1).padStart(2, "0")}
-                    </motion.span>
-                  </AnimatePresence>
-                </span>
-                <span>/ {String(STEPS.length).padStart(2, "0")}</span>
-                <span className="ml-3 hidden text-[11px] uppercase tracking-[0.2em] text-muted/70 sm:inline">
-                  fig. <DecodeText key={step.figure} text={step.figure} speed={22} />
-                </span>
-              </div>
-
-              <p className="mt-3 font-display text-6xl font-medium tracking-[-0.04em] sm:text-7xl lg:text-8xl">
-                <DecodeText key={step.title} text={step.title} speed={45} />
+          <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-between px-4 pb-8 pt-24 sm:px-6 lg:justify-center lg:pb-0 lg:pt-28">
+            <div>
+              <p className="eyebrow">
+                <DecodeText text="How a project runs" />
               </p>
-
-              <div className="relative mt-5 min-h-[7.5rem] max-w-md">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.p
-                    key={active}
-                    className="text-lg leading-relaxed text-muted"
-                    initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -10, filter: "blur(6px)" }}
-                    transition={instant(reduce, { duration: 0.45, ease: EASE })}
-                  >
-                    {step.body}
-                  </motion.p>
-                </AnimatePresence>
-              </div>
+              <h2
+                id="process-title"
+                className="mt-4 max-w-md font-display text-3xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-4xl"
+              >
+                Four stages, no surprises.
+              </h2>
             </div>
 
-            {/* Stage rail: where you are, and a way to jump. */}
-            <div aria-hidden className="pointer-events-auto mt-8 flex max-w-md gap-2 lg:mt-14">
-              {STEPS.map((s, i) => (
-                <button
-                  key={s.title}
-                  type="button"
-                  tabIndex={-1}
-                  onClick={() => jump(i)}
-                  className="group flex-1 text-left"
-                >
-                  <span className="block h-px overflow-hidden bg-line">
+            <div>
+              <div aria-hidden className="lg:mt-16">
+                {/* Counter: 01 / 04, the current number rolls. */}
+                <div className="flex items-baseline gap-3 font-mono text-sm text-muted">
+                  <span className="relative inline-flex h-[1.2em] w-[2ch] overflow-hidden text-live">
+                    <AnimatePresence initial={false} mode="popLayout">
+                      <motion.span
+                        key={active}
+                        initial={{ y: "100%", opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: "-100%", opacity: 0 }}
+                        transition={instant(reduce, { duration: 0.5, ease: EASE })}
+                      >
+                        {String(active + 1).padStart(2, "0")}
+                      </motion.span>
+                    </AnimatePresence>
+                  </span>
+                  <span>/ {String(STEPS.length).padStart(2, "0")}</span>
+                  <span className="ml-3 hidden text-[11px] uppercase tracking-[0.2em] text-muted/70 sm:inline">
+                    fig. <DecodeText key={step.figure} text={step.figure} speed={22} />
+                  </span>
+                </div>
+
+                <p className="mt-2 font-display text-5xl font-medium tracking-[-0.04em] sm:text-7xl lg:mt-3 lg:text-8xl">
+                  <DecodeText key={step.title} text={step.title} speed={45} />
+                </p>
+
+                <div className="relative mt-3 min-h-[6.5rem] max-w-md lg:mt-5 lg:min-h-[7.5rem]">
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.p
+                      key={active}
+                      className="text-base leading-relaxed text-muted sm:text-lg"
+                      initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -10, filter: "blur(6px)" }}
+                      transition={instant(reduce, { duration: 0.45, ease: EASE })}
+                    >
+                      {step.body}
+                    </motion.p>
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Stage rail: where you are, and a way to jump. */}
+              <div aria-hidden className="pointer-events-auto mt-5 flex max-w-md gap-2 lg:mt-14">
+                {STEPS.map((s, i) => (
+                  <button
+                    key={s.title}
+                    type="button"
+                    tabIndex={-1}
+                    onClick={() => jump(i)}
+                    className="group flex-1 text-left"
+                  >
+                    <span className="block h-px overflow-hidden bg-line">
+                      <span
+                        className={
+                          "block h-full origin-left bg-live transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] " +
+                          (i <= active ? "scale-x-100" : "scale-x-0")
+                        }
+                      />
+                    </span>
                     <span
                       className={
-                        "block h-full origin-left bg-live transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] " +
-                        (i <= active ? "scale-x-100" : "scale-x-0")
+                        "mt-2 block font-mono text-[11px] uppercase tracking-[0.14em] transition-colors " +
+                        (i === active ? "text-text" : "text-muted/60 group-hover:text-muted")
                       }
-                    />
-                  </span>
-                  <span
-                    className={
-                      "mt-2 block font-mono text-[11px] uppercase tracking-[0.14em] transition-colors " +
-                      (i === active ? "text-text" : "text-muted/60 group-hover:text-muted")
-                    }
-                  >
-                    {s.title}
-                  </span>
-                </button>
-              ))}
+                    >
+                      {s.title}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>

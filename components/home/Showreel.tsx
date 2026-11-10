@@ -76,7 +76,7 @@ export function Showreel({ projects }: { projects: Project[] }) {
           className={
             "mt-10 flex gap-5 px-4 sm:px-6 lg:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] " +
             // Without the pan, the row scrolls natively with snap points.
-            (pinned ? "" : "snap-x snap-mandatory scroll-px-4 overflow-x-auto pb-6 [scrollbar-width:none] sm:scroll-px-6")
+            (pinned ? "" : "snap-x snap-mandatory scroll-px-4 overflow-x-auto overscroll-x-contain pb-6 [scrollbar-width:none] sm:scroll-px-6")
           }
         >
           {projects.map((p) => (

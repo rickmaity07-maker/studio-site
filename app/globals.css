@@ -17,6 +17,14 @@
   }
   html {
     scroll-behavior: smooth;
+    /* No sideways swipe-back or rubber-banding of the whole page. */
+    overscroll-behavior-x: none;
+  }
+  /* Nothing may drag the page sideways on phones. `clip` (not `hidden`)
+     so sticky sections keep working. */
+  html,
+  body {
+    overflow-x: clip;
   }
   body {
     @apply bg-ink text-text font-body antialiased;

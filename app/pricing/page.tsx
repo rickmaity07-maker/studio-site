@@ -163,7 +163,35 @@ export default async function PricingPage(props: { searchParams: Promise<{ count
             className="mt-4 max-w-2xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-[-0.02em] sm:text-5xl"
           />
           <Reveal delay={0.1} className="mt-12">
-            <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0" data-lenis-prevent>
+            {/* Phones: one card per feature, no sideways scrolling. */}
+            <ul className="grid gap-4 sm:hidden">
+              {COMPARE.map((r) => (
+                <li key={r.what} className="rounded-2xl border border-line bg-surface/60 p-5">
+                  <p className="font-display text-lg font-medium leading-snug">{r.what}</p>
+                  <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 text-[14px]">
+                    <div className="col-span-2 rounded-lg bg-live/[0.08] px-3 py-2">
+                      <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-live/80">rira.build</dt>
+                      <dd className="mt-0.5 font-medium text-live">{r.me}</dd>
+                    </div>
+                    {(
+                      [
+                        ["DIY builder", r.diy],
+                        ["Freelancer", r.free],
+                        ["Agency", r.agency]
+                      ] as const
+                    ).map(([who, [kind, text]]) => (
+                      <div key={who}>
+                        <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">{who}</dt>
+                        <dd className={"mt-0.5 " + (kind === "yes" ? "text-text/85" : kind === "no" ? "text-signal/90" : "text-muted")}>
+                          {text}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </li>
+              ))}
+            </ul>
+            <div className="hidden sm:block">
               <table className="w-full min-w-[760px] border-collapse text-left text-[14px]">
                 <caption className="sr-only">rira.build compared with DIY builders, freelancers and agencies</caption>
                 <thead>
@@ -259,10 +287,10 @@ export default async function PricingPage(props: { searchParams: Promise<{ count
                   href={p.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-baseline justify-between gap-4 py-4 transition hover:text-live"
+                  className="group flex flex-col gap-0.5 py-4 transition hover:text-live sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
                 >
                   <span className="font-display text-lg font-medium">{p.name}</span>
-                  <span className="flex items-center gap-2 text-right text-sm text-muted group-hover:text-live/80">
+                  <span className="flex items-center gap-2 text-sm text-muted group-hover:text-live/80 sm:text-right">
                     {p.tagline}
                     <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
                   </span>
