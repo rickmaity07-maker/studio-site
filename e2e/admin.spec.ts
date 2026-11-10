@@ -24,6 +24,7 @@ test.describe("access control", () => {
       ["DELETE", "/api/admin/projects/x"],
       ["POST", "/api/admin/projects/reorder"],
       ["POST", "/api/admin/projects/import"],
+      ["POST", "/api/admin/projects/add-missing"],
       ["POST", "/api/admin/upload"]
     ];
     for (const [method, url] of calls) {

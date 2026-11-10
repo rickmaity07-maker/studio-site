@@ -13,6 +13,7 @@ export default function ProjectsAdminPage() {
   const [data, setData] = useState<Data | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setError(null);
@@ -53,6 +54,14 @@ export default function ProjectsAdminPage() {
     run(() => api(`/api/admin/projects/${id}`, { method: "PUT", json: { ...input, published: !p.published } }));
   }
 
+  // Adds projects from data/projects.ts whose slug isn't in the database yet.
+  function addMissing() {
+    run(async () => {
+      const { added } = await api<{ added: string[] }>("/api/admin/projects/add-missing", { method: "POST" });
+      setNotice(added.length ? `Added ${added.length}: ${added.join(", ")}` : "Nothing to add: every starter project is already here.");
+    });
+  }
+
   function remove(p: StoredProject) {
     if (!confirm(`Delete "${p.name}" and its screenshot? This can't be undone.`)) return;
     run(() => api(`/api/admin/projects/${p.id}`, { method: "DELETE" }));
@@ -65,10 +74,18 @@ export default function ProjectsAdminPage() {
           <p className="eyebrow">Portfolio</p>
           <h1 className="mt-2 font-display text-3xl">Projects</h1>
         </div>
-        <Link href="/admin/projects/new" className={btnPrimary}>
-          New project
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          {data && data.projects.length > 0 && (
+            <button onClick={addMissing} disabled={busy} className={btnGhost}>
+              {busy ? "Working…" : "Add missing starter projects"}
+            </button>
+          )}
+          <Link href="/admin/projects/new" className={btnPrimary}>
+            New project
+          </Link>
+        </div>
       </div>
+      {notice && <p className="mt-4 text-sm text-muted">{notice}</p>}
 
       {error ? (
         <div className="mt-10 rounded-xl border border-signal/30 bg-signal/10 p-4 text-sm text-signal">

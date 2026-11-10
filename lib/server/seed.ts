@@ -40,9 +40,14 @@ export async function importStarterProjects(db: PrismaClient) {
 }
 
 /** Copies a starter screenshot from /public into the Image table. */
-export async function storeStatic(db: PrismaClient, url: string | undefined) {
+export async function storeStatic(db: PrismaClient, url: string | undefined, origin?: string) {
   if (!url?.startsWith("/screens")) return null;
-  const data = await readFile(path.join(process.cwd(), "public", url)).catch(() => null);
+  let data: Uint8Array | null = await readFile(path.join(process.cwd(), "public", url)).catch(() => null);
+  // On Vercel, /public isn't on the function's disk; fetch it from the site instead.
+  if (!data && origin) {
+    const res = await fetch(new URL(url, origin)).catch(() => null);
+    if (res?.ok) data = new Uint8Array(await res.arrayBuffer());
+  }
   if (!data) return null;
   const image = await db.image.create({ data: { data: new Uint8Array(data), contentType: "image/jpeg" } });
   return image.id;
@@ -53,7 +58,7 @@ export async function storeStatic(db: PrismaClient, url: string | undefined) {
  * of the list, with their screenshots. Never changes existing projects, so
  * edits made in the admin portal are kept. Used by `npm run db:add-starters`.
  */
-export async function addMissingStarterProjects(db: PrismaClient) {
+export async function addMissingStarterProjects(db: PrismaClient, origin?: string) {
   const existing = await db.project.findMany({ select: { slug: true, order: true } });
   const have = new Set(existing.map((p) => p.slug));
   let order = existing.reduce((max, p) => Math.max(max, p.order), -1);
@@ -61,8 +66,8 @@ export async function addMissingStarterProjects(db: PrismaClient) {
 
   for (const p of starterProjects) {
     if (have.has(p.slug)) continue;
-    const imageId = await storeStatic(db, p.image?.url);
-    const mobileImageId = await storeStatic(db, p.mobileImage?.url);
+    const imageId = await storeStatic(db, p.image?.url, origin);
+    const mobileImageId = await storeStatic(db, p.mobileImage?.url, origin);
     await db.project.create({
       data: {
         slug: p.slug,
