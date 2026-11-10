@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useReducedMotion as useFramerReducedMotion } from "framer-motion";
+import { useReducedMotion as useFramerReducedMotion, type Transition } from "motion/react";
 
 /**
  * prefers-reduced-motion, hydration-safe. The server can't know the
@@ -19,6 +19,6 @@ export function useReducedMotion() {
 }
 
 /** The given transition, or an instant one for reduced motion. */
-export function instant<T extends object>(reduce: boolean, transition: T): T | { duration: 0 } {
+export function instant(reduce: boolean, transition: Transition): Transition {
   return reduce ? { duration: 0 } : transition;
 }

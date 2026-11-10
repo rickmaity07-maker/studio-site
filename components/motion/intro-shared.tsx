@@ -19,7 +19,7 @@ export function IntroCurtain() {
         <span className="intro-diamond">◆</span>
         <span className="intro-word">
           <span>
-            Rick<span className="text-muted">.build</span>
+            rira<span className="text-muted">.build</span>
           </span>
         </span>
       </div>

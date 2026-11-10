@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#0B0D12",
+        ink: "#07080B",
         surface: "#141821",
         surface2: "#1B202B",
         line: "#262B38",
@@ -21,7 +21,8 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)"],
         body: ["var(--font-body)"],
-        mono: ["var(--font-mono)"]
+        mono: ["var(--font-mono)"],
+        serif: ["var(--font-serif)"]
       },
       backgroundImage: {
         grain: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0)"

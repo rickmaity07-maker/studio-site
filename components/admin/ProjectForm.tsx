@@ -192,7 +192,7 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
           <span className={labelCls}>Screenshot</span>
           <div
             className="relative flex aspect-[4/3] items-end overflow-hidden rounded-2xl border border-line p-4"
-            style={{ background: `linear-gradient(155deg, ${p.accent}40 0%, #0B0D12 70%)` }}
+            style={{ background: `linear-gradient(155deg, ${p.accent}40 0%, #07080B 70%)` }}
           >
             {p.image ? (
               <Image src={p.image.url} alt="" fill sizes="320px" className="object-cover object-top" />
@@ -227,7 +227,7 @@ export function ProjectForm({ id, initial }: { id?: string; initial: ProjectInpu
           <div className="flex items-end gap-4">
             <div
               className="relative aspect-[390/844] w-24 shrink-0 overflow-hidden rounded-xl border border-line"
-              style={{ background: `linear-gradient(155deg, ${p.accent}40 0%, #0B0D12 70%)` }}
+              style={{ background: `linear-gradient(155deg, ${p.accent}40 0%, #07080B 70%)` }}
             >
               {p.mobileImage && <Image src={p.mobileImage.url} alt="" fill sizes="96px" className="object-cover object-top" />}
             </div>

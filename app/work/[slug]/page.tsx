@@ -122,7 +122,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
           <Link
             href={`/work/${next.slug}`}
             className="group relative block overflow-hidden rounded-2xl border border-line"
-            style={{ background: `linear-gradient(155deg, ${next.accent}40 0%, #0B0D12 72%)` }}
+            style={{ background: `linear-gradient(155deg, ${next.accent}40 0%, #07080B 72%)` }}
           >
             {next.image && (
               <Image

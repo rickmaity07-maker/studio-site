@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
+import { animate, motion, useInView, useMotionValue, useTransform } from "motion/react";
 import { useReducedMotion } from "@/components/motion/useReducedMotion";
 
 /** A real number that counts up from zero when it scrolls into view. */

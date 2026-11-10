@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
 import { useReducedMotion } from "@/components/motion/useReducedMotion";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import type { Project } from "@/data/projects";
@@ -67,7 +67,7 @@ export function WorkIndex({ projects }: { projects: Project[] }) {
               {/* Phones: a small thumbnail stands in for the floating preview. */}
               <span
                 className="relative h-12 w-16 shrink-0 overflow-hidden rounded-lg border border-line sm:hidden"
-                style={{ background: `linear-gradient(155deg, ${p.accent}55 0%, #0B0D12 80%)` }}
+                style={{ background: `linear-gradient(155deg, ${p.accent}55 0%, #07080B 80%)` }}
               >
                 {p.image && <Image src={p.image.url} alt="" fill sizes="64px" className="object-cover object-top" />}
               </span>
@@ -113,7 +113,7 @@ export function WorkIndex({ projects }: { projects: Project[] }) {
                 >
                   <div
                     className="relative aspect-[16/11] w-[340px] overflow-hidden rounded-2xl border border-line shadow-[0_40px_80px_-24px_rgba(0,0,0,0.9)]"
-                    style={{ background: `linear-gradient(155deg, ${hovered.accent}55 0%, #0B0D12 80%)` }}
+                    style={{ background: `linear-gradient(155deg, ${hovered.accent}55 0%, #07080B 80%)` }}
                   >
                     <AnimatePresence initial={false}>
                       <motion.div

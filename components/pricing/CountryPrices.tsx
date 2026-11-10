@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { createContext, useContext, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { EASE } from "@/components/motion/Reveal";
 import {
@@ -121,7 +121,7 @@ export function PriceMenu() {
   );
 }
 
-/** To-scale chart: the Rick.build price against local freelancers and agencies. */
+/** To-scale chart: the rira.build price against local freelancers and agencies. */
 export function PriceCompare() {
   const { c } = useCountry();
   const reduce = useReducedMotion();

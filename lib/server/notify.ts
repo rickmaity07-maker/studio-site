@@ -160,7 +160,7 @@ export function confirmation(lead: LeadInput) {
     from: fromAddress(),
     to: `${lead.name} <${lead.email}>`,
     replyTo: ownerAddress(),
-    subject: "Got your request | Rick.build",
+    subject: "Got your request | rira.build",
     html,
     text
   };

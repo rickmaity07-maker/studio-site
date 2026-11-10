@@ -115,7 +115,7 @@ export function layout({ preview, body, footer }: { preview: string; body: strin
   <tr><td align="center" style="padding:32px 16px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;">
       <tr><td style="padding:0 4px 20px;">
-        <a href="${site.url}" style="text-decoration:none;font-family:${DISPLAY};font-size:18px;font-weight:600;color:${C.text};"><span style="color:${C.live};">&#9670;</span>&nbsp;Rick<span style="color:${C.muted};">.build</span></a>
+        <a href="${site.url}" style="text-decoration:none;font-family:${DISPLAY};font-size:18px;font-weight:600;color:${C.text};"><span style="color:${C.live};">&#9670;</span>&nbsp;rira<span style="color:${C.muted};">.build</span></a>
       </td></tr>
       <tr><td bgcolor="${C.surface}" style="background:${C.surface};border:1px solid ${C.line};border-radius:16px;padding:32px 28px;">
         ${body}

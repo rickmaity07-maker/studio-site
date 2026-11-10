@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { reducedMotion } from "./helpers";
+import { apiLogin, reducedMotion } from "./helpers";
 
 // Functional checks run with reduced motion so nothing waits on animations;
 // "motion.spec.ts" covers the animated experience.
@@ -23,25 +23,25 @@ test.describe("home page", () => {
   test("showreel lists every live build with a link to each", async ({ page }) => {
     await page.goto("/");
     const reel = page.getByRole("region", { name: "Live builds" });
-    await expect(reel.getByRole("heading", { name: "19 builds you can open right now." })).toBeVisible();
+    await expect(reel.getByRole("heading", { name: "23 builds you can open right now." })).toBeVisible();
     for (const slug of ["paulaner-route-66", "bar-05", "karmel", "al-madina", "aura-nail-studio"]) {
       await expect(reel.locator(`a[href="/work/${slug}"]`)).toHaveCount(1);
     }
     await expect(reel.getByRole("link", { name: "Every build" })).toHaveAttribute("href", "/work");
   });
 
-  test("index lists all 20 projects, including the one still in build", async ({ page }) => {
+  test("index lists all 23 projects", async ({ page }) => {
     await page.goto("/");
     const index = page.locator("section").filter({ has: page.getByRole("heading", { name: "Every build, one line each." }) });
     const rows = index.getByRole("listitem");
-    await expect(rows).toHaveCount(20);
-    await expect(index.locator('a[href="/work/vespre"]')).toContainText("In build");
+    await expect(rows).toHaveCount(23);
+    await expect(index.locator('a[href="/work/vespre"]')).toBeVisible();
   });
 
   test("capabilities: live count and the working DE/EN switch", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByText("client sites live and clickable")).toBeVisible();
-    await expect(page.locator("a", { hasText: "client sites live" }).locator(".sr-only")).toHaveText("19");
+    await expect(page.locator("a", { hasText: "client sites live" }).locator(".sr-only")).toHaveText("23");
 
     const preview = page.locator('[aria-live="polite"]').filter({ hasText: /reservieren|Book a table/ });
     await expect(preview).toContainText("Tisch reservieren");
@@ -102,7 +102,7 @@ test.describe("work page", () => {
     await page.goto("/work");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Every build, live and clickable.");
     const cards = page.locator("main ul > li");
-    await expect(cards).toHaveCount(20);
+    await expect(cards).toHaveCount(23);
 
     await page.getByRole("tab", { name: /Beauty & Booking 4/ }).click();
     await expect(cards).toHaveCount(4);
@@ -111,8 +111,8 @@ test.describe("work page", () => {
 
     await page.getByRole("tab", { name: /E-commerce 8/ }).click();
     await expect(cards).toHaveCount(8);
-    await page.getByRole("tab", { name: /All 20/ }).click();
-    await expect(cards).toHaveCount(20);
+    await page.getByRole("tab", { name: /All 23/ }).click();
+    await expect(cards).toHaveCount(23);
   });
 
   test("a card opens its project page", async ({ page }) => {
@@ -145,9 +145,23 @@ test.describe("project pages", () => {
   });
 
   test("project still in build shows the coming-soon state", async ({ page }) => {
-    await page.goto("/work/vespre");
-    await expect(page.getByText("Demo coming soon")).toBeVisible();
-    await expect(page.getByText("In build").first()).toBeVisible();
+    // Every starter project is live, so make one without a live URL.
+    await apiLogin(page.request);
+    const res = await page.request.post("/api/admin/projects", {
+      data: {
+        slug: "e2e-in-build", name: "E2E In Build", tagline: "Café, Bamberg", category: "Hospitality",
+        year: "2026", stack: ["Next.js"], description: "Not hosted yet.", accent: "#4CE8B0", published: true
+      }
+    });
+    expect(res.status()).toBe(201);
+    const { id } = await res.json();
+    try {
+      await page.goto("/work/e2e-in-build");
+      await expect(page.getByText("Demo coming soon")).toBeVisible();
+      await expect(page.getByText("In build").first()).toBeVisible();
+    } finally {
+      await page.request.delete(`/api/admin/projects/${id}`);
+    }
   });
 
   test("request-this-style carries the reference into the form", async ({ page }) => {
@@ -189,7 +203,7 @@ test.describe("static pages and metadata", () => {
     expect(robots).toMatch(/Disallow: \/admin/);
     expect(robots).toMatch(/Disallow: \/api/);
     const manifest = await (await request.get("/manifest.webmanifest")).json();
-    expect(manifest.name).toBe("Rick.build");
+    expect(manifest.name).toBe("rira.build");
     const og = await request.get("/opengraph-image");
     expect(og.headers()["content-type"]).toContain("image/png");
     expect((await request.get("/icon.svg")).status()).toBe(200);
@@ -209,7 +223,7 @@ test.describe("public API", () => {
     const res = await request.get("/api/projects");
     expect(res.status()).toBe(200);
     const body = await res.json();
-    expect(body.projects).toHaveLength(20);
+    expect(body.projects).toHaveLength(23);
     expect(body.projects[0]).toMatchObject({ slug: "paulaner-route-66", embeddable: false });
     expect(body.projects[0].image.url).toMatch(/^\/api\/images\/[a-z0-9]+$/);
     expect(body.leadOptions.budgets).toContain("€1,000 - €3,000");

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "Fixed prices for a website or online shop in your country, with a free mock-up first, your own admin panel, and optional monthly care plans.",
   alternates: { canonical: "/pricing" },
   openGraph: {
-    title: "Pricing | Rick.build",
+    title: "Pricing | rira.build",
     description: "Local prices for a custom website or shop. Free mock-up first, pay the rest once you've seen it working."
   }
 };
@@ -159,11 +159,11 @@ export default async function PricingPage({ searchParams }: { searchParams: { co
           <Reveal delay={0.1} className="mt-12">
             <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0" data-lenis-prevent>
               <table className="w-full min-w-[760px] border-collapse text-left text-[14px]">
-                <caption className="sr-only">Rick.build compared with DIY builders, freelancers and agencies</caption>
+                <caption className="sr-only">rira.build compared with DIY builders, freelancers and agencies</caption>
                 <thead>
                   <tr className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
                     <th scope="col" className="w-[30%] py-4 pr-4 font-normal">What you get</th>
-                    <th scope="col" className="rounded-t-xl bg-live/[0.08] px-4 py-4 font-medium text-live">Rick.build</th>
+                    <th scope="col" className="rounded-t-xl bg-live/[0.08] px-4 py-4 font-medium text-live">rira.build</th>
                     <th scope="col" className="px-4 py-4 font-normal">DIY builder</th>
                     <th scope="col" className="px-4 py-4 font-normal">Typical freelancer</th>
                     <th scope="col" className="px-4 py-4 font-normal">Agency</th>

@@ -2,6 +2,7 @@ export const CATEGORIES = [
   "Hospitality",
   "Beauty & Booking",
   "E-commerce",
+  "Local services",
   "Product"
 ] as const;
 
@@ -332,6 +333,51 @@ export const projects: Project[] = [
     mobileImage: { url: "/screens-mobile/ajwantel.jpg" }
   },
   {
+    slug: "yetenbi",
+    name: "Yetenbi",
+    tagline: "Ethiopian restaurant & café, Würzburg",
+    category: "Hospitality",
+    year: "2026",
+    stack: ["Next.js"],
+    description:
+      "An Ethiopian restaurant site in German, English and Amharic: the shared platter, the menu, the three-round coffee ceremony and directions, with table reservations and guest accounts.",
+    liveUrl: "https://yetenbi-restaurant.vercel.app",
+    embeddable: false,
+    accent: "#C9A24D",
+    image: { url: "/screens/yetenbi.jpg" },
+    mobileImage: { url: "/screens-mobile/yetenbi.jpg" }
+  },
+  {
+    slug: "lale-tatlicisi",
+    name: "Lale Tatlıcısı",
+    tagline: "Turkish sweet shop, since 1974",
+    category: "Hospitality",
+    year: "2026",
+    stack: ["Next.js"],
+    description:
+      "A baklava shop site in English, German and Turkish that leads with the counter: the five favourites, the full menu, an open-now badge and a one-tap call to order a tray.",
+    liveUrl: "https://lale-tatlicisi.vercel.app",
+    embeddable: false,
+    accent: "#F2B233",
+    image: { url: "/screens/lale-tatlicisi.jpg" },
+    mobileImage: { url: "/screens-mobile/lale-tatlicisi.jpg" }
+  },
+  {
+    slug: "hauswacht",
+    name: "Hauswacht",
+    tagline: "Building services, Cologne",
+    category: "Local services",
+    year: "2026",
+    stack: ["Next.js"],
+    description:
+      "A site for a caretaker and building services company: services, who they work for, how a contract runs, prices, service area and FAQ, with a quote request and the 24-hour emergency line always in reach.",
+    liveUrl: "https://haustechnik-website-rho.vercel.app",
+    embeddable: true,
+    accent: "#F5C542",
+    image: { url: "/screens/hauswacht.jpg" },
+    mobileImage: { url: "/screens-mobile/hauswacht.jpg" }
+  },
+  {
     slug: "aura-nail-studio",
     name: "Aura Nail Studio",
     tagline: "Nail salon, concept",
@@ -355,6 +401,10 @@ export const projects: Project[] = [
     stack: ["Next.js", "Tailwind"],
     description:
       "A perfume storefront built around restraint: long negative space, a slow scroll pace, and product photography given room to breathe.",
-    accent: "#7A6A53"
+    liveUrl: "https://mock-perfume.vercel.app",
+    embeddable: true,
+    accent: "#7A6A53",
+    image: { url: "/screens/vespre.jpg" },
+    mobileImage: { url: "/screens-mobile/vespre.jpg" }
   }
 ];

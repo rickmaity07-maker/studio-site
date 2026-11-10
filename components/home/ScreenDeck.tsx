@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import type { Project } from "@/data/projects";
@@ -157,7 +157,7 @@ function DeckCard({ project, front }: { project: Project; front: boolean }) {
       </div>
       <div
         className="relative flex-1"
-        style={{ background: `linear-gradient(155deg, ${project.accent}33 0%, #0B0D12 72%)` }}
+        style={{ background: `linear-gradient(155deg, ${project.accent}33 0%, #07080B 72%)` }}
       >
         {project.image && (
           <Image

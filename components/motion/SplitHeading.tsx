@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { useIntroDone } from "./Intro";
 import { EASE } from "./Reveal";
@@ -50,7 +50,7 @@ export function SplitHeading({
                 <span className="-mb-[0.1em] inline-block overflow-hidden pb-[0.1em] align-bottom">
                   <motion.span
                     data-word
-                    className={"inline-block " + (accent && word.replace(/[.,]/g, "") === accent ? "text-live" : "")}
+                    className={"inline-block " + (accent && word.replace(/[.,]/g, "") === accent ? "pr-[0.06em] font-serif font-normal italic tracking-normal text-live" : "")}
                     initial={{ y: "110%", rotate: 4 }}
                     animate={show ? { y: 0, rotate: 0 } : undefined}
                     transition={instant(reduce, { duration: 0.95, delay: delay + n * 0.06, ease: EASE })}

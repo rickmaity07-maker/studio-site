@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Rick.build | Websites you can actually click through";
+export const alt = "rira.build | Websites you can actually click through";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 // The Node runtime fails to load the bundled font from paths with spaces on Windows.
@@ -18,7 +18,7 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 80,
-          background: "linear-gradient(155deg, #13241f 0%, #0B0D12 60%)",
+          background: "linear-gradient(155deg, #13241f 0%, #07080B 60%)",
           color: "#ECEEF3",
           fontFamily: "sans-serif"
         }}
@@ -26,7 +26,7 @@ export default function OpengraphImage() {
         <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 36 }}>
           <span style={{ width: 22, height: 22, background: "#4CE8B0", transform: "rotate(45deg)" }} />
           <span>
-            Rick<span style={{ color: "#8991A3" }}>.build</span>
+            rira<span style={{ color: "#8991A3" }}>.build</span>
           </span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>

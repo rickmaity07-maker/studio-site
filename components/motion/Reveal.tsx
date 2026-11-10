@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { useIntroDone } from "./Intro";
 

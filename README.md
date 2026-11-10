@@ -1,4 +1,4 @@
-# Rick.build — showcase site + Android app
+# rira.build — showcase site + Android app
 
 A portfolio/agency site that showcases real client builds as **live, clickable
 demos** and collects project requests, plus a native Android app (`android/`)

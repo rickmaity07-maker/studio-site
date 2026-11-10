@@ -109,7 +109,7 @@ export function compareRows(c: CountryPrice): { rows: CompareRow[]; max: number;
   const m = c.market;
   if (!m) return null;
   const rows: CompareRow[] = [
-    { label: "Rick.build", from: c.site, to: c.site, me: true },
+    { label: "rira.build", from: c.site, to: c.site, me: true },
     { label: "Local freelancers", from: m.free[0], to: m.free[1] }
   ];
   if (m.agency) rows.push({ label: "Agencies", from: m.agency[0], to: m.agency[1] });

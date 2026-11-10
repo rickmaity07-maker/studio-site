@@ -86,7 +86,7 @@ describe("choosing the first country", () => {
 describe("comparison chart", () => {
   it("is to scale, with agencies only where researched", () => {
     const de = compareRows(PRICES.de)!;
-    expect(de.rows.map((r) => r.label)).toEqual(["Rick.build", "Local freelancers", "Agencies"]);
+    expect(de.rows.map((r) => r.label)).toEqual(["rira.build", "Local freelancers", "Agencies"]);
     expect(de.max).toBeCloseTo(8000 * 1.05);
     expect(de.belowMiddle).toBe(true);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { EASE } from "@/components/motion/Reveal";
 import { SplitHeading } from "@/components/motion/SplitHeading";

@@ -3,7 +3,7 @@
  * from the published releases in the database (`npm run app:release`).
  */
 export const androidApp = {
-  name: "Rick.build for Android",
+  name: "rira.build for Android",
   /** The one link to share; always the newest published version. */
   downloadPath: "/download",
   /** minSdk 26 in android/app/build.gradle.kts */

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { instant, useReducedMotion } from "@/components/motion/useReducedMotion";
 import { AndroidLogo, ArrowRight, X } from "@phosphor-icons/react";
 import { useIntroDone } from "./motion/Intro";
@@ -57,7 +57,7 @@ export function AppBanner() {
           <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2.5 sm:px-6">
             <AndroidLogo weight="fill" className="h-4 w-4 shrink-0 text-live" aria-hidden />
             <p className="min-w-0 flex-1 truncate text-[13px] text-text/90">
-              <span className="font-medium text-text">New:</span> the Rick.build Android app.
+              <span className="font-medium text-text">New:</span> the rira.build Android app.
               <span className="hidden text-muted sm:inline"> Every build and every live demo, on your phone.</span>
             </p>
             <Link
