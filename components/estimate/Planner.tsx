@@ -20,8 +20,10 @@ import {
 } from "@/lib/estimate";
 
 const BUILD_NOTE: Record<Build, string> = {
-  site: "Custom design, menu, photos, hours, map, booking and delivery links, admin panel.",
-  shop: "Everything in the website, plus products, basket, checkout and orders."
+  beauty: "Barbers, hair, nail, beauty and tattoo studios.",
+  food: "Restaurants, takeaway, bakeries, sweet shops and local services.",
+  bar: "Bars, cafés, lounges and pubs.",
+  shop: "A website plus products, basket, checkout and orders."
 };
 
 const PLAN_NOTE: Record<Plan, string> = {
@@ -36,9 +38,9 @@ function show(c: CountryPrice, r: Range) {
 }
 
 /** Build + care plan + country -> what it costs now, per month and over time. */
-export function Planner() {
+export function Planner({ initialBuild = "food" }: { initialBuild?: Build }) {
   const { code, c } = useCountry();
-  const [build, setBuild] = useState<Build>("site");
+  const [build, setBuild] = useState<Build>(initialBuild);
   const [plan, setPlan] = useState<Plan>("none");
   const e = estimate(c, build, plan);
   const mid = freelancerMiddle(c);
@@ -49,11 +51,11 @@ export function Planner() {
         <CountryPicker />
 
         <fieldset>
-          <legend className="eyebrow">What you need</legend>
-          <div className="mt-3 grid gap-3">
+          <legend className="eyebrow">Your kind of business</legend>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
             {BUILDS.map((b) => (
               <Choice key={b} name="build" checked={build === b} onChange={() => setBuild(b)} title={BUILD_LABEL[b]} note={BUILD_NOTE[b]}>
-                {b === "site" ? money(c, c.site) : `${money(c, c.shop[0])} - ${money(c, c.shop[1])}`}
+                {show(c, c.sectors[b])}
               </Choice>
             ))}
           </div>
@@ -89,7 +91,7 @@ export function Planner() {
             </Row>
           </dl>
 
-          {mid !== null && build === "site" && (
+          {mid !== null && build !== "shop" && (
             <p className="mt-6 border-t border-line/70 pt-5 text-sm leading-relaxed text-muted">
               For comparison: a local freelancer in {c.name} typically charges around{" "}
               <span className="text-text">{money(c, mid)}</span> for a site like this, before any upkeep.

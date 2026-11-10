@@ -5,6 +5,7 @@ import { CountryProvider } from "@/components/pricing/CountryPrices";
 import { Planner } from "@/components/estimate/Planner";
 import { PageHero, quietLink } from "@/components/PageSection";
 import { pickCountry } from "@/lib/pricing";
+import { isBuild } from "@/lib/estimate";
 
 export const metadata: Metadata = {
   title: "Cost planner",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/estimate" }
 };
 
-export default async function EstimatePage(props: { searchParams: Promise<{ country?: string | string[] }> }) {
+export default async function EstimatePage(props: { searchParams: Promise<{ country?: string | string[]; type?: string }> }) {
   const searchParams = await props.searchParams;
   const h = await headers();
   const initial = pickCountry({
@@ -37,7 +38,7 @@ export default async function EstimatePage(props: { searchParams: Promise<{ coun
         </Link>
       </PageHero>
       <section className="mx-auto max-w-7xl px-4 pb-28 sm:px-6 lg:pb-36">
-        <Planner />
+        <Planner initialBuild={isBuild(searchParams.type) ? searchParams.type : undefined} />
       </section>
     </CountryProvider>
   );

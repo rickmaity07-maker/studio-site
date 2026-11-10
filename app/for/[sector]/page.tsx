@@ -96,10 +96,10 @@ export default async function SectorPage(props: Props) {
       <Section eyebrow="Price" title={["A fixed price,", "in your currency."]}>
         <div className="grid gap-8">
           <CountryPicker />
-          <PriceMenu />
+          <PriceMenu highlight={sector.price} />
           <p className="text-sm text-muted">
             <Validity />{" "}
-            <Link href="/estimate" className="text-text underline underline-offset-4 transition hover:text-live">
+            <Link href={`/estimate?type=${sector.price}`} className="text-text underline underline-offset-4 transition hover:text-live">
               Plan the full cost with care
             </Link>
             .

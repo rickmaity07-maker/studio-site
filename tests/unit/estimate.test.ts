@@ -9,18 +9,23 @@ const de = PRICES.de;
 
 describe("cost planner", () => {
   it("a website with no care plan costs the one-off price, forever", () => {
-    const e = estimate(de, "site", "none");
-    expect(e.oneOff).toEqual([de.site, de.site]);
+    const e = estimate(de, "food", "none");
+    expect(e.oneOff).toEqual([700, 1000]);
     expect(e.monthly).toBe(0);
-    expect(e.firstYear).toEqual([de.site, de.site]);
-    expect(e.threeYears).toEqual([de.site, de.site]);
+    expect(e.firstYear).toEqual([700, 1000]);
+    expect(e.threeYears).toEqual([700, 1000]);
+  });
+
+  it("each kind of business uses its own price range", () => {
+    expect(estimate(de, "beauty", "none").oneOff).toEqual([400, 600]);
+    expect(estimate(de, "bar", "none").oneOff).toEqual([800, 900]);
   });
 
   it("adds 12 and 36 months of the chosen plan", () => {
-    const e = estimate(de, "site", "care");
+    const e = estimate(de, "food", "care");
     expect(e.monthly).toBe(de.care[1]);
-    expect(e.firstYear[0]).toBe(de.site + de.care[1] * 12);
-    expect(e.threeYears[0]).toBe(de.site + de.care[1] * 36);
+    expect(e.firstYear[0]).toBe(700 + de.care[1] * 12);
+    expect(e.threeYears[0]).toBe(700 + de.care[1] * 36);
   });
 
   it("a shop keeps its price range", () => {
@@ -40,8 +45,9 @@ describe("cost planner", () => {
   });
 
   it("describes only valid plan links", () => {
-    expect(describePlan("site-none")).toBe("Website");
-    expect(describePlan("shop-care")).toBe("Website with online shop + Care");
+    expect(describePlan("food-none")).toBe("Restaurants and takeaway");
+    expect(describePlan("shop-care")).toBe("Online shop + Care");
+    expect(describePlan("site-none")).toBeUndefined();
     expect(describePlan("site-gold")).toBeUndefined();
     expect(describePlan("<script>-care")).toBeUndefined();
     expect(describePlan(undefined)).toBeUndefined();

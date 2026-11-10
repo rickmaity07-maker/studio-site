@@ -3,8 +3,12 @@
  * at /for/[slug] with its matching projects and features, so outreach can
  * link straight to the page that fits.
  */
+import type { PriceKey } from "@/lib/pricing";
+
 export type Sector = {
   slug: string;
+  /** Which price group in data/pricing.json this kind of business pays. */
+  price: PriceKey;
   name: string;
   /** Short label for chips and menus. */
   short: string;
@@ -20,6 +24,7 @@ export type Sector = {
 export const SECTORS: Sector[] = [
   {
     slug: "restaurants",
+    price: "food",
     name: "Restaurants",
     short: "Restaurants",
     lines: ["Websites for", "restaurants."],
@@ -36,6 +41,7 @@ export const SECTORS: Sector[] = [
   },
   {
     slug: "cafes-and-bars",
+    price: "bar",
     name: "Cafés, bars and lounges",
     short: "Cafés & bars",
     lines: ["Websites for", "cafés and bars."],
@@ -52,6 +58,7 @@ export const SECTORS: Sector[] = [
   },
   {
     slug: "takeaway",
+    price: "food",
     name: "Takeaway and fast food",
     short: "Takeaway",
     lines: ["Websites for", "takeaway and fast food."],
@@ -68,6 +75,7 @@ export const SECTORS: Sector[] = [
   },
   {
     slug: "bakeries-and-sweets",
+    price: "food",
     name: "Bakeries and sweet shops",
     short: "Bakeries & sweets",
     lines: ["Websites for bakeries", "and sweet shops."],
@@ -84,6 +92,7 @@ export const SECTORS: Sector[] = [
   },
   {
     slug: "shops",
+    price: "shop",
     name: "Shops and grocers",
     short: "Shops",
     lines: ["Websites and online", "shops for local stores."],
@@ -100,6 +109,7 @@ export const SECTORS: Sector[] = [
   },
   {
     slug: "beauty",
+    price: "beauty",
     name: "Barbers, salons and studios",
     short: "Beauty & barbers",
     lines: ["Websites for barbers,", "salons and studios."],
@@ -116,6 +126,7 @@ export const SECTORS: Sector[] = [
   },
   {
     slug: "local-services",
+    price: "food",
     name: "Local services and repairs",
     short: "Local services",
     lines: ["Websites for local", "services and repairs."],

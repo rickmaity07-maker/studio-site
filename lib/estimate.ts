@@ -2,15 +2,16 @@
  * The cost planner on /estimate: one-off price + an optional care plan,
  * added up over time. Uses only the approved prices in lib/pricing.ts.
  */
-import type { CountryPrice } from "@/lib/pricing";
+import { PRICE_KEYS, PRICE_LABEL, type CountryPrice, type PriceKey } from "@/lib/pricing";
 
-export const BUILDS = ["site", "shop"] as const;
-export type Build = (typeof BUILDS)[number];
+/** What kind of site: one of the sector price groups. */
+export const BUILDS = PRICE_KEYS;
+export type Build = PriceKey;
 
 export const PLANS = ["none", "essential", "care", "growth"] as const;
 export type Plan = (typeof PLANS)[number];
 
-export const BUILD_LABEL: Record<Build, string> = { site: "Website", shop: "Website with online shop" };
+export const BUILD_LABEL: Record<Build, string> = PRICE_LABEL;
 export const PLAN_LABEL: Record<Plan, string> = {
   none: "No care plan",
   essential: "Essential care",
@@ -34,7 +35,7 @@ export function planPrice(c: CountryPrice, plan: Plan): number {
 }
 
 export function estimate(c: CountryPrice, build: Build, plan: Plan): Estimate {
-  const oneOff: Range = build === "site" ? [c.site, c.site] : [c.shop[0], c.shop[1]];
+  const oneOff: Range = [c.sectors[build][0], c.sectors[build][1]];
   const monthly = planPrice(c, plan);
   const over = (months: number): Range => [oneOff[0] + monthly * months, oneOff[1] + monthly * months];
   return { oneOff, monthly, firstYear: over(12), threeYears: over(36) };
@@ -53,7 +54,7 @@ export function isPlan(v: unknown): v is Plan {
   return typeof v === "string" && (PLANS as readonly string[]).includes(v);
 }
 
-/** "site-care" from the planner's request link -> readable text, or undefined. */
+/** "food-care" from the planner's request link -> readable text, or undefined. */
 export function describePlan(param: string | undefined): string | undefined {
   if (!param) return undefined;
   const [build, plan] = param.split("-");

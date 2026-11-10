@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   COUNTRY_CODES,
   PRICES,
+  PRICE_KEYS,
   compareRows,
   countryFromLocales,
   isCountry,
@@ -18,6 +19,23 @@ describe("price data", () => {
     expect([...names].sort((a, b) => a.localeCompare(b, "en"))).toEqual(names);
   });
 
+  it("Germany has exactly the agreed sector prices", () => {
+    expect(PRICES.de.sectors).toEqual({ beauty: [400, 600], food: [700, 1000], bar: [800, 900], shop: [1200, 1500] });
+    expect(PRICES.de.site).toBe(700);
+    expect(PRICES.de.shop).toEqual([1200, 1500]);
+  });
+
+  it("every country has the four sector ranges, cheapest for salons, dearest for shops", () => {
+    for (const code of COUNTRY_CODES) {
+      const s = PRICES[code].sectors;
+      for (const key of PRICE_KEYS) expect(s[key][0], `${code} ${key}`).toBeLessThanOrEqual(s[key][1]);
+      expect(s.beauty[1], code).toBeLessThanOrEqual(s.food[0]);
+      expect(s.food[1], code).toBeLessThanOrEqual(s.shop[0]);
+      expect(PRICES[code].site, code).toBe(s.food[0]);
+      expect(PRICES[code].shop, code).toEqual(s.shop);
+    }
+  });
+
   it("every country has a site price, a shop range above it and rising care plans", () => {
     for (const code of COUNTRY_CODES) {
       const c = PRICES[code];
@@ -30,9 +48,17 @@ describe("price data", () => {
     }
   });
 
-  it("matches the approved guide for Germany and the US", () => {
-    expect(PRICES.de).toMatchObject({ site: 1300, shop: [1850, 2800], care: [30, 65, 120] });
-    expect(PRICES.us).toMatchObject({ site: 2300, shop: [3100, 4800] });
+  it("matches the agreed sector prices for Germany and the US; care plans unchanged", () => {
+    expect(PRICES.de).toMatchObject({ site: 700, shop: [1200, 1500], care: [30, 65, 120] });
+    expect(PRICES.us.sectors).toEqual({ beauty: [450, 700], food: [800, 1150], bar: [900, 1050], shop: [1350, 1700] });
+  });
+
+  it("never charges more than local freelancers' top price, wherever there is research", () => {
+    for (const code of COUNTRY_CODES) {
+      const c = PRICES[code];
+      if (!c.market) continue;
+      for (const key of ["beauty", "food", "bar"] as const) expect(c.sectors[key][1], `${code} ${key}`).toBeLessThanOrEqual(c.market.free[1]);
+    }
   });
 
   it("has market research for exactly the 12 researched countries", () => {
