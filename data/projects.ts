@@ -220,10 +220,116 @@ export const projects: Project[] = [
     description:
       "A restaurant site that switches theme and language without reloading, built for a room that seats German and English-speaking guests in the same evening.",
     liveUrl: "https://taj-mahal-schweinfurt.vercel.app",
-    embeddable: true,
+    // The site sends X-Frame-Options: DENY, so it can't be embedded.
+    embeddable: false,
     accent: "#9C3D3D",
     image: { url: "/screens/tajmahal.jpg" },
     mobileImage: { url: "/screens-mobile/tajmahal.jpg" }
+  },
+  {
+    slug: "kosem-food-house",
+    name: "Kösem Food House",
+    tagline: "Premium döner, Schweinfurt",
+    category: "Hospitality",
+    year: "2026",
+    stack: ["Next.js"],
+    description:
+      "A döner house site with a fixed side menu and full-bleed food photography, so the grill does the selling. Menu, gallery and contact are one tap away on a phone.",
+    liveUrl: "https://k-sem-d-ner.vercel.app",
+    embeddable: true,
+    accent: "#B3262B",
+    image: { url: "/screens/kosem-food-house.jpg" },
+    mobileImage: { url: "/screens-mobile/kosem-food-house.jpg" }
+  },
+  {
+    slug: "horseed-afro-shop",
+    name: "Horseed Afro Shop",
+    tagline: "Afro shop & online orders, Schweinfurt",
+    category: "E-commerce",
+    year: "2026",
+    stack: ["Next.js"],
+    description:
+      "A German/English shop for Somali and African groceries, cosmetics, oud perfumes and clothing. Customers order online, then pick up or get it delivered and pay cash; an open-now badge and product search sit right in the header.",
+    liveUrl: "https://horseed-afro-shop.vercel.app",
+    embeddable: false,
+    accent: "#A84F1E",
+    image: { url: "/screens/horseed-afro-shop.jpg" },
+    mobileImage: { url: "/screens-mobile/horseed-afro-shop.jpg" }
+  },
+  {
+    slug: "dalab-fresh",
+    name: "Dalab Fresh",
+    tagline: "Somali supermarket, delivery & pickup",
+    category: "E-commerce",
+    year: "2026",
+    stack: ["Next.js"],
+    description:
+      "An online supermarket in German, English and Somali. Shoppers paste their whole shopping list into the basket, browse weekly offers by aisle, and choose same-day delivery or pickup in Frankfurt, Cologne, Munich or Hamburg.",
+    liveUrl: "https://dalab-fresh.vercel.app",
+    embeddable: false,
+    accent: "#E0A526",
+    image: { url: "/screens/dalab-fresh.jpg" },
+    mobileImage: { url: "/screens-mobile/dalab-fresh.jpg" }
+  },
+  {
+    slug: "cask-and-ember",
+    name: "Cask & Ember",
+    tagline: "Spirits, tobacco & everyday goods",
+    category: "E-commerce",
+    year: "2026",
+    stack: ["Next.js"],
+    description:
+      "A late-night neighbourhood store with an age check at the door and six aisles behind it: spirits, soft drinks, tobacco, cigarettes, vapes and everyday essentials.",
+    liveUrl: "https://tobaco-store.vercel.app",
+    embeddable: true,
+    accent: "#8B5CF6",
+    image: { url: "/screens/cask-and-ember.jpg" },
+    mobileImage: { url: "/screens-mobile/cask-and-ember.jpg" }
+  },
+  {
+    slug: "kern-watches",
+    name: "Kern Watches",
+    tagline: "Watch brand, product site",
+    category: "E-commerce",
+    year: "2026",
+    stack: ["Vite"],
+    description:
+      "A stripped-back product site for a sterile mechanical watch: no logo on the dial, so the page sells the case, the movement and the tolerances instead.",
+    liveUrl: "https://kern-watches-1u5u.vercel.app",
+    embeddable: true,
+    accent: "#9A9A9A",
+    image: { url: "/screens/kern-watches.jpg" },
+    mobileImage: { url: "/screens-mobile/kern-watches.jpg" }
+  },
+  {
+    slug: "iron-rose-tattoo",
+    name: "Iron Rose Tattoo Co.",
+    tagline: "Custom tattoo studio, by appointment",
+    category: "Beauty & Booking",
+    year: "2026",
+    stack: ["Next.js"],
+    description:
+      "A cinematic site for a blackwork and fine-line studio: recent pieces, the artists, the process from first message to healed piece, a session reservation form and a try-on feature.",
+    liveUrl: "https://tattoo-parlor-two.vercel.app",
+    embeddable: false,
+    accent: "#E9DFCF",
+    image: { url: "/screens/iron-rose-tattoo.jpg" },
+    mobileImage: { url: "/screens-mobile/iron-rose-tattoo.jpg" }
+  },
+  {
+    slug: "ajwantel",
+    name: "AjwanTel",
+    tagline: "Phone repair, Schweinfurt & Bad Kissingen",
+    category: "E-commerce",
+    year: "2026",
+    stack: ["Next.js"],
+    description:
+      "A phone repair shop that also sells and buys devices: repair quotes, a shop with cart, and a buy-back page, for two branches in Schweinfurt and Bad Kissingen.",
+    liveUrl: "https://ajwantel-ui.vercel.app",
+    embeddable: true,
+    accent: "#F2553A",
+    image: { url: "/screens/ajwantel.jpg" },
+    mobileImage: { url: "/screens-mobile/ajwantel.jpg" }
   },
   {
     slug: "aura-nail-studio",

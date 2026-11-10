@@ -4,6 +4,7 @@ import { LeadForm } from "@/components/LeadForm";
 import { Reveal } from "@/components/motion/Reveal";
 import { SplitHeading } from "@/components/motion/SplitHeading";
 import { getProjectBySlug } from "@/lib/server/projects";
+import { PRICES, isCountry } from "@/lib/pricing";
 
 export const metadata: Metadata = {
   title: "Start a project",
@@ -13,9 +14,11 @@ export const metadata: Metadata = {
 export default async function RequestPage({
   searchParams
 }: {
-  searchParams: { ref?: string };
+  searchParams: { ref?: string; mockup?: string };
 }) {
   const refProject = searchParams.ref ? await getProjectBySlug(searchParams.ref) : undefined;
+  // From the pricing page's "Request a free mock-up": note which prices they saw.
+  const mockup = isCountry(searchParams.mockup) ? `Free mock-up (prices for ${PRICES[searchParams.mockup.toLowerCase()].name})` : undefined;
 
   return (
     <section className="mx-auto grid max-w-7xl gap-14 px-4 pb-28 pt-16 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20 lg:pt-24">
@@ -57,7 +60,7 @@ export default async function RequestPage({
 
       <Reveal delay={0.1}>
         <div className="rounded-2xl border border-line bg-surface p-6 shadow-card sm:p-10">
-          <LeadForm projectRef={refProject?.name} />
+          <LeadForm projectRef={refProject?.name ?? mockup} />
         </div>
       </Reveal>
     </section>

@@ -4,6 +4,7 @@ import { Showreel } from "@/components/home/Showreel";
 import { WorkIndex } from "@/components/home/WorkIndex";
 import { Capabilities } from "@/components/home/Capabilities";
 import { Process } from "@/components/home/Process";
+import { PricingTeaser } from "@/components/home/PricingTeaser";
 import { ClosingCta } from "@/components/home/ClosingCta";
 
 export default async function Home() {
@@ -19,6 +20,7 @@ export default async function Home() {
       <WorkIndex projects={projects} />
       <Capabilities projects={projects} />
       <Process />
+      <PricingTeaser />
       <ClosingCta />
     </>
   );

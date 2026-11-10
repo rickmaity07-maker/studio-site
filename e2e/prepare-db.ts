@@ -7,7 +7,7 @@ import { hashPassword } from "../lib/server/password";
 /*
   Runs before the e2e test server is built (see playwright.config.ts), so
   every page is built from a fresh, known database:
-  reset studio_site_test, import the 13 starter projects, create the e2e admin.
+  reset studio_site_test, import the 20 starter projects, create the e2e admin.
 
   Only ever touches a database named studio_site_test. The owner approved
   resetting that test database before each run (Prisma requires this consent

@@ -10,6 +10,7 @@ import { MobileMenu } from "./MobileMenu";
 
 const LINKS = [
   { href: "/work", label: "Work" },
+  { href: "/pricing", label: "Pricing" },
   { href: "/#process", label: "Process" }
 ];
 
@@ -50,7 +51,7 @@ export function Nav() {
 
         <nav className="hidden items-center gap-8 font-mono text-[13px] uppercase tracking-[0.1em] text-muted sm:flex">
           {LINKS.map((l) => {
-            const active = l.href === "/work" ? pathname.startsWith("/work") : false;
+            const active = l.href.startsWith("/#") ? false : pathname.startsWith(l.href);
             return (
               <Link key={l.href} href={l.href} className={"relative py-1 transition hover:text-text " + (active ? "text-text" : "")}>
                 {l.label}

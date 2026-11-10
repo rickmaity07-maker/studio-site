@@ -1,0 +1,1830 @@
+{
+"ad": {
+"care": [
+30,
+65,
+120
+],
+"fmt": "€{}",
+"market": null,
+"name": "Andorra",
+"shop": [
+1850,
+2800
+],
+"site": 1300
+},
+"al": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "Albania",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"ao": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Angola",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"at": {
+"care": [
+30,
+65,
+120
+],
+"fmt": "€{}",
+"market": null,
+"name": "Austria",
+"shop": [
+1850,
+2800
+],
+"site": 1300
+},
+"au": {
+"care": [
+40,
+80,
+140
+],
+"fmt": "A${}",
+"market": {
+"agency": [
+5000,
+15000
+],
+"care": "A$50+ per month",
+"free": [
+1500,
+2500
+]
+},
+"name": "Australia",
+"shop": [
+2100,
+3400
+],
+"site": 1550
+},
+"ax": {
+"care": [
+30,
+65,
+120
+],
+"fmt": "€{}",
+"market": null,
+"name": "Aland Islands",
+"shop": [
+1850,
+2800
+],
+"site": 1300
+},
+"ba": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "Bosnia and Herzegovina",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"be": {
+"care": [
+30,
+65,
+120
+],
+"fmt": "€{}",
+"market": null,
+"name": "Belgium",
+"shop": [
+1850,
+2800
+],
+"site": 1300
+},
+"bf": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Burkina Faso",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"bg": {
+"care": [
+10,
+25,
+45
+],
+"fmt": "€{}",
+"market": null,
+"name": "Bulgaria",
+"shop": [
+750,
+1200
+],
+"site": 500
+},
+"bi": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Burundi",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"bj": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Benin",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"bw": {
+"care": [
+130,
+260,
+480
+],
+"fmt": "P{}",
+"market": null,
+"name": "Botswana",
+"shop": [
+7700,
+12000
+],
+"site": 5300
+},
+"by": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "Belarus",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"ca": {
+"care": [
+40,
+85,
+150
+],
+"fmt": "CA${}",
+"market": {
+"agency": [
+3000,
+10000
+],
+"care": "CA$5 - $15 per month hosting, maintenance extra",
+"free": [
+1200,
+3500
+]
+},
+"name": "Canada",
+"shop": [
+2300,
+3700
+],
+"site": 1700
+},
+"cd": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Democratic Republic of the Congo",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"cf": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Central African Republic",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"cg": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Republic of the Congo",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"ch": {
+"care": [
+40,
+80,
+150
+],
+"fmt": "CHF {}",
+"market": null,
+"name": "Switzerland",
+"shop": [
+2400,
+3500
+],
+"site": 1650
+},
+"ci": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Ivory Coast",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"cm": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Cameroon",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"cv": {
+"care": [
+10,
+20,
+30
+],
+"fmt": "€{}",
+"market": null,
+"name": "Cabo Verde",
+"shop": [
+550,
+850
+],
+"site": 350
+},
+"cy": {
+"care": [
+20,
+35,
+65
+],
+"fmt": "€{}",
+"market": null,
+"name": "Cyprus",
+"shop": [
+1050,
+1600
+],
+"site": 700
+},
+"cz": {
+"care": [
+400,
+800,
+1450
+],
+"fmt": "{} Kč",
+"market": null,
+"name": "Czechia",
+"shop": [
+23500,
+35500
+],
+"site": 16000
+},
+"de": {
+"care": [
+30,
+65,
+120
+],
+"fmt": "€{}",
+"market": {
+"agency": [
+2000,
+8000
+],
+"care": "€5 - €50 per month hosting, maintenance extra",
+"diy": "€7 - €36 per month",
+"free": [
+800,
+3000
+]
+},
+"name": "Germany",
+"shop": [
+1850,
+2800
+],
+"site": 1300
+},
+"dj": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Djibouti",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"dk": {
+"care": [
+240,
+480,
+870
+],
+"fmt": "{} kr.",
+"market": null,
+"name": "Denmark",
+"shop": [
+14000,
+20500
+],
+"site": 9700
+},
+"dz": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "€{}",
+"market": null,
+"name": "Algeria",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"ee": {
+"care": [
+15,
+30,
+60
+],
+"fmt": "€{}",
+"market": null,
+"name": "Estonia",
+"shop": [
+950,
+1450
+],
+"site": 650
+},
+"eg": {
+"care": [
+310,
+620,
+1100
+],
+"fmt": "EGP {}",
+"market": {
+"free": [
+5000,
+21000
+]
+},
+"name": "Egypt",
+"shop": [
+19000,
+29000
+],
+"site": 12500
+},
+"eh": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Western Sahara",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"er": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Eritrea",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"es": {
+"care": [
+20,
+35,
+65
+],
+"fmt": "€{}",
+"market": {
+"agency": [
+1500,
+2000
+],
+"free": [
+300,
+1500
+]
+},
+"name": "Spain",
+"shop": [
+1050,
+1600
+],
+"site": 700
+},
+"et": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Ethiopia",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"fi": {
+"care": [
+30,
+65,
+120
+],
+"fmt": "€{}",
+"market": null,
+"name": "Finland",
+"shop": [
+1850,
+2800
+],
+"site": 1300
+},
+"fo": {
+"care": [
+240,
+480,
+870
+],
+"fmt": "{} kr.",
+"market": null,
+"name": "Faroe Islands",
+"shop": [
+14000,
+20500
+],
+"site": 9700
+},
+"fr": {
+"care": [
+30,
+65,
+120
+],
+"fmt": "€{}",
+"market": null,
+"name": "France",
+"shop": [
+1850,
+2800
+],
+"site": 1300
+},
+"ga": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Gabon",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"gb": {
+"care": [
+35,
+70,
+130
+],
+"fmt": "£{}",
+"market": {
+"agency": [
+2500,
+10000
+],
+"care": "£50 - £200 per month",
+"diy": "£240 - £360 per year",
+"free": [
+1500,
+3000
+]
+},
+"name": "United Kingdom",
+"shop": [
+2000,
+3100
+],
+"site": 1400
+},
+"gg": {
+"care": [
+35,
+70,
+130
+],
+"fmt": "£{}",
+"market": null,
+"name": "Guernsey",
+"shop": [
+2000,
+3100
+],
+"site": 1400
+},
+"gh": {
+"care": [
+100,
+210,
+380
+],
+"fmt": "GH₵{}",
+"market": null,
+"name": "Ghana",
+"shop": [
+5900,
+9500
+],
+"site": 4200
+},
+"gi": {
+"care": [
+35,
+70,
+130
+],
+"fmt": "£{}",
+"market": null,
+"name": "Gibraltar",
+"shop": [
+2000,
+3100
+],
+"site": 1400
+},
+"gm": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Gambia",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"gn": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Guinea",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"gq": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Equatorial Guinea",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"gr": {
+"care": [
+20,
+35,
+65
+],
+"fmt": "€{}",
+"market": null,
+"name": "Greece",
+"shop": [
+1050,
+1600
+],
+"site": 700
+},
+"gw": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Guinea-Bissau",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"hr": {
+"care": [
+15,
+30,
+60
+],
+"fmt": "€{}",
+"market": null,
+"name": "Croatia",
+"shop": [
+950,
+1450
+],
+"site": 650
+},
+"hu": {
+"care": [
+5900,
+12000,
+21000
+],
+"fmt": "{} Ft",
+"market": null,
+"name": "Hungary",
+"shop": [
+340000,
+520000
+],
+"site": 235000
+},
+"ie": {
+"care": [
+30,
+65,
+120
+],
+"fmt": "€{}",
+"market": null,
+"name": "Ireland",
+"shop": [
+1850,
+2800
+],
+"site": 1300
+},
+"im": {
+"care": [
+35,
+70,
+130
+],
+"fmt": "£{}",
+"market": null,
+"name": "Isle of Man",
+"shop": [
+2000,
+3100
+],
+"site": 1400
+},
+"in": {
+"care": [
+500,
+1000,
+1800
+],
+"fmt": "₹{}",
+"market": {
+"agency": [
+50000,
+200000
+],
+"free": [
+20000,
+30000
+]
+},
+"name": "India",
+"shop": [
+33500,
+55000
+],
+"site": 20000
+},
+"is": {
+"care": [
+5100,
+10000,
+18500
+],
+"fmt": "{} kr.",
+"market": null,
+"name": "Iceland",
+"shop": [
+295000,
+445000
+],
+"site": 205000
+},
+"it": {
+"care": [
+20,
+35,
+65
+],
+"fmt": "€{}",
+"market": null,
+"name": "Italy",
+"shop": [
+1050,
+1600
+],
+"site": 700
+},
+"je": {
+"care": [
+35,
+70,
+130
+],
+"fmt": "£{}",
+"market": null,
+"name": "Jersey",
+"shop": [
+2000,
+3100
+],
+"site": 1400
+},
+"ke": {
+"care": [
+1250,
+2500,
+4500
+],
+"fmt": "KSh {}",
+"market": {
+"care": "KSh 80 - 250 per month hosting",
+"free": [
+30000,
+100000
+]
+},
+"name": "Kenya",
+"shop": [
+70000,
+115000
+],
+"site": 50000
+},
+"km": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Comoros",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"li": {
+"care": [
+40,
+80,
+150
+],
+"fmt": "CHF {}",
+"market": null,
+"name": "Liechtenstein",
+"shop": [
+2400,
+3500
+],
+"site": 1650
+},
+"lr": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Liberia",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"ls": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Lesotho",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"lt": {
+"care": [
+15,
+30,
+60
+],
+"fmt": "€{}",
+"market": null,
+"name": "Lithuania",
+"shop": [
+950,
+1450
+],
+"site": 650
+},
+"lu": {
+"care": [
+40,
+75,
+140
+],
+"fmt": "€{}",
+"market": null,
+"name": "Luxembourg",
+"shop": [
+2200,
+3300
+],
+"site": 1500
+},
+"lv": {
+"care": [
+15,
+30,
+60
+],
+"fmt": "€{}",
+"market": null,
+"name": "Latvia",
+"shop": [
+950,
+1450
+],
+"site": 650
+},
+"ly": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Libya",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"ma": {
+"care": [
+90,
+180,
+320
+],
+"fmt": "{} MAD",
+"market": null,
+"name": "Morocco",
+"shop": [
+5300,
+8300
+],
+"site": 3600
+},
+"mc": {
+"care": [
+40,
+80,
+150
+],
+"fmt": "€{}",
+"market": null,
+"name": "Monaco",
+"shop": [
+2400,
+3500
+],
+"site": 1650
+},
+"md": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "Moldova",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"me": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "Montenegro",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"mg": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Madagascar",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"mk": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "North Macedonia",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"ml": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Mali",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"mr": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Mauritania",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"mt": {
+"care": [
+20,
+35,
+65
+],
+"fmt": "€{}",
+"market": null,
+"name": "Malta",
+"shop": [
+1050,
+1600
+],
+"site": 700
+},
+"mu": {
+"care": [
+450,
+900,
+1600
+],
+"fmt": "Rs {}",
+"market": null,
+"name": "Mauritius",
+"shop": [
+26000,
+40500
+],
+"site": 18000
+},
+"mw": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Malawi",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"mz": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Mozambique",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"na": {
+"care": [
+190,
+380,
+690
+],
+"fmt": "N${}",
+"market": null,
+"name": "Namibia",
+"shop": [
+11500,
+18000
+],
+"site": 7700
+},
+"ne": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Niger",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"ng": {
+"care": [
+7250,
+14500,
+26000
+],
+"fmt": "₦{}",
+"market": {
+"agency": [
+250000,
+600000
+],
+"care": "₦80,000 - ₦200,000 per year",
+"free": [
+50000,
+600000
+]
+},
+"name": "Nigeria",
+"shop": [
+460000,
+750000
+],
+"site": 290000
+},
+"nl": {
+"care": [
+30,
+65,
+120
+],
+"fmt": "€{}",
+"market": null,
+"name": "The Netherlands",
+"shop": [
+1850,
+2800
+],
+"site": 1300
+},
+"no": {
+"care": [
+400,
+800,
+1450
+],
+"fmt": "{} kr",
+"market": null,
+"name": "Norway",
+"shop": [
+22500,
+33500
+],
+"site": 16000
+},
+"pl": {
+"care": [
+65,
+130,
+230
+],
+"fmt": "{} zł",
+"market": {
+"free": [
+1500,
+5500
+]
+},
+"name": "Poland",
+"shop": [
+3800,
+5900
+],
+"site": 2600
+},
+"pt": {
+"care": [
+20,
+35,
+65
+],
+"fmt": "€{}",
+"market": null,
+"name": "Portugal",
+"shop": [
+1050,
+1600
+],
+"site": 700
+},
+"re": {
+"care": [
+20,
+35,
+65
+],
+"fmt": "€{}",
+"market": null,
+"name": "Reunion",
+"shop": [
+1050,
+1600
+],
+"site": 700
+},
+"ro": {
+"care": [
+70,
+140,
+260
+],
+"fmt": "{} lei",
+"market": null,
+"name": "Romania",
+"shop": [
+4300,
+6500
+],
+"site": 2900
+},
+"rs": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "Serbia",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"ru": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "Russia",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"rw": {
+"care": [
+9750,
+19500,
+35000
+],
+"fmt": "RWF {}",
+"market": null,
+"name": "Rwanda",
+"shop": [
+590000,
+950000
+],
+"site": 390000
+},
+"sc": {
+"care": [
+15,
+30,
+50
+],
+"fmt": "€{}",
+"market": null,
+"name": "Seychelles",
+"shop": [
+750,
+1200
+],
+"site": 550
+},
+"sd": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Sudan",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"se": {
+"care": [
+380,
+750,
+1350
+],
+"fmt": "{} kr",
+"market": null,
+"name": "Sweden",
+"shop": [
+21500,
+31500
+],
+"site": 15000
+},
+"sh": {
+"care": [
+25,
+50,
+95
+],
+"fmt": "£{}",
+"market": null,
+"name": "Saint Helena",
+"shop": [
+1550,
+2400
+],
+"site": 1050
+},
+"si": {
+"care": [
+15,
+30,
+60
+],
+"fmt": "€{}",
+"market": null,
+"name": "Slovenia",
+"shop": [
+950,
+1450
+],
+"site": 650
+},
+"sj": {
+"care": [
+400,
+800,
+1450
+],
+"fmt": "{} kr",
+"market": null,
+"name": "Svalbard and Jan Mayen",
+"shop": [
+22500,
+33500
+],
+"site": 16000
+},
+"sk": {
+"care": [
+15,
+30,
+60
+],
+"fmt": "€{}",
+"market": null,
+"name": "Slovakia",
+"shop": [
+950,
+1450
+],
+"site": 650
+},
+"sl": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Sierra Leone",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"sm": {
+"care": [
+20,
+35,
+65
+],
+"fmt": "€{}",
+"market": null,
+"name": "San Marino",
+"shop": [
+1050,
+1600
+],
+"site": 700
+},
+"sn": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Senegal",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"so": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Somalia",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"ss": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "South Sudan",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"st": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Sao Tome and Principe",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"sz": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Eswatini",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"td": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Chad",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"tg": {
+"care": [
+4500,
+9000,
+16000
+],
+"fmt": "{} FCFA",
+"market": null,
+"name": "Togo",
+"shop": [
+275000,
+415000
+],
+"site": 180000
+},
+"tn": {
+"care": [
+25,
+50,
+85
+],
+"fmt": "{} TND",
+"market": null,
+"name": "Tunisia",
+"shop": [
+1450,
+2100
+],
+"site": 950
+},
+"tz": {
+"care": [
+19000,
+38500,
+69500
+],
+"fmt": "TSh {}",
+"market": null,
+"name": "Tanzania",
+"shop": [
+1190000,
+1900000
+],
+"site": 770000
+},
+"ua": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "Ukraine",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"ug": {
+"care": [
+27000,
+53500,
+96500
+],
+"fmt": "USh {}",
+"market": null,
+"name": "Uganda",
+"shop": [
+1660000,
+2610000
+],
+"site": 1070000
+},
+"us": {
+"care": [
+60,
+120,
+210
+],
+"fmt": "US${}",
+"market": {
+"agency": [
+3000,
+10000
+],
+"care": "US$30 - $300 per month",
+"diy": "US$290 - $370 per year",
+"free": [
+1500,
+6000
+]
+},
+"name": "United States",
+"shop": [
+3100,
+4800
+],
+"site": 2300
+},
+"va": {
+"care": [
+20,
+35,
+65
+],
+"fmt": "€{}",
+"market": null,
+"name": "Vatican",
+"shop": [
+1050,
+1600
+],
+"site": 700
+},
+"xk": {
+"care": [
+10,
+20,
+40
+],
+"fmt": "€{}",
+"market": null,
+"name": "Kosovo",
+"shop": [
+650,
+1050
+],
+"site": 450
+},
+"yt": {
+"care": [
+15,
+30,
+55
+],
+"fmt": "€{}",
+"market": null,
+"name": "Mayotte",
+"shop": [
+850,
+1300
+],
+"site": 600
+},
+"za": {
+"care": [
+210,
+420,
+760
+],
+"fmt": "R{}",
+"market": {
+"care": "R499 - R799 per month",
+"free": [
+3000,
+16000
+]
+},
+"name": "South Africa",
+"shop": [
+12500,
+19500
+],
+"site": 8500
+},
+"zm": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Zambia",
+"shop": [
+500,
+700
+],
+"site": 300
+},
+"zw": {
+"care": [
+10,
+15,
+25
+],
+"fmt": "US${}",
+"market": null,
+"name": "Zimbabwe",
+"shop": [
+500,
+700
+],
+"site": 300
+}
+}

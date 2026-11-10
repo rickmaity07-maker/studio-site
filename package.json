@@ -11,6 +11,7 @@
     "db:push": "node --env-file=.env.local ./node_modules/prisma/build/index.js db push",
     "db:studio": "node --env-file=.env.local ./node_modules/prisma/build/index.js studio",
     "db:seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "db:add-starters": "tsx --env-file=.env.local scripts/add-starters.ts",
     "admin:create": "tsx --env-file=.env.local scripts/create-admin.ts",
     "test": "vitest run",
     "test:e2e": "playwright test",

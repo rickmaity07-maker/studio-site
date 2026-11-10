@@ -17,7 +17,7 @@ test.describe("work search", () => {
     await expect(cards).toHaveCount(0);
     await expect(page.getByRole("status")).toContainText("Nothing matches");
     await page.getByRole("button", { name: "Clear search" }).click();
-    await expect(cards).toHaveCount(13);
+    await expect(cards).toHaveCount(20);
   });
 
   test("combines with the industry filter, and / focuses the box", async ({ page }) => {

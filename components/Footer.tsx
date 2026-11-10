@@ -7,6 +7,7 @@ const COLUMNS = [
     title: "Studio",
     links: [
       { href: "/work", label: "Work" },
+      { href: "/pricing", label: "Pricing" },
       { href: "/#process", label: "Process" },
       { href: "/request", label: "Start a project" },
       { href: "/app", label: "Android app" }

@@ -155,7 +155,7 @@ test.describe("projects", () => {
   test("lists all projects; import refuses a non-empty database", async ({ page }) => {
     await uiLogin(page);
     await page.goto("/admin/projects");
-    await expect(page.getByRole("link", { name: "Edit" })).toHaveCount(13);
+    await expect(page.getByRole("link", { name: "Edit" })).toHaveCount(20);
     const res = await page.request.post("/api/admin/projects/import");
     expect(res.status()).toBe(409);
   });

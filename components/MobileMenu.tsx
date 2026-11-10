@@ -52,6 +52,9 @@ export function MobileMenu() {
             <Link href="/work" className="transition hover:text-text">
               Work
             </Link>
+            <Link href="/pricing" className="transition hover:text-text">
+              Pricing
+            </Link>
             <Link href="/#process" onClick={() => setOpen(false)} className="transition hover:text-text">
               Process
             </Link>
