@@ -4,7 +4,7 @@ import { HttpError, readJson, requireAdmin, route } from "@/lib/server/http";
 
 export const dynamic = "force-dynamic";
 
-type Ctx = { params: { versionCode: string } };
+type Ctx = { params: Promise<{ versionCode: string }> };
 
 async function find(raw: string) {
   const versionCode = Number(raw);
@@ -16,7 +16,8 @@ async function find(raw: string) {
 }
 
 /** Publish / unpublish a version, or mark it mandatory. */
-export const PATCH = route(async (req: Request, { params }: Ctx) => {
+export const PATCH = route(async (req: Request, ctx: Ctx) => {
+  const params = await ctx.params;
   await requireAdmin();
   const versionCode = await find(params.versionCode);
   const body = await readJson(req);
@@ -28,7 +29,8 @@ export const PATCH = route(async (req: Request, { params }: Ctx) => {
   return NextResponse.json({ ok: true });
 });
 
-export const DELETE = route(async (_req: Request, { params }: Ctx) => {
+export const DELETE = route(async (_req: Request, ctx: Ctx) => {
+  const params = await ctx.params;
   await requireAdmin();
   const versionCode = await find(params.versionCode);
   await db.appRelease.delete({ where: { versionCode } });

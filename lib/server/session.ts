@@ -24,7 +24,7 @@ export async function startSession(admin: { id: string; email: string }) {
     .setExpirationTime(`${MAX_AGE_S}s`)
     .sign(secret());
 
-  cookies().set(SESSION_COOKIE, token, {
+  (await cookies()).set(SESSION_COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -33,13 +33,13 @@ export async function startSession(admin: { id: string; email: string }) {
   });
 }
 
-export function endSession() {
-  cookies().delete(SESSION_COOKIE);
+export async function endSession() {
+  (await cookies()).delete(SESSION_COOKIE);
 }
 
 /** The signed-in admin's id and email, or null. Doesn't hit the database. */
 export async function readSession() {
-  const token = cookies().get(SESSION_COOKIE)?.value;
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
   if (!token) return null;
   try {
     const { payload } = await jwtVerify(token, secret());

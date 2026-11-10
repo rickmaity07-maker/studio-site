@@ -7,7 +7,7 @@ import { deleteOrphanImages } from "@/lib/server/storage";
 
 export const dynamic = "force-dynamic";
 
-type Ctx = { params: { id: string } };
+type Ctx = { params: Promise<{ id: string }> };
 
 async function load(id: string) {
   const row = await db.project.findUnique({ where: { id } });
@@ -15,12 +15,14 @@ async function load(id: string) {
   return row;
 }
 
-export const GET = route(async (_req: Request, { params }: Ctx) => {
+export const GET = route(async (_req: Request, ctx: Ctx) => {
+  const params = await ctx.params;
   await requireAdmin();
   return NextResponse.json({ project: toStoredProject(await load(params.id)) });
 });
 
-export const PUT = route(async (req: Request, { params }: Ctx) => {
+export const PUT = route(async (req: Request, ctx: Ctx) => {
+  const params = await ctx.params;
   await requireAdmin();
   await load(params.id);
 
@@ -43,7 +45,8 @@ export const PUT = route(async (req: Request, { params }: Ctx) => {
   return NextResponse.json({ ok: true });
 });
 
-export const DELETE = route(async (_req: Request, { params }: Ctx) => {
+export const DELETE = route(async (_req: Request, ctx: Ctx) => {
+  const params = await ctx.params;
   await requireAdmin();
   const row = await load(params.id);
   await db.project.delete({ where: { id: row.id } });

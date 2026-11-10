@@ -92,8 +92,9 @@ const FAQ = [
   { q: "Can the site be in more than one language?", a: "Yes. Sites can switch between languages, for example English and your local language." }
 ];
 
-export default async function PricingPage({ searchParams }: { searchParams: { country?: string | string[] } }) {
-  const h = headers();
+export default async function PricingPage(props: { searchParams: Promise<{ country?: string | string[] }> }) {
+  const searchParams = await props.searchParams;
+  const h = await headers();
   const initial = pickCountry({
     query: searchParams.country,
     ipCountry: h.get("x-vercel-ip-country"),

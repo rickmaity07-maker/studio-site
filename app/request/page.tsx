@@ -11,11 +11,8 @@ export const metadata: Metadata = {
   description: "Tell me about your business and what your site needs to do."
 };
 
-export default async function RequestPage({
-  searchParams
-}: {
-  searchParams: { ref?: string; mockup?: string };
-}) {
+export default async function RequestPage(props: { searchParams: Promise<{ ref?: string; mockup?: string }> }) {
+  const searchParams = await props.searchParams;
   const refProject = searchParams.ref ? await getProjectBySlug(searchParams.ref) : undefined;
   // From the pricing page's "Request a free mock-up": note which prices they saw.
   const mockup = isCountry(searchParams.mockup) ? `Free mock-up (prices for ${PRICES[searchParams.mockup.toLowerCase()].name})` : undefined;

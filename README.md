@@ -4,7 +4,7 @@ A portfolio/agency site that showcases real client builds as **live, clickable
 demos** and collects project requests, plus a native Android app (`android/`)
 that shows the same projects and sends requests to the same backend.
 
-Stack: Next.js 14 · Neon Postgres (Frankfurt) · Prisma 6 · Vercel · Gmail (nodemailer).
+Stack: Next.js 15 (React 19) · Neon Postgres (Frankfurt) · Prisma 6 · Vercel · Gmail (nodemailer).
 
 ## Run it locally
 

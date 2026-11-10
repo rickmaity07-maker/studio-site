@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { api } from "@/lib/admin-api";
 import type { StoredProject } from "@/lib/project-schema";
 import { ProjectForm } from "@/components/admin/ProjectForm";
 
-export default function EditProjectPage({ params }: { params: { id: string } }) {
+export default function EditProjectPage(props: { params: Promise<{ id: string }> }) {
+  const params = use(props.params);
   const [project, setProject] = useState<StoredProject | null>(null);
   const [error, setError] = useState<string | null>(null);
 
